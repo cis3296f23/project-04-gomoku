@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="800.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gomoku.project04gomoku.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-  </padding>
-   <VBox alignment="CENTER" prefHeight="567.0" prefWidth="560.0" spacing="20.0">
-      <children>
-         <Label prefHeight="45.0" prefWidth="144.0" text="Gomuku" textAlignment="CENTER">
-            <font>
-               <Font size="35.0" />
-            </font></Label>
-         <Pane prefHeight="85.0" prefWidth="560.0" />
-         <Button lineSpacing="4.0" mnemonicParsing="false" text="Game Start" />
-         <Button mnemonicParsing="false" text="Setting" />
-         <Button mnemonicParsing="false" text="Exit" />
-      </children>
-   </VBox>
-
-  <Label fx:id="welcomeText" />
-</VBox>
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@/com/gomoku/project04gomoku/css/menu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" prefHeight="208.0" prefWidth="409.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" stylesheets="@/com/gomoku/project04gomoku/css/menu.css" text="Game Start" />
+            <Button mnemonicParsing="false" stylesheets="@/com/gomoku/project04gomoku/css/menu.css" text="Setting" />
+            <Button mnemonicParsing="false" stylesheets="@/com/gomoku/project04gomoku/css/menu.css" text="Exit" />
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="180.0" text="Gomuku" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+   </top>
+   <left>
+      <Label text="Label" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Label text="Label" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Label text="Label" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

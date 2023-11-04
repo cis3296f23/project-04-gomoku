@@ -1,0 +1,22 @@
+#BorderPane {
+    -fx-background-image: url('../pic/sample.jpg');
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.button {
+    -fx-background-color: rgba(165, 42, 42, 0.5);
+    -fx-background-radius: 10;
+    -fx-border-color: #a52a2a;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 10, 0 , 0 , 0 );
+}
+
+.button:hover {
+    -fx-background-color: rgba(165, 42, 42, 0.7);
+}
