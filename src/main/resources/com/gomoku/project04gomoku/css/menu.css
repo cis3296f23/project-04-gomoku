@@ -14,7 +14,7 @@
     -fx-text-fill: #ffffff;
     -fx-padding: 10 20;
     -fx-font-size: 14px;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 10, 0 , 0 , 0 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 }
 
 .button:hover {

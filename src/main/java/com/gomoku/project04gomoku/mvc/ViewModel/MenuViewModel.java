@@ -1,4 +1,4 @@
-package com.gomoku.project04gomoku.ViewModel;
+package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

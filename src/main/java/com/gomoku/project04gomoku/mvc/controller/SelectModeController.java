@@ -2,7 +2,7 @@
  * 专门用来控制模式选择的controller。有返回，切换页面等功能
  */
 
-package com.gomoku.project04gomoku.controller;
+package com.gomoku.project04gomoku.mvc.controller;
 
 import com.gomoku.project04gomoku.GomokuStart;
 import javafx.event.ActionEvent;
@@ -23,14 +23,16 @@ public class SelectModeController {
     private Button Multiple;
     @FXML
     private Button MultipleBack;
+    @FXML
+    private Button Local;
 
     /**
      * 用来返回到二级菜单
+     *
      * @param event
      * @throws IOException
      */
-    public void GoBackToSelectMode(ActionEvent event) throws  IOException
-    {
+    public void GoBackToSelectMode(ActionEvent event) throws IOException {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/SelectMode.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
@@ -42,21 +44,20 @@ public class SelectModeController {
             stage.setScene(root);
             stage.show();
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * 用来返回到主菜单
+     *
      * @param event
      * @throws IOException
      */
-    public void GoBackToMain(ActionEvent event) throws IOException
-    {
+    public void GoBackToMain(ActionEvent event) throws IOException {
         try {
-           fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/menu.fxml"));
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/menu.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
 
@@ -66,19 +67,18 @@ public class SelectModeController {
             stage.setScene(root);
             stage.show();
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * 用来进入三级菜单（多人游戏选项）
+     *
      * @param event
      * @throws IOException
      */
-    public void GoToMultiplePlayer(ActionEvent event) throws IOException
-    {
+    public void GoToMultiplePlayer(ActionEvent event) throws IOException {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/MultiplePlayer.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
@@ -90,9 +90,24 @@ public class SelectModeController {
             stage.setScene(root);
             stage.show();
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToLocalMultiplayer(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/LocalMultiplayer.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            Stage stage = (Stage) Local.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load FXML for local multiplayer");
         }
     }
 
