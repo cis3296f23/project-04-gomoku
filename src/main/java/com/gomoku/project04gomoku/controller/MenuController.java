@@ -1,0 +1,58 @@
+package com.gomoku.project04gomoku.controller;
+
+/**
+ * 处理主菜单事件
+ */
+
+import com.gomoku.project04gomoku.GomokuStart;
+import com.gomoku.project04gomoku.ViewModel.MenuViewModel;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class MenuController  {
+    FXMLLoader fxmlLoader ;
+
+    private final MenuViewModel viewModel=new MenuViewModel();
+    @FXML
+    private Label welcomeText;
+
+    @FXML
+    protected void onHelloButtonClick() {
+        viewModel.displayInformationDialog("This is a dialog.");
+    }
+    @FXML
+    private Button GameStart;
+    @FXML
+
+    /**
+     * 用来进入二级菜单
+     * @param event
+     * @throws IOException
+     */
+    protected void switchToModeSelect(ActionEvent event)
+    {
+        try {
+           fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/SelectMode.fxml"));
+            Scene root = new Scene(fxmlLoader.load(), 800, 600);
+
+
+            Stage stage = (Stage) GameStart.getScene().getWindow();
+
+
+            stage.setScene(root);
+            stage.show();
+
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/menu.css" fx:controller="com.gomoku.project04gomoku.controller.MenuController" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" prefHeight="208.0" prefWidth="409.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect" stylesheets="@../css/menu.css" text="Game Start" />
+            <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting" />
+            <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Exit" />
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="180.0" text="Gomuku" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+   </top>
+   <left>
+      <Label text="Label" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Label text="Label" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Label text="Label" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
