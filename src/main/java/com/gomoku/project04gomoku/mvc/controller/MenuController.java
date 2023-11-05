@@ -1,11 +1,11 @@
-package com.gomoku.project04gomoku.controller;
+package com.gomoku.project04gomoku.mvc.controller;
 
 /**
  * 处理主菜单事件
  */
 
 import com.gomoku.project04gomoku.GomokuStart;
-import com.gomoku.project04gomoku.ViewModel.MenuViewModel;
+import com.gomoku.project04gomoku.mvc.ViewModel.MenuViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +17,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MenuController  {
-    FXMLLoader fxmlLoader ;
+public class MenuController {
+    FXMLLoader fxmlLoader;
 
-    private final MenuViewModel viewModel=new MenuViewModel();
+    private final MenuViewModel viewModel = new MenuViewModel();
     @FXML
     private Label welcomeText;
 
@@ -28,8 +28,10 @@ public class MenuController  {
     protected void onHelloButtonClick() {
         viewModel.displayInformationDialog("This is a dialog.");
     }
+
     @FXML
     private Button GameStart;
+
     @FXML
 
     /**
@@ -37,10 +39,9 @@ public class MenuController  {
      * @param event
      * @throws IOException
      */
-    protected void switchToModeSelect(ActionEvent event)
-    {
+    protected void switchToModeSelect(ActionEvent event) {
         try {
-           fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/SelectMode.fxml"));
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/SelectMode.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
 
@@ -50,8 +51,7 @@ public class MenuController  {
             stage.setScene(root);
             stage.show();
 
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
