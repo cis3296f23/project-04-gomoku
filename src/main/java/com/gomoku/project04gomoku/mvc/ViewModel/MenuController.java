@@ -1,11 +1,11 @@
-package com.gomoku.project04gomoku.mvc.controller;
+package com.gomoku.project04gomoku.mvc.ViewModel;
 
 /**
  * 处理主菜单事件
  */
 
 import com.gomoku.project04gomoku.GomokuStart;
-import com.gomoku.project04gomoku.mvc.ViewModel.MenuViewModel;
+import com.gomoku.project04gomoku.mvc.test.MenuViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MenuController {
+    @FXML
+    public Button TestChange;
     FXMLLoader fxmlLoader;
 
     private final MenuViewModel viewModel = new MenuViewModel();
@@ -54,5 +56,10 @@ public class MenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    public  void handleButtonTest()
+    {
+        welcomeText.setText("你好");
     }
 }

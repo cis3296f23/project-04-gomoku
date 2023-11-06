@@ -8,6 +8,6 @@ module com.gomoku.project04gomoku {
 
     opens com.gomoku.project04gomoku to javafx.fxml;
     exports com.gomoku.project04gomoku;
-    exports com.gomoku.project04gomoku.mvc.controller;
-    opens com.gomoku.project04gomoku.mvc.controller to javafx.fxml;
+    exports com.gomoku.project04gomoku.mvc.ViewModel;
+    opens com.gomoku.project04gomoku.mvc.ViewModel to javafx.fxml;
 }

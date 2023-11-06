@@ -5,7 +5,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="400.0" prefWidth="600.0"
-      fx:controller="com.gomoku.project04gomoku.mvc.controller.SelectModeController" xmlns="http://javafx.com/javafx/16"
+      fx:controller="com.gomoku.project04gomoku.mvc.ViewModel.SelectModeController" xmlns="http://javafx.com/javafx/16"
       xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Button fx:id="Local" alignment="CENTER" mnemonicParsing="false" onAction="#goToLocalMultiplayer" text="Local"/>
