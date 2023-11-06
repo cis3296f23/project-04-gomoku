@@ -4,35 +4,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/menu.css"
-            fx:controller="com.gomoku.project04gomoku.mvc.controller.MenuController" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gomoku.project04gomoku.mvc.ViewModel.MenuController">
     <center>
         <VBox alignment="CENTER" prefHeight="208.0" prefWidth="409.0" spacing="30.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect"
-                        stylesheets="@../css/menu.css" text="Game Start"/>
-                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting"/>
-                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Exit"/>
+                <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect" stylesheets="@../css/menu.css" text="Game Start" />
+                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting" />
+                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Exit" />
+            <Button fx:id="TestChange" mnemonicParsing="false" text="Button" onAction="#handleButtonTest" />
             </children>
         </VBox>
     </center>
     <top>
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="180.0" text="Gomuku"
-               BorderPane.alignment="CENTER">
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="180.0" text="Gomuku" BorderPane.alignment="CENTER">
             <font>
-                <Font size="32.0"/>
+                <Font size="32.0" />
             </font>
         </Label>
     </top>
     <left>
-        <Label text="Label" BorderPane.alignment="CENTER"/>
+        <Label fx:id="welcomeText" text="Label" BorderPane.alignment="CENTER" />
     </left>
     <right>
-        <Label text="Label" BorderPane.alignment="CENTER"/>
+        <Label text="Label" BorderPane.alignment="CENTER" />
     </right>
     <bottom>
-        <Label text="Label" BorderPane.alignment="CENTER"/>
+        <Label text="Label" BorderPane.alignment="CENTER" />
     </bottom>
 </BorderPane>

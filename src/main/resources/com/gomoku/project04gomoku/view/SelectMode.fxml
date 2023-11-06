@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.gomoku.project04gomoku.mvc.controller.SelectModeController">
+      fx:controller="com.gomoku.project04gomoku.mvc.ViewModel.SelectModeController">
     <children>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
             <children>

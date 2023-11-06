@@ -71,6 +71,9 @@
           <target>17</target>
         </configuration>
       </plugin>
+
+
+
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -87,6 +90,29 @@
               <noManPages>true</noManPages>
               <stripDebug>true</stripDebug>
               <noHeaderFiles>true</noHeaderFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>io.github.fvarrui</groupId>
+        <artifactId>javapackager</artifactId>
+        <version>1.7.5</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>package</goal>
+            </goals>
+            <configuration>
+
+              <mainClass>com.gomoku.project04gomoku.executeMain</mainClass>
+
+              <bundleJre>true</bundleJre>
+              <generateInstaller>false</generateInstaller>
+              <administratorRequired>false</administratorRequired>
+              <platform>windows</platform>
             </configuration>
           </execution>
         </executions>

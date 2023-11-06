@@ -1,9 +1,10 @@
-package com.gomoku.project04gomoku.mvc.controller;
+package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.app.logic.Game;
 import com.gomoku.project04gomoku.app.models.Board;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -16,13 +17,16 @@ import java.util.Optional;
 
 
 public class LocalMultiplayerController {
-
+    @FXML
+    public Button start;
     @FXML
     private GridPane gridPane;
 
     private Game game;
 
+    @FXML
     public void initialize() {
+        gridPane=new GridPane();
         game = new Game();
         setupBoard();
     }
@@ -82,6 +86,7 @@ public class LocalMultiplayerController {
 
     @FXML
     public void startGame() {
+        initialize();
         game.startGame();
         setupBoard();
         System.out.println("Start Game!");

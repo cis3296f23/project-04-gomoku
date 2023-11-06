@@ -1,4 +1,4 @@
-package com.gomoku.project04gomoku.mvc.ViewModel;
+package com.gomoku.project04gomoku.mvc.test;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -9,5 +9,6 @@ public class MenuViewModel {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.showAndWait();
     }
+
 
 }

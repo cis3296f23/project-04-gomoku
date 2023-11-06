@@ -2,7 +2,7 @@
  * 专门用来控制模式选择的controller。有返回，切换页面等功能
  */
 
-package com.gomoku.project04gomoku.mvc.controller;
+package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.GomokuStart;
 import javafx.event.ActionEvent;
@@ -17,6 +17,8 @@ import java.io.IOException;
 
 public class SelectModeController {
     FXMLLoader fxmlLoader;
+
+    LocalMultiplayerController localplay = new LocalMultiplayerController();
     @FXML
     private Button GoBackMain;
     @FXML
@@ -98,7 +100,7 @@ public class SelectModeController {
     @FXML
     private void goToLocalMultiplayer(ActionEvent event) {
         try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/LocalMultiplayer.fxml"));
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/ChessBoard.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
             Stage stage = (Stage) Local.getScene().getWindow();
@@ -106,9 +108,11 @@ public class SelectModeController {
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("Failed to load FXML for local multiplayer");
+            e.printStackTrace();
+
         }
+
     }
 
 }
