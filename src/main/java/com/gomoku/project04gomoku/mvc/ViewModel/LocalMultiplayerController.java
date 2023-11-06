@@ -127,7 +127,7 @@ public class LocalMultiplayerController {
                 pane.getChildren().clear(); // Clear previous UI components
                 int player = game.getBoard().getCell(i, j);
                 if (player != 0) {
-                    Circle circle = new Circle(20); // Just an example, adjust the size as needed
+                    Circle circle = new Circle(10); // Just an example, adjust the size as needed
                     circle.setFill(player == 1 ? Color.BLACK : Color.WHITE);
                     pane.getChildren().add(circle);
                 }
