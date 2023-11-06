@@ -137,7 +137,7 @@ public class LocalMultiplayerController {
 
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         // This method finds a node within the GridPane by its row and column index
-        System.out.println("跑进来了");
+
         for (Node node : gridPane.getChildren()) {
             Integer IntegerCol = col;
             Integer IntegerRow = row;
