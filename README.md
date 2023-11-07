@@ -1,8 +1,12 @@
 # Project Name
-Put here a short paragraph describing your project. 
-Adding an screenshot or a mockup of your application in action would be nice.  
+The Gomoku application is a personalized engaging platform that facilitates both PVP 
+and AI competition for players to play with the best user experience of this game. 
+The customizable interface and setting provide vital Gomoku matching at any moment. 
+Furthermore, the app ensures a seamless transition allowing players to take turns 
+strategically placing their chess on the board. Be the first to place five in a row 
+with no distraction all while enjoying a visually appealing and immersive interface.
 
-![This is a screenshot.](images.png)
+
 # How to run
 Provide here instructions on how to use your application.   
 - Download the latest binary from the Release section on the right on GitHub.  
