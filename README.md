@@ -24,7 +24,7 @@ with no distraction all while enjoying a visually appealing and immersive interf
 * Open the folder in an IDE that supports Maven (e.g., IntelliJ).
 * On the right panel, click on the Maven icon (m). For Visual Studio Code, it's the maven folder on Explorer.
 * Find clean and package operations in the Lifecycle folder. 
-* Run ``` clean ``` first, ``` then package ```.
+* Run ``` clean ``` first, then ```package ```.
 * Run the exe file inside the project-04-gomoku folder in the target directory generated.  
 
 # How to contribute
