@@ -1,28 +1,51 @@
-# Project Name
-Put here a short paragraph describing your project. 
-Adding an screenshot or a mockup of your application in action would be nice.  
+# Gomoku: Board Game
+The Gomoku application is a personalized engaging platform that facilitates both PVP 
+and AI competition for players to play with the best user experience of this game. 
+The customizable interface and setting provide vital Gomoku matching at any moment. 
+Furthermore, the app ensures a seamless transition allowing players to take turns 
+strategically placing their chess on the board. The winning condition is to be the 
+first player to place five pieces in a row(in any directions) with no distraction 
+all while enjoying a visually appealing and immersive interface. 
 
 ![This is a screenshot.](images.png)
+
 # How to run
-Provide here instructions on how to use your application.   
-- Download the latest binary from the Release section on the right on GitHub.  
-- On the command line uncompress using
-```
-tar -xzf  
-```
-- On the command line run with
-```
-./hello
-```
-- You will see Hello World! on your terminal. 
+## 1. With a Release available
+* Download the latest binary/zip from the Release section on the right on GitHub.
+    * If downloaded a zip, extract the content it to where you want. No password required.
+* Run the exe file.  
+
+## 2. With a target folder available on Github
+* Download the latest repository on GitHub.
+* Move the project-04-gomoku inside the target folder to where you want.
+* Run the exe inside the folder.  
+
+## 3. Otherwise 
+* Download the latest repository on GitHub.
+* Open the folder in an IDE that supports Maven (e.g., IntelliJ).
+* On the right panel, click on the Maven icon (m). For Visual Studio Code, it's the maven folder on Explorer.
+* Find clean and package operations in the Lifecycle folder. 
+* Run ``` clean ``` first, then ```package ```.
+* Run the exe file inside the project-04-gomoku folder in the target directory generated.  
 
 # How to contribute
-Follow this project board to know the latest status of the project: [http://...]([http://...])  
+Follow this project board to know the latest status of the project: [Project Board](https://github.com/orgs/cis3296f23/projects/131])  
+Contact the admin for more details.
 
 ### How to build
-- Use this github repository: ... 
-- Specify what branch to use for a more stable release or for cutting edge development.  
-- Use InteliJ 11
-- Specify additional library to download if needed 
-- What file and target to compile and run. 
-- What is expected to happen when the app start. 
+Use this GitHub repository: 
+* Download (otherwise fork) the repository from the ``` main ``` branch. Other branches are unstable.
+* Use IntelliJ. Any recent version should've worked. If not, try the ``` 2023.2.2 ``` version.
+* Specifications
+    * Install JavaFX from OpenJFX.
+    * Install Scene Kit and other supplementary tools if needed.
+    * All installments are automated through Maven. Install them when prompted. There is no need to download anything online manually.
+* Running and Testing
+    * Run ```executeMain``` to compile and launch the Gomoku program.
+* Expectations when running
+    * A graphic user interface should show up when running.
+    * At first glance, a menu shows up for a user to select operations. It includes the start, exit, and setting buttons. 
+    * By clicking on the start, there should be a submenu for the user to select game mode.
+        * There should be single-player and multiplayer modes. The multiplayer also contains a sub-selection for Local or WAN versions.
+    * Any of the modes would display a game board for the user to place pieces on it. There are also various buttons for pause, restart, and other configurations. 
+    * When any player (users/bot/AI) wins, the game would congrats the winner and query for restart. 
