@@ -32,6 +32,10 @@ public class Game {
         }
     }
 
+    /*
+        Check connect 5 by calling checkLine in 8 directions
+        If a direction and its opposed direction has a total of 4 pieces (5-1, exclude self), current player wins
+     */
     public boolean checkWin(int x, int y) {
         int player = board.getCell(x, y);
         return checkLine(x, y, 1, 0, player) + checkLine(x, y, -1, 0, player) == 4 ||
@@ -40,6 +44,9 @@ public class Game {
                 checkLine(x, y, 1, -1, player) + checkLine(x, y, -1, 1, player) == 4;
     }
 
+    /*
+        Return the number of same set of pieces in the direction of (dx, dy)
+     */
     private int checkLine(int x, int y, int dx, int dy, int player) {
         int count = 0;
         x += dx;
