@@ -1,10 +1,11 @@
-# Project Name
+# Gomoku: Board Game
 The Gomoku application is a personalized engaging platform that facilitates both PVP 
 and AI competition for players to play with the best user experience of this game. 
 The customizable interface and setting provide vital Gomoku matching at any moment. 
 Furthermore, the app ensures a seamless transition allowing players to take turns 
-strategically placing their chess on the board. Be the first to place five in a row 
-with no distraction all while enjoying a visually appealing and immersive interface.
+strategically placing their chess on the board. The winning condition is to be the 
+first player to place five pieces in a row(in any directions) with no distraction 
+all while enjoying a visually appealing and immersive interface. 
 
 ![This is a screenshot.](images.png)
 
