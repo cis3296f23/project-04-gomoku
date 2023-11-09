@@ -8,6 +8,7 @@ public class Board {
         board = new int[SIZE][SIZE];
     }
 
+
     public int getCell(int x, int y) {
         return board[x][y];
     }

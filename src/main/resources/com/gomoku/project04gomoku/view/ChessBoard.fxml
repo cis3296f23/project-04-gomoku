@@ -2,15 +2,14 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
 
 <BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gomoku.project04gomoku.mvc.ViewModel.LocalMultiplayerController">
    <center>
-      <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" BorderPane.alignment="CENTER">
-
-      </GridPane>
+      <Canvas fx:id="canvas" width="600" height="600" onMouseClicked="#handleCanvasClick" BorderPane.alignment="CENTER">
+      </Canvas>
    </center>
    <bottom>
-      <Button fx:id="start" mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" onAction="#startGame" />
+      <Button fx:id="start" mnemonicParsing="false" text="Start Game" BorderPane.alignment="CENTER" onAction="#startGame" />
    </bottom>
-
 </BorderPane>

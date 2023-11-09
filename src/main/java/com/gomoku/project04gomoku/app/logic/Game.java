@@ -13,6 +13,12 @@ public class Game {
         gameOver = false;
     }
 
+    public enum Chess {
+        EMPTY, BLACK, WHITE
+    }
+
+
+
     public Board getBoard() {
         return board;
     }

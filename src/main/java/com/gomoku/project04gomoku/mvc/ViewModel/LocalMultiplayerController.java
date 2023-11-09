@@ -3,153 +3,119 @@ package com.gomoku.project04gomoku.mvc.ViewModel;
 import com.gomoku.project04gomoku.app.logic.Game;
 import com.gomoku.project04gomoku.app.models.Board;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.shape.Rectangle;
 
-import java.util.Objects;
 import java.util.Optional;
 
 
 public class LocalMultiplayerController {
     @FXML
-    public Button start;
+    private Canvas canvas;
     @FXML
-    public GridPane gridPane;
-
-    @FXML
-    public Pane[] cell;
-
+    private Button start;
     private Game game;
+    private GraphicsContext gc;
 
-    @FXML
     public void initialize() {
-        //gridPane=new GridPane();
         game = new Game();
-        setupBoard();
+        gc = canvas.getGraphicsContext2D();
+        drawBoard();
     }
 
     private void updateBoard() {
-        // Update the board UI to reflect the current game state
+        drawBoard(); // Redraw the board
+
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
-                Pane pane = (Pane) getNodeFromGridPane(gridPane, j, i);
-                assert pane != null;
-                pane.getChildren().clear(); // Clear previous UI components
                 int player = game.getBoard().getCell(i, j);
                 if (player != 0) {
-                    Circle circle = new Circle(10); // Just an example, adjust the size as needed
-                    circle.setFill(player == 1 ? Color.BLACK : Color.WHITE);
-                    pane.getChildren().add(circle);
+                    Color color = (player == 1) ? Color.BLACK : Color.WHITE;
+                    drawPiece(i, j, color);
                 }
             }
         }
     }
 
     @FXML
-    private void setupBoard() {
-        // Set up the board with clickable panes
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
-                Pane pane = new Pane();
-                pane.setPrefSize(30, 30); // Set Pane size
-                pane.setBorder(new Border(new BorderStroke(Color.BLACK,
-                        BorderStrokeStyle.SOLID, null, new BorderWidths(1)))); // setBoarder
+    private void drawBoard() {
+        gc.setFill(Color.BEIGE);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-                // Create final variables for the lambda expression
-                final int finalI = i ;
-                final int finalJ = j;
+        double cellWidth = canvas.getWidth() / Board.SIZE;
+        double cellHeight = canvas.getHeight() / Board.SIZE;
 
-                pane.setOnMouseClicked(event -> handleCellClick(finalI, finalJ));
-                gridPane.add(pane, j, i);
-            }
+        gc.setStroke(Color.BLACK);
+        for (int i = 0; i <= Board.SIZE; i++) {
+            gc.strokeLine(i * cellWidth, 0, i * cellWidth, canvas.getHeight());
+            gc.strokeLine(0, i * cellHeight, canvas.getWidth(), i * cellHeight);
         }
-        //testNode(gridPane);
+    }
+
+    private void drawPiece(int x, int y, Color color) {
+        double cellWidth = canvas.getWidth() / Board.SIZE;
+        double cellHeight = canvas.getHeight() / Board.SIZE;
+        // Adjust the piece size if necessary
+        double pieceDiameter = Math.min(cellWidth, cellHeight) * 0.75;
+
+        // Calculate the center of the intersection
+        double centerX = (x * cellWidth) + (cellWidth / 2);
+        double centerY = (y * cellHeight) + (cellHeight / 2);
+
+        // Calculate the top left corner of the piece so it's centered in the cell
+        double topLeftX = centerX - (pieceDiameter / 2);
+        double topLeftY = centerY - (pieceDiameter / 2);
+
+        gc.setFill(color);
+        gc.fillOval(topLeftX, topLeftY, pieceDiameter, pieceDiameter);
     }
 
     @FXML
-    private void handleCellClick(int x, int y) {
-        // Check if the game is already over, do nothing if it is
-        game.handleCellClick(x, y);
-        // Add this line for debugging
-        System.out.println("Clicked on cell: " + x + ", " + y);
-        updateBoard();
+    private void handleCanvasClick(javafx.scene.input.MouseEvent event) {
+        double cellWidth = canvas.getWidth() / Board.SIZE;
+        double cellHeight = canvas.getHeight() / Board.SIZE;
 
-        if (game.checkWin(x, y)) {
-            // Handle win
-            displayEndGameMessage("Player " + (game.getCurrentPlayer() == 1 ? "Black" : "White") + " wins!");
-            game.setGameOver(true);
-        } else if (game.getBoard().isFull()) {
-            // Handle draw
+        int x = (int) (event.getX() / cellWidth);
+        int y = (int) (event.getY() / cellHeight);
+
+        game.handleCellClick(x, y);
+        updateBoard();
+        checkGameStatus();
+    }
+
+    private void checkGameStatus() {
+        if (game.isGameOver()) {
+            String winner = game.getCurrentPlayer() == 1 ? "Black" : "White";
+            displayEndGameMessage(winner + " wins!");
+        } else if (game.isDraw()) {
             displayEndGameMessage("It's a draw!");
-            game.setGameOver(true);
         }
     }
 
     private void displayEndGameMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Game Over");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-
-        ButtonType restartButton = new ButtonType("Restart");
-        alert.getButtonTypes().add(restartButton);
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == restartButton) {
-            restartGame();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            game.restartGame();
+            updateBoard();
         }
     }
 
     @FXML
     public void startGame() {
-        initialize();
         game.startGame();
-        setupBoard();
-        System.out.println("Start Game!");
-
+        updateBoard();
     }
 
     @FXML
     public void restartGame() {
         game.restartGame();
         updateBoard();
-        System.out.println("Restart Game!");
-    }
-
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        // This method finds a node within the GridPane by its row and column index
-
-        for (Node node : gridPane.getChildren()) {
-            Integer IntegerCol = col;
-            Integer IntegerRow = row;
-            if (Objects.equals(GridPane.getColumnIndex(node), IntegerCol) && Objects.equals(GridPane.getRowIndex(node), IntegerRow)) {
-                return node;
-            }
-
-//            System.out.println(GridPane.getColumnIndex(node));
-//            System.out.println(GridPane.getRowIndex(node));
-        }
-
-        return null;
-    }
-
-    private void testNode(GridPane gridPane) {
-        System.out.println("TestNode的");
-        for (Node node : gridPane.getChildren()) {
-
-            System.out.println(GridPane.getColumnIndex(node));
-            System.out.println(GridPane.getRowIndex(node));
-        }
     }
 
 }
