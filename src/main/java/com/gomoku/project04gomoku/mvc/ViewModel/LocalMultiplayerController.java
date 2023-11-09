@@ -6,6 +6,7 @@ import com.gomoku.project04gomoku.app.models.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -16,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Objects;
 import java.util.Optional;
-
 
 
 public class LocalMultiplayerController {
@@ -36,6 +36,24 @@ public class LocalMultiplayerController {
         game = new Game();
         setupBoard();
     }
+
+    private void updateBoard() {
+        // Update the board UI to reflect the current game state
+        for (int i = 0; i < Board.SIZE; i++) {
+            for (int j = 0; j < Board.SIZE; j++) {
+                Pane pane = (Pane) getNodeFromGridPane(gridPane, j, i);
+                assert pane != null;
+                pane.getChildren().clear(); // Clear previous UI components
+                int player = game.getBoard().getCell(i, j);
+                if (player != 0) {
+                    Circle circle = new Circle(10); // Just an example, adjust the size as needed
+                    circle.setFill(player == 1 ? Color.BLACK : Color.WHITE);
+                    pane.getChildren().add(circle);
+                }
+            }
+        }
+    }
+
     @FXML
     private void setupBoard() {
         // Set up the board with clickable panes
@@ -54,25 +72,15 @@ public class LocalMultiplayerController {
                 gridPane.add(pane, j, i);
             }
         }
-      //testNode(gridPane);
-        gridPane.setStyle("-fx-grid-lines-visible: true");
+        //testNode(gridPane);
     }
 
-    private  void testNode(GridPane gridPane)
-    {
-        System.out.println("TestNode的");
-        for (Node node : gridPane.getChildren()) {
-
-            System.out.println(GridPane.getColumnIndex(node));
-            System.out.println(GridPane.getRowIndex(node));
-        }
-    }
     @FXML
     private void handleCellClick(int x, int y) {
         // Check if the game is already over, do nothing if it is
-
-
         game.handleCellClick(x, y);
+        // Add this line for debugging
+        System.out.println("Clicked on cell: " + x + ", " + y);
         updateBoard();
 
         if (game.checkWin(x, y)) {
@@ -118,23 +126,6 @@ public class LocalMultiplayerController {
         System.out.println("Restart Game!");
     }
 
-    private void updateBoard() {
-        // Update the board UI to reflect the current game state
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
-                Pane pane = (Pane) getNodeFromGridPane(gridPane, j, i);
-                assert pane != null;
-                pane.getChildren().clear(); // Clear previous UI components
-                int player = game.getBoard().getCell(i, j);
-                if (player != 0) {
-                    Circle circle = new Circle(10); // Just an example, adjust the size as needed
-                    circle.setFill(player == 1 ? Color.BLACK : Color.WHITE);
-                    pane.getChildren().add(circle);
-                }
-            }
-        }
-    }
-
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         // This method finds a node within the GridPane by its row and column index
 
@@ -151,4 +142,14 @@ public class LocalMultiplayerController {
 
         return null;
     }
+
+    private void testNode(GridPane gridPane) {
+        System.out.println("TestNode的");
+        for (Node node : gridPane.getChildren()) {
+
+            System.out.println(GridPane.getColumnIndex(node));
+            System.out.println(GridPane.getRowIndex(node));
+        }
+    }
+
 }

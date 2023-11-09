@@ -24,13 +24,24 @@ public class Game {
     public void handleCellClick(int x, int y) {
         if (!gameOver && board.isEmpty(x, y)) {
             board.setCell(x, y, currentPlayer);
+
+            // Immediately after setting the cell, check for a win.
             if (checkWin(x, y)) {
                 gameOver = true;
-            } else {
-                currentPlayer = 3 - currentPlayer;
+                return; // Exit the method if a win is detected.
             }
+
+            // If the move didn't result in a win, check for a draw.
+            if (board.isFull()) {
+                gameOver = true; // The game is a draw because the board is full.
+                return; // Exit the method if it's a draw.
+            }
+
+            // If no win or draw, switch players.
+            currentPlayer = 3 - currentPlayer;
         }
     }
+
 
     /*
         Check connect 5 by calling checkLine in 8 directions
@@ -80,10 +91,12 @@ public class Game {
     }
 
     public boolean isDraw() {
-        if (gameOver) {
-            return false;
-        }
-        return board.isFull();
+        // A draw can only happen if the game is not already won by someone.
+        return !gameOver && board.isFull();
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
 }
