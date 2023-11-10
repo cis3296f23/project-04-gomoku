@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.canvas.Canvas?>
 
@@ -9,7 +8,4 @@
       <Canvas fx:id="canvas" width="600" height="600" onMouseClicked="#handleCanvasClick" BorderPane.alignment="CENTER">
       </Canvas>
    </center>
-   <bottom>
-      <Button fx:id="start" mnemonicParsing="false" text="Start Game" BorderPane.alignment="CENTER" onAction="#startGame" />
-   </bottom>
 </BorderPane>
