@@ -58,18 +58,18 @@ public class LocalMultiplayerController {
         gc.setFill(Color.BEIGE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         // Draw the grid lines for the board
-        double cellWidth = canvas.getWidth() / Board.SIZE;
-        double cellHeight = canvas.getHeight() / Board.SIZE;
+        double cellWidth = canvas.getWidth() / (Board.SIZE - 1);
+        double cellHeight = canvas.getHeight() / (Board.SIZE - 1);
         gc.setStroke(Color.BLACK);
-        for (int i = 0; i <= Board.SIZE; i++) {
+        for (int i = 0; i <= Board.SIZE - 1; i++) {
             gc.strokeLine(i * cellWidth, 0, i * cellWidth, canvas.getHeight());
             gc.strokeLine(0, i * cellHeight, canvas.getWidth(), i * cellHeight);
         }
     }
 
     private void drawPiece(int col, int row, Color color) {
-        double cellWidth = canvas.getWidth() / (Board.SIZE );
-        double cellHeight = canvas.getHeight() / (Board.SIZE );
+        double cellWidth = canvas.getWidth() / (Board.SIZE -1);
+        double cellHeight = canvas.getHeight() / (Board.SIZE -1);
         // Piece diameter as a fraction of cell size
         double pieceDiameter = Math.min(cellWidth, cellHeight) * 0.8; // Adjust the size as needed
         // Calculate the top-left position of the piece to center it on the intersection
@@ -90,8 +90,8 @@ public class LocalMultiplayerController {
     // Handle a click on the canvas (player's move)
     @FXML
     private void handleCanvasClick(javafx.scene.input.MouseEvent event) {
-        double cellWidth = canvas.getWidth() / (Board.SIZE );
-        double cellHeight = canvas.getHeight() / (Board.SIZE );
+        double cellWidth = canvas.getWidth() / (Board.SIZE -1);
+        double cellHeight = canvas.getHeight() / (Board.SIZE -1);
         // Find the nearest intersection point
         int col = (int) Math.round(event.getX() / cellWidth);
         int row = (int) Math.round(event.getY() / cellHeight);
