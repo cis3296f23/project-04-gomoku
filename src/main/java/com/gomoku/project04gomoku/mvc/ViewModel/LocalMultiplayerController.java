@@ -20,6 +20,7 @@ public class LocalMultiplayerController {
     @FXML private Button start;
     private Game game;
     private GraphicsContext gc; // The graphics context for drawing on the canvas
+    private final double padding = 20; // You can adjust the padding size as needed
 
     // Initialize the game and graphics context, and draw the empty game board
     public void initialize() {
@@ -55,26 +56,34 @@ public class LocalMultiplayerController {
     }
 
     private void drawBoard() {
+        double paddedWidth = canvas.getWidth() - 2 * padding;
+        double paddedHeight = canvas.getHeight() - 2 * padding;
         gc.setFill(Color.BEIGE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         // Draw the grid lines for the board
-        double cellWidth = canvas.getWidth() / (Board.SIZE - 1);
-        double cellHeight = canvas.getHeight() / (Board.SIZE - 1);
+        double cellWidth = paddedWidth / (Board.SIZE - 1);
+        double cellHeight = paddedHeight / (Board.SIZE - 1);
         gc.setStroke(Color.BLACK);
-        for (int i = 0; i <= Board.SIZE - 1; i++) {
-            gc.strokeLine(i * cellWidth, 0, i * cellWidth, canvas.getHeight());
-            gc.strokeLine(0, i * cellHeight, canvas.getWidth(), i * cellHeight);
+        for (int i = 0; i < Board.SIZE - 1; i++) {
+            gc.strokeLine(padding + i * cellWidth, padding, padding + i * cellWidth, padding + paddedHeight);
+            gc.strokeLine(padding, padding + i * cellHeight, padding + paddedWidth, padding + i * cellHeight);
         }
+        // *
+        // Draw the last lines on the right and bottom edges
+        gc.strokeLine(padding + paddedWidth, padding, padding + paddedWidth, padding + paddedHeight);
+        gc.strokeLine(padding, padding + paddedHeight, padding + paddedWidth, padding + paddedHeight);
     }
 
     private void drawPiece(int col, int row, Color color) {
-        double cellWidth = canvas.getWidth() / (Board.SIZE -1);
-        double cellHeight = canvas.getHeight() / (Board.SIZE -1);
+        double paddedWidth = canvas.getWidth() - 2 * padding;
+        double paddedHeight = canvas.getHeight() - 2 * padding;
+        double cellWidth = paddedWidth / (Board.SIZE - 1);
+        double cellHeight = paddedHeight / (Board.SIZE - 1);
         // Piece diameter as a fraction of cell size
-        double pieceDiameter = Math.min(cellWidth, cellHeight) * 0.8; // Adjust the size as needed
+        double pieceDiameter = Math.min(cellWidth, cellHeight) * 0.8;
         // Calculate the top-left position of the piece to center it on the intersection
-        double centerX = col * cellWidth;
-        double centerY = row * cellHeight;
+        double centerX = padding + col * cellWidth;
+        double centerY = padding + row * cellHeight;
         double topLeftX = centerX - pieceDiameter / 2;
         double topLeftY = centerY - pieceDiameter / 2;
         gc.setFill(color);
@@ -90,11 +99,13 @@ public class LocalMultiplayerController {
     // Handle a click on the canvas (player's move)
     @FXML
     private void handleCanvasClick(javafx.scene.input.MouseEvent event) {
-        double cellWidth = canvas.getWidth() / (Board.SIZE -1);
-        double cellHeight = canvas.getHeight() / (Board.SIZE -1);
-        // Find the nearest intersection point
-        int col = (int) Math.round(event.getX() / cellWidth);
-        int row = (int) Math.round(event.getY() / cellHeight);
+        double paddedWidth = canvas.getWidth() - 2 * padding;
+        double paddedHeight = canvas.getHeight() - 2 * padding;
+        double cellWidth = paddedWidth / (Board.SIZE - 1);
+        double cellHeight = paddedHeight / (Board.SIZE - 1);
+        // Find the nearest intersection point, accounting for padding
+        int col = (int) Math.round((event.getX() - padding) / cellWidth);
+        int row = (int) Math.round((event.getY() - padding) / cellHeight);
         // Ensure the click is within the bounds of the board
         if (col >= 0 && col < Board.SIZE && row >= 0 && row < Board.SIZE) {
             game.handleCellClick(col, row); // Handle the click in the game logic
