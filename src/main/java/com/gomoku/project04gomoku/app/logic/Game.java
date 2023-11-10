@@ -4,12 +4,38 @@ import com.gomoku.project04gomoku.app.models.Board;
 
 public class Game {
     private Board board;
-    private int currentPlayer;
+    private Player currentPlayer;
     private boolean gameOver;
 
+    // Enum for the players and empty cells
+    public enum Player {
+        NONE, // Represents an empty cell
+        BLACK, // Represents the black player
+        WHITE; // Represents the white player
+
+        // Method to get the next player
+        public Player next() {
+            // Ternary operator to switch between BLACK and WHITE
+            return (this == BLACK) ? WHITE : (this == WHITE) ? BLACK : NONE;
+        }
+    }
+
     public Game() {
+        // Initialize
         board = new Board();
-        currentPlayer = 1;
+        currentPlayer = Player.BLACK;
+        gameOver = false;
+    }
+
+    public void startGame() {
+        board.reset(); // Clear the board
+        currentPlayer = Player.BLACK; // Start with the black player
+        gameOver = false;
+    }
+
+    public void restartGame() {
+        board.reset();
+        currentPlayer = Player.BLACK;
         gameOver = false;
     }
 
@@ -17,62 +43,46 @@ public class Game {
         return board;
     }
 
-    public int getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
     public void handleCellClick(int x, int y) {
+        // Only handle the click if the game is not over and the cell is empty
         if (!gameOver && board.isEmpty(x, y)) {
+            // Set the cell to the current player's enum
             board.setCell(x, y, currentPlayer);
+
             if (checkWin(x, y)) {
                 gameOver = true;
-            } else {
-                currentPlayer = 3 - currentPlayer;
+                return;
             }
+
+            if (board.isFull()) {
+                gameOver = true;
+                return;
+            }
+
+            // Switch to the next player
+            currentPlayer = currentPlayer.next();
         }
     }
 
-    /*
-        Check connect 5 by calling checkLine in 8 directions
-        If a direction and its opposed direction has a total of 4 pieces (5-1, exclude self), current player wins
-     */
     public boolean checkWin(int x, int y) {
-        int player = board.getCell(x, y);
-        return checkLine(x, y, 1, 0, player) + checkLine(x, y, -1, 0, player) == 4 ||
-                checkLine(x, y, 0, 1, player) + checkLine(x, y, 0, -1, player) == 4 ||
-                checkLine(x, y, 1, 1, player) + checkLine(x, y, -1, -1, player) == 4 ||
-                checkLine(x, y, 1, -1, player) + checkLine(x, y, -1, 1, player) == 4;
-    }
-
-    /*
-        Return the number of same set of pieces in the direction of (dx, dy)
-     */
-    private int checkLine(int x, int y, int dx, int dy, int player) {
-        int count = 0;
-        x += dx;
-        y += dy;
-        while (x >= 0 && x < Board.SIZE && y >= 0 && y < Board.SIZE && board.getCell(x, y) == player) {
-            count++;
-            x += dx;
-            y += dy;
+        Player player = board.getCell(x, y);
+        if (player == Player.NONE) {
+            return false; // If the cell is empty, it can't be part of a win
         }
-        return count;
+
+        // Check lines emanating from the last move for a win
+        return board.checkLine(x, y, 1, 0, player) + board.checkLine(x, y, -1, 0, player) == 4 ||
+                board.checkLine(x, y, 0, 1, player) + board.checkLine(x, y, 0, -1, player) == 4 ||
+                board.checkLine(x, y, 1, 1, player) + board.checkLine(x, y, -1, -1, player) == 4 ||
+                board.checkLine(x, y, 1, -1, player) + board.checkLine(x, y, -1, 1, player) == 4;
     }
 
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-    }
-
-    public void startGame() {
-        board = new Board();
-        currentPlayer = 1;
-        gameOver = false;
-    }
-
-    public void restartGame() {
-        board.reset();
-        currentPlayer = 1;
-        gameOver = false;
     }
 
     public boolean isGameOver() {
@@ -80,10 +90,6 @@ public class Game {
     }
 
     public boolean isDraw() {
-        if (gameOver) {
-            return false;
-        }
-        return board.isFull();
+        return !gameOver && board.isFull();
     }
-
 }
