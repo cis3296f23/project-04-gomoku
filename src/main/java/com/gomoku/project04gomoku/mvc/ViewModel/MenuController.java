@@ -65,7 +65,7 @@ public class MenuController {
     }
 
     @FXML
-    public void handleExitButtonAction(ActionEvent actionEvent) {
+    public void handleExitButtonAction(ActionEvent event) {
         Platform.exit();
     }
 }
