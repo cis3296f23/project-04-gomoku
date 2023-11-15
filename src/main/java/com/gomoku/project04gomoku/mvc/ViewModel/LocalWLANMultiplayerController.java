@@ -2,8 +2,6 @@ package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.GomokuStart;
 import com.gomoku.project04gomoku.app.logic.Game;
-
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,15 +13,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
-public class LocalMultiplayerController {
-    @FXML private Canvas canvas; // The canvas for drawing the game board and pieces
+public class LocalWLANMultiplayerController {
+    @FXML
+    private Canvas canvas; // The canvas for drawing the game board and pieces
     // Adding Start button in fxml later
+    FXMLLoader fxmlLoader;
     @FXML private Button RestartButton;
     @FXML private Button SettingButton;
     @FXML private Button BackButton;
-
-    FXMLLoader fxmlLoader;
     private utils utils;
     private Game game;
     private GraphicsContext gc; // The graphics context for drawing on the canvas
@@ -43,11 +40,10 @@ public class LocalMultiplayerController {
     }
 
     @FXML
-    public void restartGame(ActionEvent event) {
+    public void restartGame() {
         game.restartGame();
         utils.updateBoard();
     }
-
     @FXML
     public  void handleCanvasClick(javafx.scene.input.MouseEvent event) {
         utils.handleCanvasClick(event);
@@ -70,5 +66,4 @@ public class LocalMultiplayerController {
             e.printStackTrace();
         }
     }
-
 }
