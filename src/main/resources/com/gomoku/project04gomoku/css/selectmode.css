@@ -1,0 +1,5 @@
+#vbox-with-background {
+    -fx-background-image: url('../pic/selection.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
