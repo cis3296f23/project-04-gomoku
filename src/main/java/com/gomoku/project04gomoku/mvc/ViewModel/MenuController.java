@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -35,6 +36,8 @@ public class MenuController {
     private Button GameStart;
 
     @FXML
+    private Button Setting;
+    @FXML
 
     /**
      * 用来进入二级菜单
@@ -57,6 +60,25 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+    @FXML
+    protected void GoToSetting(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
+            fxmlLoader.setController(new SettingController());
+            Scene root = new Scene(fxmlLoader.load(), 800, 600);
+
+
+            Stage stage = (Stage) Setting.getScene().getWindow();
+
+
+            stage.setScene(root);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     public  void handleButtonTest()
     {

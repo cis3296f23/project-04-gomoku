@@ -18,10 +18,12 @@ public class LocalWLANMultiplayerController {
     private Canvas canvas; // The canvas for drawing the game board and pieces
     // Adding Start button in fxml later
     FXMLLoader fxmlLoader;
+
     @FXML private Button RestartButton;
     @FXML private Button SettingButton;
     @FXML private Button BackButton;
-    private utils utils;
+
+    private ChessUtils ChessUtils;
     private Game game;
     private GraphicsContext gc; // The graphics context for drawing on the canvas
     private final double padding = 20; // You can adjust the padding size as needed
@@ -30,29 +32,25 @@ public class LocalWLANMultiplayerController {
     public void initialize() {
         this.game = new Game();
         this.gc = canvas.getGraphicsContext2D();
-        this.utils=new utils(canvas,game);
+        this.ChessUtils =new ChessUtils(canvas,game);
     }
 
-    @FXML
-    public void startGame() {
-        game.startGame();
-        utils.updateBoard();
-    }
+
 
     @FXML
     public void restartGame() {
         game.restartGame();
-        utils.updateBoard();
+        ChessUtils.updateBoard();
     }
     @FXML
     public  void handleCanvasClick(javafx.scene.input.MouseEvent event) {
-        utils.handleCanvasClick(event);
+        ChessUtils.handleCanvasClick(event);
     }
 
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/menu.fxml"));
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
 

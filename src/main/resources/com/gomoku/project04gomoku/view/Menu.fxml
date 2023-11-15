@@ -14,7 +14,7 @@
                   </font>
               </Label>
                 <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect" stylesheets="@../css/menu.css" text="Game Start" />
-                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting" />
+                <Button fx:id="Setting" mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting" onAction="#GoToSetting" />
                 <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Exit" />
             <Button fx:id="TestChange" mnemonicParsing="false" onAction="#handleButtonTest" text="Button" />
             </children>

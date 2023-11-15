@@ -1,8 +1,14 @@
+
+/**
+ * This class provides utility functions for drawing and updating the Gomoku (Five in a Row) game board
+ * using JavaFX. It handles the graphical representation of the board and the game pieces, and also
+ * responds to user interactions.
+ */
+
 package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.app.logic.Game;
 import com.gomoku.project04gomoku.app.models.Board;
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -11,18 +17,29 @@ import javafx.scene.paint.Color;
 
 import java.util.Optional;
 
-public class utils {
+
+public class ChessUtils {
     private Canvas canvas;
     private Game game;
     private GraphicsContext gc;
     private final double padding = 20;
 
-    utils(Canvas canvas, Game game) {
+    /**
+     * Constructor to initialize the ChessUtils with a canvas and game logic.
+     * It sets up the graphics context and draws the initial board.
+     *
+     * @param canvas The canvas where the game board is drawn.
+     * @param game   The game logic and state.
+     */
+    ChessUtils(Canvas canvas, Game game) {
         this.canvas=canvas;
         this.game=game;
         this.gc = canvas.getGraphicsContext2D();
         drawBoard();
     }
+    /**
+     * Updates the game board by redrawing it and placing pieces based on the current game state.
+     */
     public  void updateBoard() {
         drawBoard(); // Redraw the board
         for (int i = 0; i < Board.SIZE; i++) {
@@ -35,7 +52,9 @@ public class utils {
             }
         }
     }
-
+    /**
+     * Draws the game board including the grid lines.
+     */
     public void drawBoard() {
         double paddedWidth = canvas.getWidth() - 2 * padding;
         double paddedHeight = canvas.getHeight() - 2 * padding;
@@ -54,7 +73,13 @@ public class utils {
         gc.strokeLine(padding + paddedWidth, padding, padding + paddedWidth, padding + paddedHeight);
         gc.strokeLine(padding, padding + paddedHeight, padding + paddedWidth, padding + paddedHeight);
     }
-
+    /**
+     * Draws a game piece on the board.
+     *
+     * @param col   The column where the piece should be drawn.
+     * @param row   The row where the piece should be drawn.
+     * @param color The color of the piece.
+     */
     public void drawPiece(int col, int row, Color color) {
         double paddedWidth = canvas.getWidth() - 2 * padding;
         double paddedHeight = canvas.getHeight() - 2 * padding;
@@ -78,7 +103,12 @@ public class utils {
     }
 
     // Handle a click on the canvas (player's move)
-
+    /**
+     * Handles mouse click events on the canvas. It calculates the clicked cell and updates the game
+     * state based on the player's move.
+     *
+     * @param event The mouse event that occurred on the canvas.
+     */
     public void handleCanvasClick(javafx.scene.input.MouseEvent event) {
         double paddedWidth = canvas.getWidth() - 2 * padding;
         double paddedHeight = canvas.getHeight() - 2 * padding;
@@ -95,7 +125,10 @@ public class utils {
             checkGameStatus();  // Check if the game has been won or is a draw
         }
     }
-
+    /**
+     * Checks the current status of the game (win, draw, ongoing) and displays an appropriate message
+     * if the game has ended.
+     */
     public void checkGameStatus() {
         if (game.isGameOver()) {
             String winner = game.getCurrentPlayer() == Game.Player.BLACK ? "Black" : "White";
@@ -104,7 +137,11 @@ public class utils {
             displayEndGameMessage("It's a draw!"); // Display a draw message
         }
     }
-
+    /**
+     * Displays a message dialog showing the end game status (win/draw) and restarts the game.
+     *
+     * @param message The message to be displayed in the dialog.
+     */
     public void displayEndGameMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         // Wait for the player to acknowledge the message

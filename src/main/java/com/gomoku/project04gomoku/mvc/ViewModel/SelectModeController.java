@@ -8,6 +8,7 @@ import com.gomoku.project04gomoku.GomokuStart;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -24,11 +25,13 @@ public class SelectModeController {
     private Button GoBackMain;
     @FXML
     private Button Multiple;
-    @FXML
-    private Button MultipleBack;
+
+
     @FXML
     private Button Local;
 
+   @FXML
+   private Button CreateButton;
     /**
      * 用来返回到二级菜单
      *
@@ -41,7 +44,8 @@ public class SelectModeController {
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
 
-            Stage stage = (Stage) MultipleBack.getScene().getWindow();
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
 
 
             stage.setScene(root);
@@ -60,11 +64,11 @@ public class SelectModeController {
      */
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/menu.fxml"));
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
-
-            Stage stage = (Stage) GoBackMain.getScene().getWindow();
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
 
 
             stage.setScene(root);
@@ -117,7 +121,7 @@ public class SelectModeController {
     }
 
     @FXML
-    private void goToLocalMultiplayer(ActionEvent event) {
+    private void GoToLocalMultiplayer(ActionEvent event) {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/ChessBoard.fxml"));
             fxmlLoader.setController(new LocalMultiplayerController());
@@ -135,13 +139,14 @@ public class SelectModeController {
 
     }
     @FXML
-    private void goToLocalWLANMultiplayer(ActionEvent event) {
+    private void GoToLocalWLANMultiplayer(ActionEvent event) {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/CreateOrJoin.fxml"));
-
+            fxmlLoader.setController(this);
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
-            Stage stage = (Stage) Local.getScene().getWindow();
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -151,13 +156,13 @@ public class SelectModeController {
 
     }
     @FXML
-    private void goToCreate(ActionEvent event) {
+    private void GoToJoin(ActionEvent event) {
         try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/WLANSetting.fxml"));
-            fxmlLoader.setController(new LocalWLANMultiplayerController());
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/JoinLobby.fxml"));
+            fxmlLoader.setController(this);
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
-            Stage stage = (Stage) Local.getScene().getWindow();
+            Stage stage = (Stage) CreateButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -166,6 +171,40 @@ public class SelectModeController {
         }
 
     }
+    @FXML
+    private void GoToCreate(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/LobbyCreate.fxml"));
+            fxmlLoader.setController(this);
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            Stage stage = (Stage) CreateButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load FXML for local multiplayer");
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    private void CreateHost(ActionEvent event)
+    {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/ChessBoard.fxml"));
+            fxmlLoader.setController(new LocalWLANMultiplayerController());
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load FXML for local multiplayer");
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

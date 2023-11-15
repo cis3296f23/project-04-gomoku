@@ -10,10 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class LocalMultiplayerController {
@@ -24,7 +27,7 @@ public class LocalMultiplayerController {
     @FXML private Button BackButton;
 
     FXMLLoader fxmlLoader;
-    private utils utils;
+    private ChessUtils ChessUtils;
     private Game game;
     private GraphicsContext gc; // The graphics context for drawing on the canvas
     private final double padding = 20; // You can adjust the padding size as needed
@@ -33,42 +36,45 @@ public class LocalMultiplayerController {
     public void initialize() {
         this.game = new Game();
         this.gc = canvas.getGraphicsContext2D();
-        this.utils=new utils(canvas,game);
+        this.ChessUtils =new ChessUtils(canvas,game);
     }
 
-    @FXML
-    public void startGame() {
-        game.startGame();
-        utils.updateBoard();
-    }
+
 
     @FXML
     public void restartGame(ActionEvent event) {
         game.restartGame();
-        utils.updateBoard();
+        ChessUtils.updateBoard();
     }
 
     @FXML
     public  void handleCanvasClick(javafx.scene.input.MouseEvent event) {
-        utils.handleCanvasClick(event);
+        ChessUtils.handleCanvasClick(event);
     }
 
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
-        try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/menu.fxml"));
-            Scene root = new Scene(fxmlLoader.load(), 800, 600);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure to end the game?", ButtonType.OK,ButtonType.CANCEL);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
 
 
-            Stage stage = (Stage) BackButton.getScene().getWindow();
+            try {
+                fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
+                Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
 
-            stage.setScene(root);
-            stage.show();
+                Stage stage = (Stage) BackButton.getScene().getWindow();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+
+                stage.setScene(root);
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
 }
