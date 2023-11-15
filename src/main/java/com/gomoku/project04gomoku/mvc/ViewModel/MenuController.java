@@ -79,9 +79,5 @@ public class MenuController {
         }
     }
 
-    @FXML
-    public  void handleButtonTest()
-    {
-        welcomeText.setText("你好");
-    }
+
 }

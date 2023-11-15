@@ -14,7 +14,7 @@ public class GomokuStart extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
         stage.setResizable(false);
-        stage.setTitle("Hello!");
+        stage.setTitle("Gomuku");
         stage.setScene(scene);
         stage.show();
     }
