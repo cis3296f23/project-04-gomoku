@@ -1,0 +1,18 @@
+#vbox-with-background {
+    -fx-background-image: url('../pic/multiplayer.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.button {
+    -fx-background-color: rgba(165, 42, 42, 0.5);
+    -fx-background-radius: 10;
+    -fx-border-color: #a52a2a;
+    -fx-border-radius: 5; /*Smaller border radius compared to the main menu*/
+    -fx-border-width: 1; /* Thinner border */
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5 10; /* Smaller padding */
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+}
+
