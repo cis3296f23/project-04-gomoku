@@ -6,6 +6,7 @@ package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.GomokuStart;
 import com.gomoku.project04gomoku.mvc.test.MenuViewModel;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,6 +78,10 @@ public class MenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    public void handleExitButtonAction(ActionEvent event) {
+        Platform.exit();
     }
 
 

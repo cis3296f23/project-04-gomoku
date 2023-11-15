@@ -15,7 +15,7 @@
               </Label>
                 <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect" stylesheets="@../css/menu.css" text="Game Start" />
                 <Button fx:id="Setting" mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting" onAction="#GoToSetting" />
-                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" text="Exit" />
+                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" onAction="#handleExitButtonAction" text="Exit" />
 
             </children>
         </VBox>
