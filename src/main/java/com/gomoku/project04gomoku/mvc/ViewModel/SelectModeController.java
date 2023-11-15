@@ -16,6 +16,7 @@ import java.io.IOException;
 
 
 public class SelectModeController {
+    public Button LocalWlan;
     FXMLLoader fxmlLoader;
 
     LocalMultiplayerController localplay = new LocalMultiplayerController();
@@ -96,11 +97,30 @@ public class SelectModeController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void GoToPVE(ActionEvent event) throws IOException {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/MultiplePlayer.fxml"));
+            fxmlLoader.setController(new PVEController());
+            Scene root = new Scene(fxmlLoader.load(), 800, 600);
+
+
+            Stage stage = (Stage) Multiple.getScene().getWindow();
+
+
+            stage.setScene(root);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void goToLocalMultiplayer(ActionEvent event) {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/ChessBoard.fxml"));
+            fxmlLoader.setController(new LocalMultiplayerController());
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
             Stage stage = (Stage) Local.getScene().getWindow();
@@ -114,5 +134,38 @@ public class SelectModeController {
         }
 
     }
+    @FXML
+    private void goToLocalWLANMultiplayer(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/CreateOrJoin.fxml"));
+
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            Stage stage = (Stage) Local.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load FXML for local multiplayer");
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    private void goToCreate(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/WLANSetting.fxml"));
+            fxmlLoader.setController(new LocalWLANMultiplayerController());
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            Stage stage = (Stage) Local.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load FXML for local multiplayer");
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
