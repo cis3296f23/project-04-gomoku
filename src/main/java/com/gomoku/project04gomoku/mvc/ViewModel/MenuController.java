@@ -6,6 +6,7 @@ package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.GomokuStart;
 import com.gomoku.project04gomoku.mvc.test.MenuViewModel;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,5 +62,10 @@ public class MenuController {
     public  void handleButtonTest()
     {
         welcomeText.setText("你好");
+    }
+
+    @FXML
+    public void handleExitButtonAction(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }
