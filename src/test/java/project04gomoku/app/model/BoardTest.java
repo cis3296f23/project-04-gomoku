@@ -3,7 +3,7 @@ package project04gomoku.app.model;
 import static org.junit.Assert.*;
 
 import com.gomoku.project04gomoku.app.models.Board;
-import com.gomoku.project04gomoku.app.logic.Game.Player;
+import com.gomoku.project04gomoku.app.logic.Player;
 import org.junit.Before;
 import org.junit.Test;
 
