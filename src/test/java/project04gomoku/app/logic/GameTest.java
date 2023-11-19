@@ -45,11 +45,11 @@ public class GameTest {
 
     @Test
     public void testRestartGame() {
-        game.handleCellClick(0, 0); // Player.BLACK
+        game.handleCellClick(0, 0); // Black
         game.restartGame();
-        assertEquals("Board should be empty after game restart.", Player.NONE, game.getBoard().getCell(0, 0));
+        assertNull("Board should be empty after game restart.", game.getBoard().getCell(0, 0));
         assertFalse("Game should not be over after restart.", game.isGameOver());
-        assertEquals("Current player should be BLACK after game restart.", Player.BLACK, game.getCurrentPlayer());
+        assertEquals("Current player should be BLACK after game restart.", Player.PlayerColor.BLACK, game.getCurrentPlayer().getColor());
     }
 
     @Test
