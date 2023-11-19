@@ -1,6 +1,6 @@
 package com.gomoku.project04gomoku.app.models;
 
-import com.gomoku.project04gomoku.app.logic.Game.Player;
+import com.gomoku.project04gomoku.app.logic.Player;
 
 public class Board {
     public static final int SIZE = 15;  // Size of the board (15x15)
@@ -13,24 +13,29 @@ public class Board {
 
     // Returns the player occupying the cell (x,y), or Player.NONE if it is empty
     public Player getCell(int x, int y) {
+        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
+            return null;  // Outside the board bounds
+        }
         return board[x][y];
     }
 
     // Sets the cell at position (x,y) to the specified player
     public void setCell(int x, int y, Player player) {
-        board[x][y] = player;
+        if (x >= 0 && x < SIZE && y >= 0 && y < SIZE) {
+            board[x][y] = player;
+        }
     }
 
     // Checks if the cell at position (x,y) is empty
     public boolean isEmpty(int x, int y) {
-        return board[x][y] == Player.NONE;
+        return getCell(x, y) == null;
     }
 
     // Resets the board to an empty state
     public void reset() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                board[i][j] = Player.NONE;
+                board[i][j] = null;  // Reset each cell to null (empty)
             }
         }
     }
@@ -39,8 +44,8 @@ public class Board {
     public boolean isFull() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (board[i][j] == Player.NONE) {
-                    return false; // Found an empty cell, so the board is not full
+                if (isEmpty(i, j)) {
+                    return false;  // Found an empty cell, so the board is not full
                 }
             }
         }
@@ -53,7 +58,7 @@ public class Board {
         int count = 0;
         x += dx;
         y += dy;
-        while (x >= 0 && x < SIZE && y >= 0 && y < SIZE && board[x][y] == player) {
+        while (x >= 0 && x < SIZE && y >= 0 && y < SIZE && getCell(x, y) == player) {
             count++; // Found a piece belonging to the player
             x += dx; // Move in the direction of (dx, dy)
             y += dy;
