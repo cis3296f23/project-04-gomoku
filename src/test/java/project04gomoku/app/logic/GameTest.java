@@ -35,9 +35,9 @@ public class GameTest {
     public void testWinCondition() {
         // Simulate a winning condition for BLACK
         for (int i = 0; i < 5; i++) {
-            game.handleCellClick(i, 0); // Player.BLACK
+            game.handleCellClick(i, 0); // Black
             if (i < 4) {
-                game.handleCellClick(i, 1); // Player.WHITE
+                game.handleCellClick(i, 1); // White
             }
         }
         assertTrue("Game should be over after winning condition is met.", game.isGameOver());
