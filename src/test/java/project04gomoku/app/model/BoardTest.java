@@ -10,6 +10,8 @@ import org.junit.Test;
 public class BoardTest {
 
     private Board board;
+    private Player blackPlayer;
+    private Player whitePlayer;
 
     @Before
     public void setUp() {
