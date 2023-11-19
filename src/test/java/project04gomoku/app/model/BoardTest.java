@@ -2,6 +2,7 @@ package project04gomoku.app.model;
 
 import static org.junit.Assert.*;
 
+import com.gomoku.project04gomoku.app.logic.HumanPlayer;
 import com.gomoku.project04gomoku.app.models.Board;
 import com.gomoku.project04gomoku.app.logic.Player;
 import org.junit.Before;
@@ -16,6 +17,8 @@ public class BoardTest {
     @Before
     public void setUp() {
         board = new Board();
+        blackPlayer = new HumanPlayer(Player.PlayerColor.BLACK);
+        whitePlayer = new HumanPlayer(Player.PlayerColor.WHITE);
     }
 
     @Test
