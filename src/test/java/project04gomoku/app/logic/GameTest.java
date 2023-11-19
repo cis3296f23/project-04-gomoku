@@ -3,7 +3,7 @@ package project04gomoku.app.logic;
 import static org.junit.Assert.*;
 
 import com.gomoku.project04gomoku.app.logic.Game;
-import com.gomoku.project04gomoku.app.logic.Game.Player;
+import com.gomoku.project04gomoku.app.logic.Player;
 import com.gomoku.project04gomoku.app.models.Board;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class GameTest {
     @Test
     public void testGameInitialization() {
         assertFalse("Game should not be over after initialization.", game.isGameOver());
-        assertEquals("Current player should be BLACK after initialization.", Player.BLACK, game.getCurrentPlayer());
+        assertEquals("Current player should be BLACK after initialization.", Player.PlayerColor.BLACK, game.getCurrentPlayer().getColor());
     }
 
     @Test
