@@ -54,10 +54,10 @@ public class GameTest {
 
     @Test
     public void testIllegalClick() {
-        game.handleCellClick(0, 0);
-        Player currentPlayer = game.getCurrentPlayer();
+        game.handleCellClick(0, 0); // Black
+        Player.PlayerColor currentPlayerColor = game.getCurrentPlayer().getColor();
         game.handleCellClick(0, 0); // Attempting to click the same cell
-        assertEquals("Current player should not change after illegal click.", currentPlayer, game.getCurrentPlayer());
+        assertEquals("Current player should not change after illegal click.", currentPlayerColor, game.getCurrentPlayer().getColor());
     }
 
     @Test
