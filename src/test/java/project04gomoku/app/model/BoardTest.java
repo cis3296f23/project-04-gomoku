@@ -25,7 +25,7 @@ public class BoardTest {
     public void testBoardInitialization() {
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
-                assertEquals("Board should be initialized with NONE at cell (" + i + "," + j + ").", Player.NONE, board.getCell(i, j));
+                assertNull("Board should be initialized with null at cell (" + i + "," + j + ").", board.getCell(i, j));
             }
         }
     }
