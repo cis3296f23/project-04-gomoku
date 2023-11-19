@@ -26,8 +26,9 @@ public class GameTest {
     @Test
     public void testHandleCellClick() {
         game.handleCellClick(0, 0);
-        assertEquals("Cell (0,0) should be occupied by BLACK.", Player.BLACK, game.getBoard().getCell(0, 0));
-        assertEquals("Current player should be WHITE after one successful move.", Player.WHITE, game.getCurrentPlayer());
+        assertEquals("Cell (0,0) should be occupied by BLACK.", Player.PlayerColor.BLACK, game.getBoard().getCell(0, 0).getColor());
+        // Since the player switches after each move, we need to check the next player's color
+        assertEquals("Current player should be WHITE after one successful move.", Player.PlayerColor.WHITE, game.getCurrentPlayer().getColor());
     }
 
     @Test
