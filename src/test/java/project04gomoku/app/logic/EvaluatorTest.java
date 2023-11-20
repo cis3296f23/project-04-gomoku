@@ -88,4 +88,31 @@ public class EvaluatorTest {
         assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenThreeScore(), score);
     }
 
+    @Test
+    public void testOpenTwo() {
+        // Set up an open three pattern
+        board.setCell(0, 0, null); // empty space
+        for (int i = 1; i <= 2; i++) {
+            board.setCell(i, 0, blackPlayer); // three consecutive black pieces
+            System.out.println("x = " + i);
+        }
+        board.setCell(3, 0, null); // empty space
+
+        int score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three", Evaluator.getOpenTwo(), score);
+    }
+
+    @Test
+    public void testHalfOpenTwo() {
+        // Set up a half-open three pattern
+        board.setCell(0, 0, null); // empty space
+        for (int i = 1; i <= 2; i++) {
+            board.setCell(i, 0, blackPlayer); // three consecutive black pieces
+            System.out.println("x = " + i);
+        }
+        board.setCell(3, 0, whitePlayer); // blocked by white player
+
+        int score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenTwo(), score);
+    }
 }
