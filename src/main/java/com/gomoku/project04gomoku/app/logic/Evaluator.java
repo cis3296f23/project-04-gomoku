@@ -160,5 +160,11 @@ public class Evaluator {
                 checkSplitPattern(x, y, 1, -1, 3, player);
     }
 
-
+    // Method to check for Split Two
+    private boolean checkSplitTwo(int x, int y, Player player) {
+        return checkSplitPattern(x, y, 1, 0, 2, player) ||
+                checkSplitPattern(x, y, 0, 1, 2, player) ||
+                checkSplitPattern(x, y, 1, 1, 2, player) ||
+                checkSplitPattern(x, y, 1, -1, 2, player);
+    }
 }
