@@ -133,12 +133,13 @@ public class Evaluator {
 
     // Method to check for Open Four
     private boolean checkOpenFour(int x, int y, Player player) {
-        if (board.getCell(x, y) != null) return false;
-        return checkLineWithGaps(x, y, 1, 0, 4, player, true) ||
-                checkLineWithGaps(x, y, 0, 1, 4, player, true) ||
-                checkLineWithGaps(x, y, 1, 1, 4, player, true) ||
-                checkLineWithGaps(x, y, 1, -1, 4, player, true);
+        return (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
+                (checkLineWithGaps(x, y, 1, 0, 4, player, true) ||
+                        checkLineWithGaps(x, y, 0, 1, 4, player, true) ||
+                        checkLineWithGaps(x, y, 1, 1, 4, player, true) ||
+                        checkLineWithGaps(x, y, 1, -1, 4, player, true));
     }
+
 
     // Method to check for Open Three
     private boolean checkOpenThree(int x, int y, Player player) {
