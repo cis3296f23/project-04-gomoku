@@ -112,7 +112,7 @@ public class Evaluator {
         }
     }
 
-    // Method to check line for a pattern
+
     private boolean checkLine(int x, int y, int dx, int dy, int length, Player player) {
         int count = 0;
         for (int i = 0; i < length; i++) {
@@ -125,7 +125,7 @@ public class Evaluator {
         return true;
     }
 
-    // Helper method to check lines with possible gaps at the ends
+
     private boolean checkLineWithGaps(int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
         int count = 0;
         int gaps = openEnds ? 1 : 0;
@@ -151,7 +151,6 @@ public class Evaluator {
         return true;
     }
 
-    // Helper method to check split patterns
     private boolean checkSplitPattern(int x, int y, int dx, int dy, int length, Player player) {
         int gapCount = 0;
         int stoneCount = 0;
