@@ -54,6 +54,7 @@ public class Evaluator {
                 if (checkOpenFour(x, y, currentPlayer)) {
                     score += OPEN_FOUR;
                     System.out.println("Open four found at " + x + "," + y);
+                    markEvaluated(evaluated,x,y,1,0,4);
                     continue; // Skip to next cell
                 }
 
