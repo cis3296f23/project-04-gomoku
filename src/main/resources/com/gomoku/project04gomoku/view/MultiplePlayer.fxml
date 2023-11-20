@@ -13,6 +13,5 @@
         <Button fx:id="LocalWlan" mnemonicParsing="false" prefHeight="23.0" onAction="#GoToLocalWLANMultiplayer" prefWidth="55.0" text="WAN"/>
         <Pane prefHeight="138.0" prefWidth="600.0"/>
         <Button  mnemonicParsing="false" text="Back" onAction="#GoBackToSelectMode"/>
->>>>>>> 6be7de3f51d95190ae98072bd32275750f07a0b6
     </children>
 </VBox>
