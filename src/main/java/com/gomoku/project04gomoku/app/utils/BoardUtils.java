@@ -20,7 +20,7 @@ public class BoardUtils {
 
     // Check for the existence of specific chess patterns (such as open four, half open four, etc.)
     // Helper method to check lines with possible gaps at the ends
-    public static boolean checkPatternWithGaps(Board board, int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
+    public static boolean checkLineWithGaps(Board board, int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
         int gaps = openEnds ? 1 : 0;
 
         for (int i = -gaps; i < length + gaps; i++) {
@@ -45,7 +45,7 @@ public class BoardUtils {
 
     // Check for the existence of split chess patterns (such as separated three pieces, etc.)
     // Helper method to check split patterns
-    public static boolean checkSplitPattern(Board board, int x, int y, int dx, int dy, int length, Player player) {
+    public static boolean CheckLineWithSplit(Board board, int x, int y, int dx, int dy, int length, Player player) {
         int gapCount = 0;
         int stoneCount = 0;
 
