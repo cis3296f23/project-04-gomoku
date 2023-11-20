@@ -59,7 +59,7 @@ public class BoardTest {
         // Fill the board
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
-                board.setCell(i, j, Player.BLACK);
+                board.setCell(i, j, blackPlayer);
             }
         }
 
