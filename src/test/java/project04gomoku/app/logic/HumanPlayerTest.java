@@ -16,5 +16,10 @@ public class HumanPlayerTest {
         HumanPlayer whitePlayer = new HumanPlayer(Player.PlayerColor.WHITE);
         assertEquals("HumanPlayer should have color WHITE.", Player.PlayerColor.WHITE, whitePlayer.getColor());
     }
-    
+
+    @Test
+    public void testHumanPlayerType() {
+        HumanPlayer player = new HumanPlayer(Player.PlayerColor.BLACK);
+        assertEquals("HumanPlayer should have type HUMAN.", Player.PlayerType.HUMAN, player.getType());
+    }
 }
