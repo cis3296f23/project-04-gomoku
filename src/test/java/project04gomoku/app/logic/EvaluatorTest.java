@@ -19,4 +19,16 @@ public class EvaluatorTest {
         blackPlayer = new HumanPlayer(Player.PlayerColor.BLACK);
         whitePlayer = new HumanPlayer(Player.PlayerColor.WHITE);
     }
+
+    @Test
+    public void testFiveInRow() {
+        // Set up a five-in-a-row pattern
+        for (int i = 0; i < 5; i++) {
+            board.setCell(i, 0, blackPlayer);
+        }
+        int score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect five in a row", Evaluator.getFiveInRowScore(), score);
+    }
+
+
 }

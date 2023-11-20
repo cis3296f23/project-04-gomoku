@@ -31,6 +31,20 @@ public class Evaluator {
     public int evaluateBoard(Player currentPlayer) {
         int score = 0;
         // Evaluate the board and adjust the score based on the patterns found
+        // Iterate over every cell in the board
+        for (int x = 0; x < Board.SIZE; x++) {
+            for (int y = 0; y < Board.SIZE; y++) {
+                // Check for different patterns from this cell
+                if (checkFiveInRow(x, y, currentPlayer)) {
+                    score += FIVE_IN_ROW;
+                }
+                else if (checkOpenFour(x, y, currentPlayer)) {
+                    score += OPEN_FOUR;
+                }
+                // ... continue with other patterns
+
+            }
+        }
         return score;
     }
 
