@@ -151,4 +151,14 @@ public class Evaluator {
                 checkLineWithGaps(x, y, 1, 1, 2, player, false) ||
                 checkLineWithGaps(x, y, 1, -1, 2, player, false);
     }
+
+    // Method to check for Split Three
+    private boolean checkSplitThree(int x, int y, Player player) {
+        return checkSplitPattern(x, y, 1, 0, 3, player) ||
+                checkSplitPattern(x, y, 0, 1, 3, player) ||
+                checkSplitPattern(x, y, 1, 1, 3, player) ||
+                checkSplitPattern(x, y, 1, -1, 3, player);
+    }
+
+
 }
