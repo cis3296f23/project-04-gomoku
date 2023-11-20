@@ -38,10 +38,11 @@ public class BoardTest {
 
     @Test
     public void testReset() {
-        board.setCell(0, 0, Player.BLACK);
+        board.setCell(0, 0, blackPlayer);
         board.reset();
-        assertEquals("Board should be cleared after reset.", Player.NONE, board.getCell(0, 0));
+        assertNull("Board should be cleared after reset.", board.getCell(0, 0));
     }
+
 
     @Test
     public void testIsEmpty() {
