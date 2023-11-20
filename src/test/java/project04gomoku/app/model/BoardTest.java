@@ -47,7 +47,7 @@ public class BoardTest {
     @Test
     public void testIsEmpty() {
         assertTrue("Cell should be empty initially.", board.isEmpty(0, 0));
-        board.setCell(0, 0, Player.BLACK);
+        board.setCell(0, 0, blackPlayer);
         assertFalse("Cell should not be empty after being set.", board.isEmpty(0, 0));
     }
 
