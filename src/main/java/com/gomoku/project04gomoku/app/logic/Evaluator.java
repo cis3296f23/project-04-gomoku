@@ -83,16 +83,34 @@ public class Evaluator {
                     System.out.println("Half open three found at " + x + "," + y);
                     continue;
                 }
+
+                // Check for Open two
                 if (checkOpenTwo(x, y, currentPlayer)) {
                     score += OPEN_TWO;
                     markEvaluated(evaluated, x, y, 1, 0, 2);
                     System.out.println("Open two found at " + x + "," + y);
                     continue;
                 }
+
+                // Check for Half-Open two
                 if (checkHalfOpenTwo(x, y, currentPlayer)) {
                     score += HALF_OPEN_TWO;
                     markEvaluated(evaluated, x, y, 1, 0, 2);
                     System.out.println("Half open two found at " + x + "," + y);
+                    continue;
+                }
+
+                // Check for Split Three
+                if (checkSplitThree(x, y, currentPlayer)) {
+                    score += SPLIT_THREE;
+                    markEvaluated(evaluated, x, y, 1, 0, 3); // assuming horizontal split three
+                    continue;
+                }
+
+                // Check for Split Two
+                if (checkSplitTwo(x, y, currentPlayer)) {
+                    score += SPLIT_TWO;
+                    markEvaluated(evaluated, x, y, 1, 0, 2); // assuming horizontal split two
                     continue;
                 }
                 // ... Add similar logic for other patterns
@@ -121,7 +139,7 @@ public class Evaluator {
         return BoardUtils.checkLineWithGaps(board, x, y, dx, dy, length, player, openEnds);
     }
 
-    public boolean checkSplitPattern(int x, int y, int dx, int dy, int length, Player player) {
+    public boolean CheckLineWithSplit(int x, int y, int dx, int dy, int length, Player player) {
         return BoardUtils.CheckLineWithSplit(board, x, y, dx, dy, length, player);
     }
 
@@ -185,18 +203,18 @@ public class Evaluator {
 
     // Method to check for Split Three
     private boolean checkSplitThree(int x, int y, Player player) {
-        return checkSplitPattern(x, y, 1, 0, 3, player) ||
-                checkSplitPattern(x, y, 0, 1, 3, player) ||
-                checkSplitPattern(x, y, 1, 1, 3, player) ||
-                checkSplitPattern(x, y, 1, -1, 3, player);
+        return CheckLineWithSplit(x, y, 1, 0, 3, player) ||
+                CheckLineWithSplit(x, y, 0, 1, 3, player) ||
+                CheckLineWithSplit(x, y, 1, 1, 3, player) ||
+                CheckLineWithSplit(x, y, 1, -1, 3, player);
     }
 
     // Method to check for Split Two
     private boolean checkSplitTwo(int x, int y, Player player) {
-        return checkSplitPattern(x, y, 1, 0, 2, player) ||
-                checkSplitPattern(x, y, 0, 1, 2, player) ||
-                checkSplitPattern(x, y, 1, 1, 2, player) ||
-                checkSplitPattern(x, y, 1, -1, 2, player);
+        return CheckLineWithSplit(x, y, 1, 0, 2, player) ||
+                CheckLineWithSplit(x, y, 0, 1, 2, player) ||
+                CheckLineWithSplit(x, y, 1, 1, 2, player) ||
+                CheckLineWithSplit(x, y, 1, -1, 2, player);
     }
 
     // Getters for the constants
