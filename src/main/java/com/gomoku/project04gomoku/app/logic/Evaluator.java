@@ -98,4 +98,13 @@ public class Evaluator {
                 checkLineWithGaps(x, y, 1, -1, 3, player, true);
     }
 
+    // Method to check for Half-Open Three
+    private boolean checkHalfOpenThree(int x, int y, Player player) {
+        return checkLineWithGaps(x, y, 1, 0, 3, player, false) ||
+                checkLineWithGaps(x, y, 0, 1, 3, player, false) ||
+                checkLineWithGaps(x, y, 1, 1, 3, player, false) ||
+                checkLineWithGaps(x, y, 1, -1, 3, player, false);
+    }
+
+
 }
