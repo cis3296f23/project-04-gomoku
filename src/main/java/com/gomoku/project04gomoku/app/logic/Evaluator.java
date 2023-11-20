@@ -30,33 +30,67 @@ public class Evaluator {
 
     public int evaluateBoard(Player currentPlayer) {
         int score = 0;
+        boolean[][] evaluated = new boolean[Board.SIZE][Board.SIZE]; // Track evaluated cells
+
         // Evaluate the board and adjust the score based on the patterns found
         // Iterate over every cell in the board
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
                 // Ensure that we count a pattern only if it starts from this cell
                 // to avoid double counting
+                if (evaluated[x][y]) {
+                    continue; // Skip already evaluated cells
+                }
 
                 // Check for Five in a Row
                 if (checkFiveInRow(x, y, currentPlayer)) {
                     score += FIVE_IN_ROW;
                     System.out.println("Five in a row found at " + x + "," + y);
+                    markEvaluated(evaluated, x, y, 1, 0, 5);
+                    continue; // Skip to next cell
                 }
+
                 // Check for Open Four
-                else if (checkOpenFour(x, y, currentPlayer)) {
+                if (checkOpenFour(x, y, currentPlayer)) {
                     score += OPEN_FOUR;
                     System.out.println("Open four found at " + x + "," + y);
+                    continue; // Skip to next cell
                 }
+
+                // Check for Half-Open Four
+                if (checkHalfOpenFour(x, y, currentPlayer)) {
+                    score += HALF_OPEN_FOUR;
+                    System.out.println("Half-open four found at " + x + "," + y);
+                    continue; // Skip to next cell
+                }
+
                 // Check for Open Three
-                else if (checkOpenThree(x, y, currentPlayer)) {
+                if (checkOpenThree(x, y, currentPlayer)) {
                     score += OPEN_THREE;
-                    System.out.println("Open four found at " + x + "," + y);
+                    System.out.println("Open three found at " + x + "," + y);
+                    continue; // Skip to next cell
+                }
+
+                // Check for Half-Open Three
+                if (checkHalfOpenThree(x, y, currentPlayer)) {
+                    score += HALF_OPEN_THREE;
+                    System.out.println("Half-open three found at " + x + "," + y);
+                    continue; // Skip to next cell
                 }
                 // ... Add similar logic for other patterns
-
             }
         }
         return score;
+    }
+
+    private void markEvaluated(boolean[][] evaluated, int x, int y, int dx, int dy, int length) {
+        for (int i = 0; i < length; i++) {
+            if (x >= 0 && y >= 0 && x < Board.SIZE && y < Board.SIZE) {
+                evaluated[x][y] = true;
+                x += dx;
+                y += dy;
+            }
+        }
     }
 
     // Method to check line for a pattern
@@ -145,6 +179,12 @@ public class Evaluator {
                         checkLineWithGaps(x, y, 1, -1, 4, player, true));
     }
 
+    private boolean checkHalfOpenFour(int x, int y, Player player) {
+        return checkLineWithGaps(x, y, 1, 0, 4, player,false) ||
+                checkLineWithGaps(x, y, 0, 1, 4, player,false) ||
+                checkLineWithGaps(x, y, 1, 1, 4, player,false) ||
+                checkLineWithGaps(x, y, 1, -1, 4, player,false);
+    }
 
     // Method to check for Open Three
     private boolean checkOpenThree(int x, int y, Player player) {
