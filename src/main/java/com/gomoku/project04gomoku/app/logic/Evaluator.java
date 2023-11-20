@@ -34,14 +34,20 @@ public class Evaluator {
         // Iterate over every cell in the board
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
-                // Check for different patterns from this cell
+                // Ensure that we count a pattern only if it starts from this cell
+                // to avoid double counting
+
+                // Check for Five in a Row
                 if (checkFiveInRow(x, y, currentPlayer)) {
                     score += FIVE_IN_ROW;
+                    System.out.println("Five in a row found at " + x + "," + y);
                 }
+                // Check for Open Four
                 else if (checkOpenFour(x, y, currentPlayer)) {
                     score += OPEN_FOUR;
+                    System.out.println("Open four found at " + x + "," + y);
                 }
-                // ... continue with other patterns
+                // ... Add similar logic for other patterns
 
             }
         }
@@ -49,7 +55,7 @@ public class Evaluator {
     }
 
     // Method to check line for a pattern
-    public boolean checkLine(int x, int y, int dx, int dy, int length, Player player) {
+    private boolean checkLine(int x, int y, int dx, int dy, int length, Player player) {
         int count = 0;
         for (int i = 0; i < length; i++) {
             if (x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE || board.getCell(x, y) != player) {
@@ -62,7 +68,7 @@ public class Evaluator {
     }
 
     // Helper method to check lines with possible gaps at the ends
-    public boolean checkLineWithGaps(int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
+    private boolean checkLineWithGaps(int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
         int count = 0;
         int gaps = openEnds ? 1 : 0;
 
@@ -88,7 +94,7 @@ public class Evaluator {
     }
 
     // Helper method to check split patterns
-    public boolean checkSplitPattern(int x, int y, int dx, int dy, int length, Player player) {
+    private boolean checkSplitPattern(int x, int y, int dx, int dy, int length, Player player) {
         int gapCount = 0;
         int stoneCount = 0;
 
@@ -118,7 +124,7 @@ public class Evaluator {
     }
 
     // Method to check for Five in a Row
-    public boolean checkFiveInRow(int x, int y, Player player) {
+    private boolean checkFiveInRow(int x, int y, Player player) {
         return checkLine(x, y, 1, 0, 5, player) ||
                 checkLine(x, y, 0, 1, 5, player) ||
                 checkLine(x, y, 1, 1, 5, player) ||
@@ -126,7 +132,7 @@ public class Evaluator {
     }
 
     // Method to check for Open Four
-    public boolean checkOpenFour(int x, int y, Player player) {
+    private boolean checkOpenFour(int x, int y, Player player) {
         if (board.getCell(x, y) != null) return false;
         return checkLineWithGaps(x, y, 1, 0, 4, player, true) ||
                 checkLineWithGaps(x, y, 0, 1, 4, player, true) ||
@@ -135,7 +141,7 @@ public class Evaluator {
     }
 
     // Method to check for Open Three
-    public boolean checkOpenThree(int x, int y, Player player) {
+    private boolean checkOpenThree(int x, int y, Player player) {
         return checkLineWithGaps(x, y, 1, 0, 3, player, true) ||
                 checkLineWithGaps(x, y, 0, 1, 3, player, true) ||
                 checkLineWithGaps(x, y, 1, 1, 3, player, true) ||
@@ -143,7 +149,7 @@ public class Evaluator {
     }
 
     // Method to check for Half-Open Three
-    public boolean checkHalfOpenThree(int x, int y, Player player) {
+    private boolean checkHalfOpenThree(int x, int y, Player player) {
         return checkLineWithGaps(x, y, 1, 0, 3, player, false) ||
                 checkLineWithGaps(x, y, 0, 1, 3, player, false) ||
                 checkLineWithGaps(x, y, 1, 1, 3, player, false) ||
@@ -151,7 +157,7 @@ public class Evaluator {
     }
 
     // Method to check for Open Two
-    public boolean checkOpenTwo(int x, int y, Player player) {
+    private boolean checkOpenTwo(int x, int y, Player player) {
         return checkLineWithGaps(x, y, 1, 0, 2, player, true) ||
                 checkLineWithGaps(x, y, 0, 1, 2, player, true) ||
                 checkLineWithGaps(x, y, 1, 1, 2, player, true) ||
@@ -159,7 +165,7 @@ public class Evaluator {
     }
 
     // Method to check for Half-Open Two
-    public boolean checkHalfOpenTwo(int x, int y, Player player) {
+    private boolean checkHalfOpenTwo(int x, int y, Player player) {
         return checkLineWithGaps(x, y, 1, 0, 2, player, false) ||
                 checkLineWithGaps(x, y, 0, 1, 2, player, false) ||
                 checkLineWithGaps(x, y, 1, 1, 2, player, false) ||
@@ -167,7 +173,7 @@ public class Evaluator {
     }
 
     // Method to check for Split Three
-    public boolean checkSplitThree(int x, int y, Player player) {
+    private boolean checkSplitThree(int x, int y, Player player) {
         return checkSplitPattern(x, y, 1, 0, 3, player) ||
                 checkSplitPattern(x, y, 0, 1, 3, player) ||
                 checkSplitPattern(x, y, 1, 1, 3, player) ||
@@ -175,7 +181,7 @@ public class Evaluator {
     }
 
     // Method to check for Split Two
-    public boolean checkSplitTwo(int x, int y, Player player) {
+    private boolean checkSplitTwo(int x, int y, Player player) {
         return checkSplitPattern(x, y, 1, 0, 2, player) ||
                 checkSplitPattern(x, y, 0, 1, 2, player) ||
                 checkSplitPattern(x, y, 1, 1, 2, player) ||
