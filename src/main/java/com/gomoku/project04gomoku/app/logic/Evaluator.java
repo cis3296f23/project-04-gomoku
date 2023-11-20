@@ -114,5 +114,11 @@ public class Evaluator {
                 checkLineWithGaps(x, y, 1, -1, 2, player, true);
     }
 
-    
+    // Method to check for Half-Open Two
+    private boolean checkHalfOpenTwo(int x, int y, Player player) {
+        return checkLineWithGaps(x, y, 1, 0, 2, player, false) ||
+                checkLineWithGaps(x, y, 0, 1, 2, player, false) ||
+                checkLineWithGaps(x, y, 1, 1, 2, player, false) ||
+                checkLineWithGaps(x, y, 1, -1, 2, player, false);
+    }
 }
