@@ -47,6 +47,11 @@ public class Evaluator {
                     score += OPEN_FOUR;
                     System.out.println("Open four found at " + x + "," + y);
                 }
+                // Check for Open Three
+                else if (checkOpenThree(x, y, currentPlayer)) {
+                    score += OPEN_THREE;
+                    System.out.println("Open four found at " + x + "," + y);
+                }
                 // ... Add similar logic for other patterns
 
             }
@@ -143,10 +148,11 @@ public class Evaluator {
 
     // Method to check for Open Three
     private boolean checkOpenThree(int x, int y, Player player) {
-        return checkLineWithGaps(x, y, 1, 0, 3, player, true) ||
+        return (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
+                (checkLineWithGaps(x, y, 1, 0, 3, player, true) ||
                 checkLineWithGaps(x, y, 0, 1, 3, player, true) ||
                 checkLineWithGaps(x, y, 1, 1, 3, player, true) ||
-                checkLineWithGaps(x, y, 1, -1, 3, player, true);
+                checkLineWithGaps(x, y, 1, -1, 3, player, true));
     }
 
     // Method to check for Half-Open Three

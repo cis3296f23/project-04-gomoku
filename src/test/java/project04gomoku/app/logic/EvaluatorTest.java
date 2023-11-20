@@ -46,4 +46,19 @@ public class EvaluatorTest {
         assertEquals("Score should reflect open four", Evaluator.getOpenFourScore(), score);
     }
 
+    @Test
+    public void testOpenThree() {
+        // Set up an open three pattern
+        board.setCell(0, 0, null); // empty space
+        for (int i = 1; i <= 3; i++) {
+            board.setCell(i, 0, blackPlayer); // three consecutive black pieces
+            System.out.println("x = " + i);
+        }
+        board.setCell(4, 0, null); // empty space
+
+        int score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three", Evaluator.getOpenThreeScore(), score);
+    }
+
+
 }
