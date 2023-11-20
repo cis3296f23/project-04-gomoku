@@ -72,7 +72,7 @@ public class BoardTest {
         // Fill the board and then reset
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
-                board.setCell(i, j, Player.BLACK);
+                board.setCell(i, j, blackPlayer);
             }
         }
         board.reset();
