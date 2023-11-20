@@ -106,5 +106,13 @@ public class Evaluator {
                 checkLineWithGaps(x, y, 1, -1, 3, player, false);
     }
 
+    // Method to check for Open Two
+    private boolean checkOpenTwo(int x, int y, Player player) {
+        return checkLineWithGaps(x, y, 1, 0, 2, player, true) ||
+                checkLineWithGaps(x, y, 0, 1, 2, player, true) ||
+                checkLineWithGaps(x, y, 1, 1, 2, player, true) ||
+                checkLineWithGaps(x, y, 1, -1, 2, player, true);
+    }
 
+    
 }
