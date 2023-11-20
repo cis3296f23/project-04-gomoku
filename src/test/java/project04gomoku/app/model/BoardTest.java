@@ -32,8 +32,8 @@ public class BoardTest {
 
     @Test
     public void testSetCell() {
-        board.setCell(0, 0, Player.BLACK);
-        assertEquals("Cell (0,0) should be set to BLACK.", Player.BLACK, board.getCell(0, 0));
+        board.setCell(0, 0, blackPlayer);
+        assertEquals("Cell (0,0) should be set to BLACK.", blackPlayer, board.getCell(0, 0));
     }
 
     @Test
