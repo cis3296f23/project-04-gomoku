@@ -3,7 +3,7 @@ package project04gomoku.app.logic;
 import static org.junit.Assert.*;
 
 import com.gomoku.project04gomoku.app.logic.Game;
-import com.gomoku.project04gomoku.app.logic.Game.Player;
+import com.gomoku.project04gomoku.app.logic.Player;
 import com.gomoku.project04gomoku.app.models.Board;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,23 +20,24 @@ public class GameTest {
     @Test
     public void testGameInitialization() {
         assertFalse("Game should not be over after initialization.", game.isGameOver());
-        assertEquals("Current player should be BLACK after initialization.", Player.BLACK, game.getCurrentPlayer());
+        assertEquals("Current player should be BLACK after initialization.", Player.PlayerColor.BLACK, game.getCurrentPlayer().getColor());
     }
 
     @Test
     public void testHandleCellClick() {
         game.handleCellClick(0, 0);
-        assertEquals("Cell (0,0) should be occupied by BLACK.", Player.BLACK, game.getBoard().getCell(0, 0));
-        assertEquals("Current player should be WHITE after one successful move.", Player.WHITE, game.getCurrentPlayer());
+        assertEquals("Cell (0,0) should be occupied by BLACK.", Player.PlayerColor.BLACK, game.getBoard().getCell(0, 0).getColor());
+        // Since the player switches after each move, we need to check the next player's color
+        assertEquals("Current player should be WHITE after one successful move.", Player.PlayerColor.WHITE, game.getCurrentPlayer().getColor());
     }
 
     @Test
     public void testWinCondition() {
         // Simulate a winning condition for BLACK
         for (int i = 0; i < 5; i++) {
-            game.handleCellClick(i, 0); // Player.BLACK
+            game.handleCellClick(i, 0); // Black
             if (i < 4) {
-                game.handleCellClick(i, 1); // Player.WHITE
+                game.handleCellClick(i, 1); // White
             }
         }
         assertTrue("Game should be over after winning condition is met.", game.isGameOver());
@@ -44,28 +45,28 @@ public class GameTest {
 
     @Test
     public void testRestartGame() {
-        game.handleCellClick(0, 0); // Player.BLACK
+        game.handleCellClick(0, 0); // Black
         game.restartGame();
-        assertEquals("Board should be empty after game restart.", Player.NONE, game.getBoard().getCell(0, 0));
+        assertNull("Board should be empty after game restart.", game.getBoard().getCell(0, 0));
         assertFalse("Game should not be over after restart.", game.isGameOver());
-        assertEquals("Current player should be BLACK after game restart.", Player.BLACK, game.getCurrentPlayer());
+        assertEquals("Current player should be BLACK after game restart.", Player.PlayerColor.BLACK, game.getCurrentPlayer().getColor());
     }
 
     @Test
     public void testIllegalClick() {
-        game.handleCellClick(0, 0);
-        Player currentPlayer = game.getCurrentPlayer();
+        game.handleCellClick(0, 0); // Black
+        Player.PlayerColor currentPlayerColor = game.getCurrentPlayer().getColor();
         game.handleCellClick(0, 0); // Attempting to click the same cell
-        assertEquals("Current player should not change after illegal click.", currentPlayer, game.getCurrentPlayer());
+        assertEquals("Current player should not change after illegal click.", currentPlayerColor, game.getCurrentPlayer().getColor());
     }
 
     @Test
     public void testClickAfterGameOver() {
         // Simulate a winning condition for BLACK
         for (int i = 0; i < 5; i++) {
-            game.handleCellClick(i, 0); // Player.BLACK
+            game.handleCellClick(i, 0); // Black
             if (i < 4) {
-                game.handleCellClick(i, 1); // Player.WHITE
+                game.handleCellClick(i, 1); // White
             }
         }
         assertTrue("Game should be over after winning condition is met.", game.isGameOver());

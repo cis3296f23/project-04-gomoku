@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane alignment="CENTER" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox alignment="CENTER" spacing="20">
+
+      <padding>
+         <Insets bottom="20" left="20" right="20" top="20" />
+      </padding>
+
+
+      <VBox alignment="CENTER" spacing="5">
+         <Label text="IP Address" />
+         <TextField fx:id="lobbyNameField" maxWidth="200" promptText="IPaddress:PortNumber" />
+      </VBox>
+
+
+      <VBox alignment="CENTER" spacing="5">
+         <Label text="Password" />
+         <TextField fx:id="passwordField" maxWidth="200" promptText="if any...." />
+      </VBox>
+
+
+      <HBox alignment="CENTER" spacing="10">
+         <Button fx:id="createButton" minWidth="80" text="Join" />
+         <Button fx:id="backButton" minWidth="80" onAction="#GoToLocalWLANMultiplayer" text="Back" />
+      </HBox>
+   </VBox>
+</StackPane>
