@@ -49,6 +49,7 @@ public class Evaluator {
 
     // Helper method to check lines with possible gaps at the ends
     private boolean checkLineWithGaps(int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
+        int count = 0;
         int gaps = openEnds ? 1 : 0;
 
         for (int i = -gaps; i < length + gaps; i++) {
@@ -72,6 +73,35 @@ public class Evaluator {
         return true;
     }
 
+    // Helper method to check split patterns
+    private boolean checkSplitPattern(int x, int y, int dx, int dy, int length, Player player) {
+        int gapCount = 0;
+        int stoneCount = 0;
+
+        for (int i = -1; i <= length; i++) {
+            int checkX = x + i * dx;
+            int checkY = y + i * dy;
+
+            if (checkX < 0 || checkY < 0 || checkX >= Board.SIZE || checkY >= Board.SIZE) {
+                return false;
+            }
+
+            Player cellPlayer = board.getCell(checkX, checkY);
+            if (i == -1 || i == length) {
+                if (cellPlayer != null) return false; // Ends should be empty
+            } else {
+                if (cellPlayer == player) {
+                    stoneCount++;
+                } else if (cellPlayer == null) {
+                    gapCount++;
+                } else {
+                    return false; // Encountered opponent's stone
+                }
+            }
+        }
+
+        return stoneCount == length - 1 && gapCount == 1; // Ensure correct number of stones and single gap
+    }
 
     // Method to check for Five in a Row
     private boolean checkFiveInRow(int x, int y, Player player) {
