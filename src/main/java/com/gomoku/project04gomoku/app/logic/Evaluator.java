@@ -47,4 +47,48 @@ public class Evaluator {
         return true;
     }
 
+    // Helper method to check lines with possible gaps at the ends
+    private boolean checkLineWithGaps(int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
+        int gaps = openEnds ? 1 : 0;
+
+        for (int i = -gaps; i < length + gaps; i++) {
+            int checkX = x + i * dx;
+            int checkY = y + i * dy;
+            if (checkX < 0 || checkY < 0 || checkX >= Board.SIZE || checkY >= Board.SIZE) {
+                return false;
+            }
+
+            if (i < 0 || i >= length) {
+                if (board.getCell(checkX, checkY) != null) {
+                    return false;
+                }
+            } else {
+                if (board.getCell(checkX, checkY) != player) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    // Method to check for Five in a Row
+    private boolean checkFiveInRow(int x, int y, Player player) {
+        return checkLine(x, y, 1, 0, 5, player) ||
+                checkLine(x, y, 0, 1, 5, player) ||
+                checkLine(x, y, 1, 1, 5, player) ||
+                checkLine(x, y, 1, -1, 5, player);
+    }
+
+    // Method to check for Open Four
+    private boolean checkOpenFour(int x, int y, Player player) {
+        if (board.getCell(x, y) != null) return false;
+        return checkLineWithGaps(x, y, 1, 0, 4, player, true) ||
+                checkLineWithGaps(x, y, 0, 1, 4, player, true) ||
+                checkLineWithGaps(x, y, 1, 1, 4, player, true) ||
+                checkLineWithGaps(x, y, 1, -1, 4, player, true);
+    }
+
+
 }
