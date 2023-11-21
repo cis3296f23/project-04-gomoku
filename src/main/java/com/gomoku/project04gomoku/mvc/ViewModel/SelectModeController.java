@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -205,6 +206,15 @@ public class SelectModeController {
         }
     }
 
+    public void GoToSinglePlayer(ActionEvent event) throws IOException {
+        // Load the PvE view
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/path/to/PVEView.fxml"));
+        Parent pveView = fxmlLoader.load();
+        Scene pveScene = new Scene(pveView);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(pveScene);
+        stage.show();
+    }
 
 
 }
