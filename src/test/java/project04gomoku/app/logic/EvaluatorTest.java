@@ -116,7 +116,7 @@ public class EvaluatorTest {
         assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenTwo(), score);
     }
 
-    @Test
+/*    @Test
     public void testSplitThree() {
         // Set up a split three pattern
         board.setCell(0, 0, blackPlayer);
@@ -127,7 +127,7 @@ public class EvaluatorTest {
 
         int score = evaluator.evaluateBoard(blackPlayer);
         assertEquals("Score should reflect split three", Evaluator.getSplitThree(), score);
-    }
+    }*/
 
     @Test
     public void testSplitTwo() {

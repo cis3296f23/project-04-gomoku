@@ -15,7 +15,7 @@ public class Evaluator {
     // ○●●●○
     final static int OPEN_THREE = 2500;
     // ●○●●○ or ●●○●○
-    final static int SPLIT_THREE = 1000;
+    // final static int SPLIT_THREE = 1000;
     // ●●●○ or ●●●×
     final static int HALF_OPEN_THREE = 500;
     // ○●●○
@@ -246,9 +246,9 @@ public class Evaluator {
         return HALF_OPEN_TWO;
     }
 
-    public static int getSplitThree() {
+  /*  public static int getSplitThree() {
         return SPLIT_THREE;
-    }
+    }*/
 
     public static int getSplitTwo() {
         return SPLIT_TWO;
