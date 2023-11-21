@@ -83,10 +83,10 @@ public class Game {
         }
 
         // Check lines emanating from the last move for a win
-        return board.checkLine(x, y, 1, 0, player) + board.checkLine(x, y, -1, 0, player) == 4 ||
-                board.checkLine(x, y, 0, 1, player) + board.checkLine(x, y, 0, -1, player) == 4 ||
-                board.checkLine(x, y, 1, 1, player) + board.checkLine(x, y, -1, -1, player) == 4 ||
-                board.checkLine(x, y, 1, -1, player) + board.checkLine(x, y, -1, 1, player) == 4;
+        return board.checkLine(x, y, 1, 0, player) + board.checkLine(x, y, -1, 0, player) >= 4 ||
+                board.checkLine(x, y, 0, 1, player) + board.checkLine(x, y, 0, -1, player) >= 4 ||
+                board.checkLine(x, y, 1, 1, player) + board.checkLine(x, y, -1, -1, player) >= 4 ||
+                board.checkLine(x, y, 1, -1, player) + board.checkLine(x, y, -1, 1, player) >= 4;
     }
 
     public void setGameOver(boolean gameOver) {
