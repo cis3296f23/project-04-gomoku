@@ -14,14 +14,14 @@ public class Evaluator {
     final static int HALF_OPEN_FOUR = 5000;
     // ○●●●○
     final static int OPEN_THREE = 2500;
+    // ●○●●○ or ●●○●○
+    final static int SPLIT_THREE = 1000;
     // ●●●○ or ●●●×
     final static int HALF_OPEN_THREE = 500;
     // ○●●○
     final static int OPEN_TWO = 100;
     // ●●○ or ●●×
     final static int HALF_OPEN_TWO = 50;
-    // ●○●●○ or ●●○●○
-    final static int SPLIT_THREE = 1000;
     // ●○●○
     final static int SPLIT_TWO = 75;
 
@@ -44,7 +44,7 @@ public class Evaluator {
                 }
 
                 // Check for Five in a Row
-                else if (checkFiveInRow(x, y, currentPlayer)) {
+                if (checkFiveInRow(x, y, currentPlayer)) {
                     score += FIVE_IN_ROW;
                     markEvaluated(evaluated, x, y, 1, 0, 5);
                     System.out.println("Five in a row found at " + x + "," + y);
@@ -76,6 +76,13 @@ public class Evaluator {
                     continue;
                 }
 
+                /*// Check for Split Three
+                if (checkSplitThree(x, y, currentPlayer)) {
+                    score += SPLIT_THREE;
+                    markEvaluated(evaluated, x, y, 1, 0, 3); // assuming horizontal split three
+                    continue;
+                }*/
+
                 // Check for Half-Open Three
                 if (checkHalfOpenThree(x, y, currentPlayer)) {
                     score += HALF_OPEN_THREE;
@@ -97,13 +104,6 @@ public class Evaluator {
                     score += HALF_OPEN_TWO;
                     markEvaluated(evaluated, x, y, 1, 0, 2);
                     System.out.println("Half open two found at " + x + "," + y);
-                    continue;
-                }
-
-                // Check for Split Three
-                if (checkSplitThree(x, y, currentPlayer)) {
-                    score += SPLIT_THREE;
-                    markEvaluated(evaluated, x, y, 1, 0, 3); // assuming horizontal split three
                     continue;
                 }
 
@@ -201,13 +201,13 @@ public class Evaluator {
                 checkLineWithGaps(x, y, 1, -1, 2, player, false);
     }
 
-    // Method to check for Split Three
+  /*  // Method to check for Split Three
     private boolean checkSplitThree(int x, int y, Player player) {
         return CheckLineWithSplit(x, y, 1, 0, 3, player) ||
                 CheckLineWithSplit(x, y, 0, 1, 3, player) ||
                 CheckLineWithSplit(x, y, 1, 1, 3, player) ||
                 CheckLineWithSplit(x, y, 1, -1, 3, player);
-    }
+    }*/
 
     // Method to check for Split Two
     private boolean checkSplitTwo(int x, int y, Player player) {

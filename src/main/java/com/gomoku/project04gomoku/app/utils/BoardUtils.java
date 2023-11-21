@@ -53,13 +53,15 @@ public class BoardUtils {
             int checkX = x + i * dx;
             int checkY = y + i * dy;
 
+            // Check if within board bounds
             if (checkX < 0 || checkY < 0 || checkX >= Board.SIZE || checkY >= Board.SIZE) {
                 return false;
             }
 
             Player cellPlayer = board.getCell(checkX, checkY);
             if (i == -1 || i == length) {
-                if (cellPlayer != null) return false; // Ends should be empty
+                // Ends should be empty for split pattern
+                if (cellPlayer != null) return false;
             } else {
                 if (cellPlayer == player) {
                     stoneCount++;
@@ -70,8 +72,8 @@ public class BoardUtils {
                 }
             }
         }
-        return stoneCount == length - 1 && gapCount == 1; // Ensure correct number of stones and single gap
+        return stoneCount == length - 1 && gapCount == 1;
     }
 
-    // 其他可能的公共方法...
+    // Other possible public methods...
 }
