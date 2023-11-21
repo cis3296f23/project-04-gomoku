@@ -206,15 +206,21 @@ public class SelectModeController {
         }
     }
 
-    public void GoToSinglePlayer(ActionEvent event) throws IOException {
-        // Load the PvE view
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/path/to/PVEView.fxml"));
-        Parent pveView = fxmlLoader.load();
-        Scene pveScene = new Scene(pveView);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(pveScene);
-        stage.show();
-    }
+    @FXML
+    public void GoToSinglePlayer(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/PVE.fxml"));
+            fxmlLoader.setController(new PVEController());
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load PvE view");
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -39,7 +39,7 @@ public class PVEController {
     }
 
     @FXML
-    public void restartGame(MouseEvent event) {
+    public void restartGame(ActionEvent event) {
         game.restartGame();
         chessUtils.updateBoard();
     }
