@@ -2,16 +2,33 @@ package com.gomoku.project04gomoku.app.models;
 
 import com.gomoku.project04gomoku.app.logic.Player;
 
+/**
+ * Hold the 2D array representing the game board of Gomoku including functionalities that check and change the board.
+ */
 public class Board {
-    public static final int SIZE = 15;  // Size of the board (15x15)
-    private Player[][] board; // Two-dimensional array to represent the board
+    /**
+     * The SIZE x SIZE dimension of the board.
+     */
+    public static final int SIZE = 15;
+    /**
+     * Actual 2D array representing the board.
+     */
+    private Player[][] board;
 
+    /**
+     * Initialize the board with default SIZE x SIZE dimension and reset all cell to empty state.
+     */
     public Board() {
         board = new Player[SIZE][SIZE];
         reset(); // Sets all positions to Player.NONE
     }
 
-    // Returns the player occupying the cell (x,y), or Player.NONE if it is empty
+    /**
+     * Gets the player possessed the specified cell (x,y).
+     * @param x the x-axis value of the cell
+     * @param y the y-axis value of the cell
+     * @return the player occupied the cell (x,y), or null if no player possess it.
+     */
     public Player getCell(int x, int y) {
         if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
             return null;  // Outside the board bounds
@@ -19,19 +36,31 @@ public class Board {
         return board[x][y];
     }
 
-    // Sets the cell at position (x,y) to the specified player
+    /**
+     * Assigns the owner of the cell (x,y).
+     * @param x the x-axis value of the cell
+     * @param y the y-axis value of the cell
+     * @param player the owner to be set.
+     */
     public void setCell(int x, int y, Player player) {
         if (x >= 0 && x < SIZE && y >= 0 && y < SIZE) {
             board[x][y] = player;
         }
     }
 
-    // Checks if the cell at position (x,y) is empty
+    /**
+     * Check if the specified cell (x,y) is empty.
+     * @param x the x-axis value of the cell
+     * @param y the y-axis value of the cell
+     * @return true if the cell is empty, or false otherwise
+     */
     public boolean isEmpty(int x, int y) {
         return getCell(x, y) == null;
     }
 
-    // Resets the board to an empty state
+    /**
+     * Empty all player possessions inside the board to null.
+     */
     public void reset() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -40,7 +69,10 @@ public class Board {
         }
     }
 
-    // Checks if the board is completely filled with no empty cells
+    /**
+     * Checks if the board is full.
+     * @return true if no empty cells leftover, or false otherwise
+     */
     public boolean isFull() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -52,6 +84,15 @@ public class Board {
         return true;
     }
 
+    /**
+     * Count for combo pieces of a player starting from the cell (x,y) and moving in direction specified by (dx, dy).
+     * @param x the x-axis value of the cell
+     * @param y the y-axis value of the cell
+     * @param dx the x-axis direction of traversal
+     * @param dy the y-axis direction of traversal
+     * @param player the owner of the pieces to look for
+     * @return the total count of the consecutive pieces in the specified direction
+     */
     // Counts the number of consecutive pieces of the specified player starting
     // from position (x,y) and moving in direction specified by (dx,dy)
     public int checkLine(int x, int y, int dx, int dy, Player player) {
