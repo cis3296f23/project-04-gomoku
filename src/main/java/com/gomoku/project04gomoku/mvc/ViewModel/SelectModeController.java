@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -205,6 +206,21 @@ public class SelectModeController {
         }
     }
 
+    @FXML
+    public void GoToSinglePlayer(ActionEvent event) {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/PVE.fxml"));
+            fxmlLoader.setController(new PVEController());
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Failed to load PvE view");
+            e.printStackTrace();
+        }
+    }
 
 }
