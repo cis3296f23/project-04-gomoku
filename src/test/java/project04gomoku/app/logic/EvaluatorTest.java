@@ -29,7 +29,7 @@ public class EvaluatorTest {
             System.out.println("x = " + i);
         }
         int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect five in a row", Evaluator.getFiveInRowScore(), score);
+        assertEquals("Score should reflect five in a row", Evaluator.getFiveInRow(), score);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class EvaluatorTest {
         board.setCell(5, 0, null); // empty space
 
         int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect open four", Evaluator.getOpenFourScore(), score);
+        assertEquals("Score should reflect open four", Evaluator.getOpenFour(), score);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class EvaluatorTest {
         board.setCell(4, 0, whitePlayer); // blocked by white player
 
         int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenThreeScore(), score);
+        assertEquals("Score should reflect half-open Four", Evaluator.getHalfOpenFour(), score);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class EvaluatorTest {
         board.setCell(4, 0, null); // empty space
 
         int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect open three", Evaluator.getOpenThreeScore(), score);
+        assertEquals("Score should reflect open three", Evaluator.getOpenThree(), score);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class EvaluatorTest {
         board.setCell(4, 0, whitePlayer); // blocked by white player
 
         int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenThreeScore(), score);
+        assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenThree(), score);
     }
 
     @Test

@@ -32,17 +32,16 @@ public class Evaluator {
     public int evaluateBoard(Player currentPlayer) {
         int score = 0;
         boolean[][] evaluated = new boolean[Board.SIZE][Board.SIZE]; // Track evaluated cells
-        System.out.println("////////////////////");
+        /*System.out.println("////////////////////");*/
         // Evaluate the board and adjust the score based on the patterns found
         // Iterate over every cell in the board
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
 
-                if(!board.isEmpty(x,y))
-                {
-                    System.out.println(board.getCell(x,y).getColor()+" x:"+x+" y:"+y);
+               /* if (!board.isEmpty(x, y)) {
+                    System.out.println(board.getCell(x, y).getColor() + " x:" + x + " y:" + y);
 
-                }
+                }*/
 
                 // Ensure that we count a pattern only if it starts from this cell
                 // to avoid double counting
@@ -153,61 +152,74 @@ public class Evaluator {
 
     // Method to check for Five in a Row
     private boolean checkFiveInRow(int x, int y, Player player) {
-        return checkLine(x, y, 1, 0, 5, player) ||
+        boolean found = checkLine(x, y, 1, 0, 5, player) ||
                 checkLine(x, y, 0, 1, 5, player) ||
                 checkLine(x, y, 1, 1, 5, player) ||
-                checkLine(x, y, 1, -1, 5, player) ;
-
+                checkLine(x, y, 1, -1, 5, player);
+        if (found) System.out.println("Five in a Row found at " + x + "," + y);
+        return found;
     }
 
     // Method to check for Open Four
     private boolean checkOpenFour(int x, int y, Player player) {
-        return (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
+        boolean found = (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
                 (checkLineWithGaps(x, y, 1, 0, 4, player, true) ||
                         checkLineWithGaps(x, y, 0, 1, 4, player, true) ||
                         checkLineWithGaps(x, y, 1, 1, 4, player, true) ||
                         checkLineWithGaps(x, y, 1, -1, 4, player, true));
+        if (found) System.out.println("Open Four found at " + x + "," + y);
+        return found;
     }
 
     // Method to check for Half Open Four
     private boolean checkHalfOpenFour(int x, int y, Player player) {
-        return checkLineWithGaps(x, y, 1, 0, 4, player, false) ||
+        boolean found = checkLineWithGaps(x, y, 1, 0, 4, player, false) ||
                 checkLineWithGaps(x, y, 0, 1, 4, player, false) ||
                 checkLineWithGaps(x, y, 1, 1, 4, player, false) ||
                 checkLineWithGaps(x, y, 1, -1, 4, player, false);
+        if (found) System.out.println("Half Open Four at " + x + "," + y);
+        return found;
     }
 
     // Method to check for Open Three
     private boolean checkOpenThree(int x, int y, Player player) {
-        return (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
+        boolean found = (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
                 (checkLineWithGaps(x, y, 1, 0, 3, player, true) ||
                         checkLineWithGaps(x, y, 0, 1, 3, player, true) ||
                         checkLineWithGaps(x, y, 1, 1, 3, player, true) ||
                         checkLineWithGaps(x, y, 1, -1, 3, player, true));
+        if (found) System.out.println("Open Three at " + x + "," + y);
+        return found;
     }
 
     // Method to check for Half-Open Three
     private boolean checkHalfOpenThree(int x, int y, Player player) {
-        return checkLineWithGaps(x, y, 1, 0, 3, player, false) ||
+        boolean found =  checkLineWithGaps(x, y, 1, 0, 3, player, false) ||
                 checkLineWithGaps(x, y, 0, 1, 3, player, false) ||
                 checkLineWithGaps(x, y, 1, 1, 3, player, false) ||
                 checkLineWithGaps(x, y, 1, -1, 3, player, false);
+        if (found) System.out.println("Half Open Three at " + x + "," + y);
+        return found;
     }
 
     // Method to check for Open Two
     private boolean checkOpenTwo(int x, int y, Player player) {
-        return checkLineWithGaps(x, y, 1, 0, 2, player, true) ||
+        boolean found =  checkLineWithGaps(x, y, 1, 0, 2, player, true) ||
                 checkLineWithGaps(x, y, 0, 1, 2, player, true) ||
                 checkLineWithGaps(x, y, 1, 1, 2, player, true) ||
                 checkLineWithGaps(x, y, 1, -1, 2, player, true);
+        if (found) System.out.println("Open Two at " + x + "," + y);
+        return found;
     }
 
     // Method to check for Half-Open Two
     private boolean checkHalfOpenTwo(int x, int y, Player player) {
-        return checkLineWithGaps(x, y, 1, 0, 2, player, false) ||
+        boolean found =  checkLineWithGaps(x, y, 1, 0, 2, player, false) ||
                 checkLineWithGaps(x, y, 0, 1, 2, player, false) ||
                 checkLineWithGaps(x, y, 1, 1, 2, player, false) ||
                 checkLineWithGaps(x, y, 1, -1, 2, player, false);
+        if (found) System.out.println("Hlaf Open Two at " + x + "," + y);
+        return found;
     }
 
   /*  // Method to check for Split Three
@@ -220,30 +232,32 @@ public class Evaluator {
 
     // Method to check for Split Two
     private boolean checkSplitTwo(int x, int y, Player player) {
-        return CheckLineWithSplit(x, y, 1, 0, 2, player) ||
+        boolean found = CheckLineWithSplit(x, y, 1, 0, 2, player) ||
                 CheckLineWithSplit(x, y, 0, 1, 2, player) ||
                 CheckLineWithSplit(x, y, 1, 1, 2, player) ||
                 CheckLineWithSplit(x, y, 1, -1, 2, player);
+        if (found) System.out.println("Split Two at " + x + "," + y);
+        return found;
     }
 
     // Getters for the constants
-    public static int getFiveInRowScore() {
+    public static int getFiveInRow() {
         return FIVE_IN_ROW;
     }
 
-    public static int getOpenFourScore() {
+    public static int getOpenFour() {
         return OPEN_FOUR;
     }
 
-    public static int getHalfOpenFourScore() {
+    public static int getHalfOpenFour() {
         return HALF_OPEN_FOUR;
     }
 
-    public static int getOpenThreeScore() {
+    public static int getOpenThree() {
         return OPEN_THREE;
     }
 
-    public static int getHalfOpenThreeScore() {
+    public static int getHalfOpenThree() {
         return HALF_OPEN_THREE;
     }
 

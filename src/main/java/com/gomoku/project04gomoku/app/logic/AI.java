@@ -2,6 +2,8 @@ package com.gomoku.project04gomoku.app.logic;
 
 import com.gomoku.project04gomoku.app.models.Board;
 
+import static com.gomoku.project04gomoku.app.logic.Evaluator.FIVE_IN_ROW;
+
 public class AI {
     private final Evaluator evaluator;
     private final Board board;
@@ -22,32 +24,37 @@ public class AI {
 
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
-
-
-                // Check if the cell is empty
                 if (board.isEmpty(x, y)) {
-                    // Make a temporary move
-                    board. setCell(x, y, aiPlayer);
+                    // 模拟 AI 落子
+                    board.setCell(x, y, aiPlayer);
+                    int scoreAI = evaluator.evaluateBoard(aiPlayer);
 
-                    // Evaluate this move
-                    int scoreai = evaluator.evaluateBoard(aiPlayer);
-                    int scorehuman = evaluator.evaluateBoard(humanPlayer);
+                    // 模拟对手落子
+                    board.setCell(x, y, humanPlayer);
+                    int scoreHuman = evaluator.evaluateBoard(humanPlayer);
 
-
-                    System.out.println("Human Score："+scorehuman);
-                    // Undo the move
+                    // 撤销落子
                     board.setCell(x, y, null);
 
-                    // Update the best move if this move is better than the current best
-                    if (scoreai > bestScore) {
+                    // 输出当前位置和对应的分数
+                    System.out.println("Position: (" + x + ", " + y + ") - AI Score: " + scoreAI + ", Human Score: " + scoreHuman);
 
-                        bestScore = scoreai;
+                    // 考虑防守
+                    int score = scoreAI - scoreHuman;
+                    if (scoreHuman > FIVE_IN_ROW / 2) {
+                        score += scoreHuman;  // 如果对手即将获胜，增加对手的分数以促使 AI 防守
+                    }
+
+                    // 选择最佳移动
+                    if (score > bestScore) {
+                        bestScore = score;
                         bestMove = new Move(x, y);
                     }
                 }
             }
         }
 
+        System.out.println("Best Move: (" + bestMove.x + ", " + bestMove.y + ") with Score: " + bestScore);
         return bestMove;
     }
 
