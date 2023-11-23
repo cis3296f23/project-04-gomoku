@@ -16,4 +16,11 @@ public class HumanPlayer implements Player {
     public PlayerType getType() {
         return PlayerType.HUMAN;
     }
+    @Override
+    public String toString() {
+        return "HumanPlayer{" +
+                "color=" + color +
+                ", type=" + getType() +
+                '}';
+    }
 }

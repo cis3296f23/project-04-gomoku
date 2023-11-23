@@ -4,7 +4,7 @@ import com.gomoku.project04gomoku.app.models.Board;
 import com.gomoku.project04gomoku.app.utils.BoardUtils;
 
 public class Evaluator {
-    private Board board;
+    private final Board board;
 
     // ●●●●●
     final static int FIVE_IN_ROW = 100000;
@@ -32,11 +32,18 @@ public class Evaluator {
     public int evaluateBoard(Player currentPlayer) {
         int score = 0;
         boolean[][] evaluated = new boolean[Board.SIZE][Board.SIZE]; // Track evaluated cells
-
+        System.out.println("////////////////////");
         // Evaluate the board and adjust the score based on the patterns found
         // Iterate over every cell in the board
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
+
+                if(!board.isEmpty(x,y))
+                {
+                    System.out.println(board.getCell(x,y).getColor()+" x:"+x+" y:"+y);
+
+                }
+
                 // Ensure that we count a pattern only if it starts from this cell
                 // to avoid double counting
                 if (evaluated[x][y]) {
@@ -113,6 +120,7 @@ public class Evaluator {
                     markEvaluated(evaluated, x, y, 1, 0, 2); // assuming horizontal split two
                     continue;
                 }
+                evaluated[x][y] = true;
                 // ... Add similar logic for other patterns
             }
         }
@@ -148,7 +156,8 @@ public class Evaluator {
         return checkLine(x, y, 1, 0, 5, player) ||
                 checkLine(x, y, 0, 1, 5, player) ||
                 checkLine(x, y, 1, 1, 5, player) ||
-                checkLine(x, y, 1, -1, 5, player);
+                checkLine(x, y, 1, -1, 5, player) ;
+
     }
 
     // Method to check for Open Four
