@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import com.gomoku.project04gomoku.app.logic.HumanPlayer;
 import com.gomoku.project04gomoku.app.models.Board;
 import com.gomoku.project04gomoku.app.logic.Player;
+import com.gomoku.project04gomoku.app.models.Board.Move;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -80,6 +82,21 @@ public class BoardTest {
         // The board should not be full after reset
         assertFalse("Board should not be full after reset.", board.isFull());
     }
+
+    // Test the record functionality
+    @Test
+    public void testMoveRecording() {
+        // Make a move
+        board.setCell(0, 0, blackPlayer);
+        assertFalse("Move history should not be empty after a move", board.getMoveHistory().isEmpty());
+
+        Move lastMove = board.getMoveHistory().peek();
+        assertNotNull("Last move should not be null", lastMove);
+        assertEquals("Last move player should be BLACK", blackPlayer, lastMove.player);
+        assertEquals("Last move X coordinate should be 0", 0, lastMove.x);
+        assertEquals("Last move Y coordinate should be 0", 0, lastMove.y);
+    }
+
 
     // Add more tests if there are more behaviors to verify.
 }
