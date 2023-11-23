@@ -23,7 +23,7 @@ public class Evaluator {
     // ●●○ or ●●×
     final static int HALF_OPEN_TWO = 50;
     // ●○●○
-    final static int SPLIT_TWO = 75;
+    // final static int SPLIT_TWO = 75;
 
     public Evaluator(Board board) {
         this.board = board;
@@ -113,13 +113,13 @@ public class Evaluator {
                     continue;
                 }
 
-                // Check for Split Two
+               /* // Check for Split Two
                 if (checkSplitTwo(x, y, currentPlayer)) {
                     score += SPLIT_TWO;
                     markEvaluated(evaluated, x, y, 1, 0, 2); // assuming horizontal split two
                     continue;
                 }
-                evaluated[x][y] = true;
+                evaluated[x][y] = true;*/
                 // ... Add similar logic for other patterns
             }
         }
@@ -273,8 +273,8 @@ public class Evaluator {
         return SPLIT_THREE;
     }*/
 
-    public static int getSplitTwo() {
+  /*  public static int getSplitTwo() {
         return SPLIT_TWO;
-    }
+    }*/
 
 }

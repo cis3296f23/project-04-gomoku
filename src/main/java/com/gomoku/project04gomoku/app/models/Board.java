@@ -2,16 +2,20 @@ package com.gomoku.project04gomoku.app.models;
 
 import com.gomoku.project04gomoku.app.logic.Player;
 
+import java.util.Stack;
+
 public class Board {
     public static final int SIZE = 15;  // Size of the board (15x15)
     private Player[][] board; // Two-dimensional array to represent the board
+    private Stack<Move> moveHistory;
 
     public Board() {
         board = new Player[SIZE][SIZE];
-        reset(); // Sets all positions to Player.NONE
+        moveHistory = new Stack<>();
+        reset(); // Sets all positions to null (empty)
     }
 
-    // Returns the player occupying the cell (x,y), or Player.NONE if it is empty
+    // Returns the player occupying the cell (x,y), or null if it is empty
     public Player getCell(int x, int y) {
         if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
             return null;  // Outside the board bounds
@@ -23,6 +27,9 @@ public class Board {
     public void setCell(int x, int y, Player player) {
         if (x >= 0 && x < SIZE && y >= 0 && y < SIZE) {
             board[x][y] = player;
+            if (player != null) {
+                recordMove(x, y, player); // Record the move
+            }
         }
     }
 
@@ -38,6 +45,7 @@ public class Board {
                 board[i][j] = null;  // Reset each cell to null (empty)
             }
         }
+        moveHistory.clear(); // Clear the move history
     }
 
     // Checks if the board is completely filled with no empty cells
@@ -64,5 +72,32 @@ public class Board {
             y += dy;
         }
         return count; // Return the total count of consecutive pieces
+    }
+
+    // Records a move to the move history
+    private void recordMove(int x, int y, Player player) {
+        moveHistory.push(new Move(x, y, player));
+    }
+
+    // Undoes the last move and returns it
+    public Move undoMove() {
+        return !moveHistory.isEmpty() ? moveHistory.pop() : null;
+    }
+
+    // Gets the move history
+    public Stack<Move> getMoveHistory() {
+        return moveHistory;
+    }
+
+    // Inner class to represent a move
+    public static class Move {
+        public int x, y;
+        public Player player;
+
+        public Move(int x, int y, Player player) {
+            this.x = x;
+            this.y = y;
+            this.player = player;
+        }
     }
 }
