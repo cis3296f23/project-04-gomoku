@@ -98,5 +98,24 @@ public class BoardTest {
     }
 
 
+    // Test the undo functionality
+    @Test
+    public void testUndoMove() {
+        // Make a move and then undo it
+        board.setCell(0, 0, blackPlayer);
+        Move undoneMove = board.undoMove();
+
+        assertNotNull("Undone move should not be null", undoneMove);
+        assertEquals("Undone move player should be BLACK", blackPlayer, undoneMove.player);
+        assertEquals("Undone move X coordinate should be 0", 0, undoneMove.x);
+        assertEquals("Undone move Y coordinate should be 0", 0, undoneMove.y);
+
+        // Check if the move was really removed from the history
+        assertTrue("Move history should be empty after undo", board.getMoveHistory().isEmpty());
+
+        // Check if the cell is empty again
+        assertTrue("Cell should be empty after undo", board.isEmpty(0, 0));
+    }
+
     // Add more tests if there are more behaviors to verify.
 }
