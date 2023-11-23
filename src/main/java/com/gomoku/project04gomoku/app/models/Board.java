@@ -81,7 +81,13 @@ public class Board {
 
     // Undoes the last move and returns it
     public Move undoMove() {
-        return !moveHistory.isEmpty() ? moveHistory.pop() : null;
+        if (!moveHistory.isEmpty()) {
+            Move lastMove = moveHistory.pop();
+            // Reset the cell to empty
+            board[lastMove.x][lastMove.y] = null;
+            return lastMove;
+        }
+        return null;
     }
 
     // Gets the move history
