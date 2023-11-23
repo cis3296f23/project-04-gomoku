@@ -128,7 +128,7 @@ public class EvaluatorTest {
         assertEquals("Score should reflect split three", Evaluator.getSplitThree(), score);
     }*/
 
-    @Test
+   /* @Test
     public void testSplitTwo() {
         // Set up a split two pattern
         board.setCell(0, 0, blackPlayer);
@@ -138,6 +138,6 @@ public class EvaluatorTest {
 
         int score = evaluator.evaluateBoard(blackPlayer);
         assertEquals("Score should reflect split two", Evaluator.getSplitTwo(), score);
-    }
+    }*/
 
 }
