@@ -48,13 +48,12 @@ public class EvaluatorTest {
 
     @Test
     public void testHalfOpenFour() {
-        // Set up a half-open three pattern
+        // Set up a half-open four pattern
         board.setCell(0, 0, null); // empty space
         for (int i = 1; i <= 4; i++) {
             board.setCell(i, 0, blackPlayer); // four consecutive black pieces
-            System.out.println("x = " + i);
         }
-        board.setCell(4, 0, whitePlayer); // blocked by white player
+        board.setCell(5, 0, whitePlayer); // blocked by white player
 
         int score = evaluator.evaluateBoard(blackPlayer);
         assertEquals("Score should reflect half-open Four", Evaluator.getHalfOpenFour(), score);
