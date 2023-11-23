@@ -32,10 +32,12 @@ public class BoardUtils {
 
             if (i < 0 || i >= length) {
                 if (board.getCell(checkX, checkY) != null) {
+
                     return false;
                 }
             } else {
                 if (board.getCell(checkX, checkY) != player) {
+
                     return false;
                 }
             }

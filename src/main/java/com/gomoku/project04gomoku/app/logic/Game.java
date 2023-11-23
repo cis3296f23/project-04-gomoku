@@ -3,7 +3,7 @@ package com.gomoku.project04gomoku.app.logic;
 import com.gomoku.project04gomoku.app.models.Board;
 
 public class Game {
-    private Board board;
+    private final Board board;
     private Player currentPlayer;
     private Player blackPlayer;
     private Player whitePlayer;

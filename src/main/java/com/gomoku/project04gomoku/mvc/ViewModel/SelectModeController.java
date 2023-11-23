@@ -102,7 +102,7 @@ public class SelectModeController {
             e.printStackTrace();
         }
     }
-    @FXML
+/*    @FXML
     public void GoToPVE(ActionEvent event) throws IOException {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/MultiplePlayer.fxml"));
@@ -119,7 +119,7 @@ public class SelectModeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @FXML
     private void GoToLocalMultiplayer(ActionEvent event) {
@@ -209,8 +209,8 @@ public class SelectModeController {
     @FXML
     public void GoToSinglePlayer(ActionEvent event) {
         try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/PVE.fxml"));
-            fxmlLoader.setController(new PVEController());
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/PVEDifficultSelect.fxml"));
+            fxmlLoader.setController(new DifficultSelectController());
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
             Node source =(Node) event.getSource();
