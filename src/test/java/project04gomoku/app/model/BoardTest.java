@@ -117,5 +117,19 @@ public class BoardTest {
         assertTrue("Cell should be empty after undo", board.isEmpty(0, 0));
     }
 
+    @Test
+    public void testMultipleMovesRecording() {
+        // Make multiple moves
+        board.setCell(0, 0, blackPlayer);
+        board.setCell(1, 1, whitePlayer);
+
+        // Check if the move history has recorded both moves
+        assertEquals("Move history should have two moves", 2, board.getMoveHistory().size());
+        assertEquals("First move should be by BLACK player at (0,0)",
+                new Board.Move(0, 0, blackPlayer), board.getMoveHistory().get(0));
+        assertEquals("Second move should be by WHITE player at (1,1)",
+                new Board.Move(1, 1, whitePlayer), board.getMoveHistory().get(1));
+    }
+
     // Add more tests if there are more behaviors to verify.
 }
