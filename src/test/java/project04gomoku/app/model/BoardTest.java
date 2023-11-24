@@ -131,5 +131,26 @@ public class BoardTest {
                 new Board.Move(1, 1, whitePlayer), board.getMoveHistory().get(1));
     }
 
+    @Test
+    public void testUndoMultipleMoves() {
+        // Make multiple moves
+        board.setCell(0, 0, blackPlayer);
+        board.setCell(1, 1, whitePlayer);
+
+        // Undo the moves
+        Board.Move lastMove = board.undoMove();
+        assertEquals("Undo move should be WHITE player at (1,1)",
+                new Board.Move(1, 1, whitePlayer), lastMove);
+        assertTrue("Cell (1,1) should be empty after undo", board.isEmpty(1, 1));
+
+        lastMove = board.undoMove();
+        assertEquals("Undo move should be BLACK player at (0,0)",
+                new Board.Move(0, 0, blackPlayer), lastMove);
+        assertTrue("Cell (0,0) should be empty after undo", board.isEmpty(0, 0));
+
+        assertTrue("Move history should be empty after undoing all moves", board.getMoveHistory().isEmpty());
+    }
+
+
     // Add more tests if there are more behaviors to verify.
 }
