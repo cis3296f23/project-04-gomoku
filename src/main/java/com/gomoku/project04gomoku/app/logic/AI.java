@@ -22,30 +22,31 @@ public class AI {
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
 
+        // Iterate through all possible moves
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
                 if (board.isEmpty(x, y)) {
-                    // 模拟 AI 落子
+                    // Simulate AI move
                     board.setCell(x, y, aiPlayer);
                     int scoreAI = evaluator.evaluateBoard(aiPlayer);
 
-                    // 模拟对手落子
+                    // Undo AI move and simulate opponent's move
                     board.setCell(x, y, humanPlayer);
                     int scoreHuman = evaluator.evaluateBoard(humanPlayer);
 
-                    // 撤销落子
+                    // Reset the cell to its original state
                     board.setCell(x, y, null);
 
-                    // 输出当前位置和对应的分数
+                    // Output current position and corresponding scores
                     System.out.println("Position: (" + x + ", " + y + ") - AI Score: " + scoreAI + ", Human Score: " + scoreHuman);
 
-                    // 考虑防守
+                    // Consider a defensive play
                     int score = scoreAI - scoreHuman;
                     if (scoreHuman > FIVE_IN_ROW / 2) {
-                        score += scoreHuman;  // 如果对手即将获胜，增加对手的分数以促使 AI 防守
+                        score += scoreHuman;  // Boost the opponent's score if they are close to winning
                     }
 
-                    // 选择最佳移动
+                    // Select the best move
                     if (score > bestScore) {
                         bestScore = score;
                         bestMove = new Move(x, y);
