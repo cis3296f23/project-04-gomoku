@@ -151,6 +151,16 @@ public class BoardTest {
         assertTrue("Move history should be empty after undoing all moves", board.getMoveHistory().isEmpty());
     }
 
+    @Test
+    public void testMoveHistoryAfterMultipleMovesAndUndo() {
+        // Make and undo multiple moves
+        board.setCell(0, 0, blackPlayer);
+        board.setCell(1, 1, whitePlayer);
+        board.undoMove();
+        board.undoMove();
 
+        // Check if the move history is empty after undoing
+        assertTrue("Move history should be empty after undoing all moves", board.getMoveHistory().isEmpty());
+    }
     // Add more tests if there are more behaviors to verify.
 }
