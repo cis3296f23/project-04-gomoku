@@ -2,6 +2,7 @@ package com.gomoku.project04gomoku.app.models;
 
 import com.gomoku.project04gomoku.app.logic.Player;
 
+import java.util.Objects;
 import java.util.Stack;
 
 public class Board {
@@ -104,6 +105,19 @@ public class Board {
             this.x = x;
             this.y = y;
             this.player = player;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Move move = (Move) o;
+            return x == move.x && y == move.y && Objects.equals(player, move.player);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y, player);
         }
     }
 }
