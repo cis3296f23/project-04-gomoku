@@ -277,4 +277,63 @@ public class Evaluator {
         return SPLIT_TWO;
     }*/
 
+    public int evaluateBoardForAll(Player currentPlayer) {
+        int totalScore = 0;
+
+        // Iterate over every cell in the board
+        for (int x = 0; x < Board.SIZE; x++) {
+            for (int y = 0; y < Board.SIZE; y++) {
+                if (!board.isEmpty(x, y) && board.getCell(x, y) == currentPlayer) {
+                    // Evaluate the score for each piece of the current player
+                    totalScore += evaluateBoardFromCell(x, y, currentPlayer);
+                }
+            }
+        }
+
+        return totalScore;
+    }
+
+    private int evaluateBoardFromCell(int x, int y, Player currentPlayer) {
+        int score = 0;
+
+        // Check for Five in a Row
+        if (checkFiveInRow(x, y, currentPlayer)) {
+            score += FIVE_IN_ROW;
+        }
+
+        // Check for Open Four
+        if (checkOpenFour(x, y, currentPlayer)) {
+            score += OPEN_FOUR;
+        }
+
+        // Check for Half-Open Four
+        if (checkHalfOpenFour(x, y, currentPlayer)) {
+            score += HALF_OPEN_FOUR;
+        }
+
+        // Check for Open Three
+        if (checkOpenThree(x, y, currentPlayer)) {
+            score += OPEN_THREE;
+        }
+
+        // Check for Half-Open Three
+        if (checkHalfOpenThree(x, y, currentPlayer)) {
+            score += HALF_OPEN_THREE;
+        }
+
+        // Check for Open Two
+        if (checkOpenTwo(x, y, currentPlayer)) {
+            score += OPEN_TWO;
+        }
+
+        // Check for Half-Open Two
+        if (checkHalfOpenTwo(x, y, currentPlayer)) {
+            score += HALF_OPEN_TWO;
+        }
+
+        // ... Add similar logic for other patterns, if any
+
+        return score;
+    }
+
 }

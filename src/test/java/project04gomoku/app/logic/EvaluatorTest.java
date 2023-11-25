@@ -140,4 +140,25 @@ public class EvaluatorTest {
         assertEquals("Score should reflect split two", Evaluator.getSplitTwo(), score);
     }*/
 
+    @Test
+    public void testEvaluateBoardForAll() {
+        // Set up a board state that should result in a specific score
+        // Example: Placing a sequence of pieces on the board
+        board.setCell(0, 0, blackPlayer);
+        board.setCell(1, 0, blackPlayer);
+        board.setCell(2, 0, blackPlayer);
+
+        // Calculate the total score for the black player
+        int totalScore = evaluator.evaluateBoardForAll(blackPlayer);
+
+        // Assert that the total score is as expected
+        int expectedScore = 600;
+        assertEquals("Total score should match the expected value for the given board state", expectedScore, totalScore);
+    }
+
+    @Test
+    public void testEmptyBoard() {
+        int totalScore = evaluator.evaluateBoardForAll(blackPlayer);
+        assertEquals("Total score should be zero for an empty board", 0, totalScore);
+    }
 }
