@@ -2,6 +2,8 @@ package com.gomoku.project04gomoku.app.logic;
 
 import com.gomoku.project04gomoku.app.models.Board;
 
+import static com.gomoku.project04gomoku.app.logic.Evaluator.FIVE_IN_ROW;
+
 public class AI {
     private final Evaluator evaluator;
     private final Board board;
@@ -20,34 +22,40 @@ public class AI {
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
 
+        // Iterate through all possible moves
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
-
-
-                // Check if the cell is empty
                 if (board.isEmpty(x, y)) {
-                    // Make a temporary move
-                    board. setCell(x, y, aiPlayer);
+                    // Simulate AI move
+                    board.setCell(x, y, aiPlayer);
+                    int scoreAI = evaluator.evaluateBoard(aiPlayer);
 
-                    // Evaluate this move
-                    int scoreai = evaluator.evaluateBoard(aiPlayer);
-                    int scorehuman = evaluator.evaluateBoard(humanPlayer);
+                    // Undo AI move and simulate opponent's move
+                    board.setCell(x, y, humanPlayer);
+                    int scoreHuman = evaluator.evaluateBoard(humanPlayer);
 
-
-                    System.out.println("Human Score："+scorehuman);
-                    // Undo the move
+                    // Reset the cell to its original state
                     board.setCell(x, y, null);
 
-                    // Update the best move if this move is better than the current best
-                    if (scoreai > bestScore) {
+                    // Output current position and corresponding scores
+                    System.out.println("Position: (" + x + ", " + y + ") - AI Score: " + scoreAI + ", Human Score: " + scoreHuman);
 
-                        bestScore = scoreai;
+                    // Consider a defensive play
+                    int score = scoreAI - scoreHuman;
+                    if (scoreHuman > FIVE_IN_ROW / 2) {
+                        score += scoreHuman;  // Boost the opponent's score if they are close to winning
+                    }
+
+                    // Select the best move
+                    if (score > bestScore) {
+                        bestScore = score;
                         bestMove = new Move(x, y);
                     }
                 }
             }
         }
 
+        System.out.println("Best Move: (" + bestMove.x + ", " + bestMove.y + ") with Score: " + bestScore);
         return bestMove;
     }
 

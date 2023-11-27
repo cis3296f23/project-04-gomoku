@@ -43,7 +43,7 @@ public class PVEController {
     public void initialize() {
         this.game = new Game();
         this.game.setupGameMode(false); // Set to PvE mode
-      // AI as white for now
+        // AI as white for now
         Player humanPlayer =  new HumanPlayer(PlayerColor.BLACK);
         Player aiPlayer  = new HumanPlayer(PlayerColor.WHITE);
         switch (diff) {

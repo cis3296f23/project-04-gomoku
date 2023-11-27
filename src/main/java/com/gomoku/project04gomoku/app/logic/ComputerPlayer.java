@@ -18,11 +18,11 @@ public class ComputerPlayer implements Player {
     }
 
     // Additional methods specific to ComputerPlayer can be added here
-    @Override
+  /*  @Override
     public String toString() {
-        return "HumanPlayer{" +
+        return "ComputerPlayer{" +
                 "color=" + color +
                 ", type=" + getType() +
                 '}';
-    }
+    }*/
 }
