@@ -9,7 +9,7 @@ public class Game {
     /**
      * A 15x15 board to be used as the game board.
      */
-    private Board board;
+    private final Board board;
     /**
      * The current player available for next move.
      */

@@ -26,17 +26,36 @@ public class PVEController {
     @FXML private Button BackButton;
 
     private ChessUtils chessUtils;
+    private String diff;
     private Game game;
+
+    //TODO:Suppose you have multiple AI classes, add them here
     private AI ai;
+
+
+    PVEController(String diff)
+    {
+
+        this.diff=diff;
+
+    }
 
     public void initialize() {
         this.game = new Game();
         this.game.setupGameMode(false); // Set to PvE mode
-        Player humanPlayer = new HumanPlayer(PlayerColor.BLACK); // Assuming human is black
-        Player aiPlayer = new HumanPlayer(PlayerColor.WHITE); // AI as white for now
-        this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
+        // AI as white for now
+        Player humanPlayer =  new HumanPlayer(PlayerColor.BLACK);
+        Player aiPlayer  = new HumanPlayer(PlayerColor.WHITE);
+        switch (diff) {
+            case "Easy" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
+            case "Normal" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
+            case "Hard" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
+        }
+
+
         this.chessUtils = new ChessUtils(canvas, game);
     }
+
 
     @FXML
     public void restartGame(ActionEvent event) {

@@ -2,6 +2,9 @@ package com.gomoku.project04gomoku.app.models;
 
 import com.gomoku.project04gomoku.app.logic.Player;
 
+import java.util.Objects;
+import java.util.Stack;
+
 /**
  * Hold the 2D array representing the game board of Gomoku including functionalities that check and change the board.
  */
@@ -13,14 +16,16 @@ public class Board {
     /**
      * Actual 2D array representing the board.
      */
-    private Player[][] board;
+    private Player[][] board; // Two-dimensional array to represent the board
+    private Stack<Move> moveHistory;
 
     /**
      * Initialize the board with default SIZE x SIZE dimension and reset all cell to empty state.
      */
     public Board() {
         board = new Player[SIZE][SIZE];
-        reset(); // Sets all positions to Player.NONE
+        moveHistory = new Stack<>();
+        reset(); // Sets all positions to null (empty)
     }
 
     /**
@@ -45,6 +50,9 @@ public class Board {
     public void setCell(int x, int y, Player player) {
         if (x >= 0 && x < SIZE && y >= 0 && y < SIZE) {
             board[x][y] = player;
+            if (player != null) {
+                recordMove(x, y, player); // Record the move
+            }
         }
     }
 
@@ -67,6 +75,7 @@ public class Board {
                 board[i][j] = null;  // Reset each cell to null (empty)
             }
         }
+        moveHistory.clear(); // Clear the move history
     }
 
     /**
@@ -105,5 +114,51 @@ public class Board {
             y += dy;
         }
         return count; // Return the total count of consecutive pieces
+    }
+
+    // Records a move to the move history
+    private void recordMove(int x, int y, Player player) {
+        moveHistory.push(new Move(x, y, player));
+    }
+
+    // Undoes the last move and returns it
+    public Move undoMove() {
+        if (!moveHistory.isEmpty()) {
+            Move lastMove = moveHistory.pop();
+            // Reset the cell to empty
+            board[lastMove.x][lastMove.y] = null;
+            return lastMove;
+        }
+        return null;
+    }
+
+    // Gets the move history
+    public Stack<Move> getMoveHistory() {
+        return moveHistory;
+    }
+
+    // Inner class to represent a move
+    public static class Move {
+        public int x, y;
+        public Player player;
+
+        public Move(int x, int y, Player player) {
+            this.x = x;
+            this.y = y;
+            this.player = player;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Move move = (Move) o;
+            return x == move.x && y == move.y && Objects.equals(player, move.player);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y, player);
+        }
     }
 }

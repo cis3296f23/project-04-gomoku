@@ -18,4 +18,11 @@ public class ComputerPlayer implements Player {
     }
 
     // Additional methods specific to ComputerPlayer can be added here
+  /*  @Override
+    public String toString() {
+        return "ComputerPlayer{" +
+                "color=" + color +
+                ", type=" + getType() +
+                '}';
+    }*/
 }
