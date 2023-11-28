@@ -1,6 +1,7 @@
 package com.gomoku.project04gomoku.mvc.ViewModel;
 import com.gomoku.project04gomoku.GomokuStart;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,12 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.event.ActionEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.net.URISyntaxException;
+import java.util.*;
 
 public class SettingController {
 
@@ -25,41 +26,31 @@ public class SettingController {
     private ComboBox<String> bgmSelectionBox;
 
     private static final String CONFIG_FILE_PATH = "settings.properties";
+    private static final Map<String,String> BgmPATHs = new HashMap<>();
 
 
 
     public void initialize() {
 
-        bgmVolumeSlider.setValue(loadVolumeSetting());
-        bgmSelectionBox.setValue(loadBgmSetting());
+        bgmVolumeSlider.setValue(loadVolumeSetting()*100);
 
+        bgmSelectionBox.setItems(FXCollections.observableArrayList(MusicPlayer.loadBgmFiles()));
+        bgmSelectionBox.setValue(loadBgmSetting());
         bgmVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             double volume = newValue.doubleValue() / 100;
             MusicPlayer.setVolume(volume);
         });
 
         bgmSelectionBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            changeBGM(newValue);
+            try {
+                changeBGM(newValue);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private List<String> loadBgmFiles() {
-        List<String> bgmFiles = new ArrayList<>();
-        try {
-            InputStream in = getClass().getResourceAsStream("/bgm");
-            assert in != null;
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.endsWith(".mp3")) {
-                    bgmFiles.add(line);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bgmFiles;
-    }
+
 
 
     private Properties loadSettings() {
@@ -78,15 +69,30 @@ public class SettingController {
         return Double.parseDouble(volume);
     }
     private String loadBgmSetting() {
+
+        List<String> bgmFileNames = MusicPlayer.loadBgmFiles();
+        for(String filename: bgmFileNames)
+        {
+            String BgmPath = "bgm/"+filename;
+            BgmPATHs.put(filename,BgmPath);
+        }
         Properties props = loadSettings();
         String bgm = props.getProperty("bgm", "bgm1");
-        return bgm;
+        for(String key: BgmPATHs.keySet())
+        {
+            if(BgmPATHs.get(key).equals(bgm))
+            {
+                return key;
+            }
+        }
+        return "Not bgm Found!";
     }
 
 
-    private void changeBGM(String bgmName) {
-
-
+    private void changeBGM(String bgmName) throws URISyntaxException {
+        String BgmPath = "bgm/"+bgmName;
+        BgmPATHs.put(bgmName,BgmPath);
+        MusicPlayer.playMusic(BgmPath,loadVolumeSetting());
         System.out.println("BGM changed to: " + bgmName);
     }
 
@@ -94,7 +100,7 @@ public class SettingController {
 
 
     @FXML
-    private void applySettings(ActionEvent event) {
+    private void applySettings(ActionEvent event) throws URISyntaxException {
 
 
         double volume = bgmVolumeSlider.getValue() /100;
@@ -112,7 +118,7 @@ public class SettingController {
 
         Properties props = new Properties();
         props.setProperty("volume", String.valueOf(volume));
-        props.setProperty("bgm", selectedBGM);
+        props.setProperty("bgm", BgmPATHs.get(selectedBGM));
 
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_PATH)) {
             props.store(output, null);
