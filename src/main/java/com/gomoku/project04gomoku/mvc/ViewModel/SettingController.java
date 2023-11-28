@@ -28,6 +28,7 @@ public class SettingController {
     private static final String CONFIG_FILE_PATH = "settings.properties";
     private static final Map<String,String> BgmPATHs = new HashMap<>();
 
+    private Scene LastScene;
 
 
     public void initialize() {
@@ -136,20 +137,11 @@ public class SettingController {
     }
     @FXML
     protected void GoBackMain(ActionEvent event) {
-        try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
-            Scene root = new Scene(fxmlLoader.load(), 800, 600);
-
 
             Node source =(Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
 
 
-            stage.setScene(root);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

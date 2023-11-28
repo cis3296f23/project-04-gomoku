@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,14 +67,15 @@ public class MenuController {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
             fxmlLoader.setController(new SettingController());
-            Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
 
-            Stage stage = (Stage) Setting.getScene().getWindow();
+            Parent root = fxmlLoader.load();
+            Stage newWindow = new Stage();
 
+            newWindow.setTitle("Setting");
+            newWindow.setScene(new Scene(root));
+            newWindow.show();
 
-            stage.setScene(root);
-            stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();

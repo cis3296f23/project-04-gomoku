@@ -4,6 +4,7 @@ import com.gomoku.project04gomoku.GomokuStart;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
@@ -92,18 +93,14 @@ public class PVEController {
     }
 
     @FXML
-    private void openNewWindow(ActionEvent event) {
+    private void openNewWindow(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
+        fxmlLoader.setController(new SettingController());
+        Parent root = fxmlLoader.load();
         Stage newWindow = new Stage();
-        StackPane secondaryLayout = new StackPane();
-        secondaryLayout.getChildren().add(new Button("Close"));
 
-        Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> newWindow.close());
-
-        Scene secondScene = new Scene(secondaryLayout, 230, 100);
-
-        newWindow.setTitle("New Window");
-        newWindow.setScene(secondScene);
+        newWindow.setTitle("Setting");
+        newWindow.setScene(new Scene(root));
         newWindow.show();
     }
 }
