@@ -19,7 +19,7 @@
 
         <HBox alignment="CENTER" spacing="10">
             <Label text="BGM Volume：" />
-            <Slider fx:id="bgmVolumeSlider" max="100" min="0" value="50" />
+            <Slider fx:id="bgmVolumeSlider" max="100" min="0" value="50"  />
         </HBox>
 
 
@@ -28,9 +28,7 @@
             <ComboBox fx:id="bgmSelectionBox" prefWidth="150">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="BGM 1" />
-                        <String fx:value="BGM 2" />
-                        <String fx:value="BGM 3" />
+
 
                     </FXCollections>
                 </items>
@@ -39,7 +37,7 @@
 
       
         <GridPane alignment="CENTER" hgap="10" vgap="10">
-            <Button text="Apply" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button text="Apply" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#applySettings"/>
             <Button onAction="#GoBackMain" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          <columnConstraints>
             <ColumnConstraints />
