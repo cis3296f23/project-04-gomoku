@@ -4,7 +4,9 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 public class MusicPlayer {
@@ -13,21 +15,40 @@ public class MusicPlayer {
     public static void initializeMusicPlayer() throws URISyntaxException {
 
         Properties props = loadSettings();
-        URL musicResource = MusicPlayer.class.getResource("/bgm/default_music.mp3");
-        assert musicResource != null;
-        File musicFile = new File(musicResource.getFile());
-        String musicFilePath = musicFile.getAbsolutePath();
-        saveVolumeSetting(0.5,musicFilePath);
-        String musicFileName = props.getProperty("bgm", musicFilePath); // default bgm
-        double volume = Double.parseDouble(props.getProperty("volume", "0.5")); // default volume
+        //URL musicResource = MusicPlayer.class.getResource("/bgm/default_music.mp3");
+        //assert musicResource != null;
+        //File musicFile = new File(musicResource.getFile());
+        //String musicFilePath = musicFile.getAbsolutePath();
+        InitSetting(0.5, "bgm/default_music.mp3");
+        List<String> bgmList = loadBgmFiles();
+        if(!bgmList.isEmpty())
+        {
+            String musicFileName = props.getProperty("bgm"); // default bgm
+            double volume = Double.parseDouble(props.getProperty("volume", "0.5")); // default volume
 
 
+            loadBgmFiles();
+            playMusic(musicFileName, volume);
+        }
 
-        playMusic(musicFileName, volume);
     }
-    private static void saveVolumeSetting(double volume, String selectedBGM) {
+    private static void InitSetting(double volume, String selectedBGM) {
 
         Properties props = new Properties();
+        String bgmfolder="bgm";
+        File bgmdirectory= new File(bgmfolder);
+        if (!bgmdirectory.exists()) {
+            // create while bgm folder
+            boolean result = !bgmdirectory.mkdir();
+            if (result) {
+                System.out.println("Folder created：" + bgmdirectory);
+            } else {
+                System.out.println("Folder creation failed。");
+            }
+        } else {
+            System.out.println("Folder already exist：" + bgmdirectory);
+        }
+
         props.setProperty("volume", String.valueOf(volume));
         props.setProperty("bgm", selectedBGM);
 
@@ -36,6 +57,35 @@ public class MusicPlayer {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public   static List<String> loadBgmFiles() {
+        List<String> bgmFiles = new ArrayList<>();
+        try {
+            String bgmDirectoryPath="bgm";
+            File bgmFile = new File(bgmDirectoryPath);
+            FilenameFilter mp3Filter = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".mp3");
+                }
+            };
+
+            File[] mp3Files = bgmFile.listFiles(mp3Filter);
+            if (mp3Files != null) {
+                for (File file : mp3Files) {
+                    // print file name
+                    System.out.println("Found Mp3 file: " + file.getName());
+                    bgmFiles.add(file.getName());
+                }
+            } else {
+                System.out.println("Directory does not exist");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bgmFiles;
     }
 
 
