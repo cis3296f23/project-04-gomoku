@@ -15,6 +15,7 @@ import com.gomoku.project04gomoku.app.logic.Game;
 import com.gomoku.project04gomoku.app.logic.HumanPlayer;
 import com.gomoku.project04gomoku.app.logic.Player;
 import com.gomoku.project04gomoku.app.logic.Player.PlayerColor;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -88,5 +89,21 @@ public class PVEController {
             stage.setScene(root);
             stage.show();
         }
+    }
+
+    @FXML
+    private void openNewWindow(ActionEvent event) {
+        Stage newWindow = new Stage();
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(new Button("Close"));
+
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> newWindow.close());
+
+        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+
+        newWindow.setTitle("New Window");
+        newWindow.setScene(secondScene);
+        newWindow.show();
     }
 }
