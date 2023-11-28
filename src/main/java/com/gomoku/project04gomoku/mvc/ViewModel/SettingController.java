@@ -37,8 +37,7 @@ public class SettingController {
             double volume = newValue.doubleValue() / 100;
             MusicPlayer.setVolume(volume);
         });
-        List<String> bgmFiles = loadBgmFiles();
-        bgmSelectionBox.setItems(FXCollections.observableArrayList(bgmFiles));
+
         bgmSelectionBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             changeBGM(newValue);
         });
@@ -48,6 +47,7 @@ public class SettingController {
         List<String> bgmFiles = new ArrayList<>();
         try {
             InputStream in = getClass().getResourceAsStream("/bgm");
+            assert in != null;
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line;
             while ((line = reader.readLine()) != null) {
