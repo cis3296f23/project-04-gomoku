@@ -53,7 +53,7 @@ public class MusicPlayer {
             mediaPlayer.stop();
         }
         System.out.println(musicFile);
-        String musicFileName = musicFile.replace("\\", "/");
+        String musicFileName = musicFile.replace("\\", "/").replace("%20", " ");
         System.out.println(musicFileName);
         Media sound = new Media(new File(musicFileName).toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
