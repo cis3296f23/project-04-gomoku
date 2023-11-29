@@ -47,7 +47,7 @@ public class ChessUtils {
                 Player player = game.getBoard().getCell(i, j);
                 if (player != null) {
                     // Draw the piece of the current player
-                    drawPiece(i, j, getPlayerColor(player));
+                    drawPiece(j, i, getPlayerColor(player));
                 }
             }
         }
@@ -120,7 +120,7 @@ public class ChessUtils {
         int col = (int) Math.round((event.getX() - padding) / cellWidth);
         int row = (int) Math.round((event.getY() - padding) / cellHeight);
         if (col >= 0 && col < Board.SIZE && row >= 0 && row < Board.SIZE) {
-            game.handleCellClick(col, row);
+            game.handleCellClick(row, col);
             updateBoard();
             checkGameStatus();
         }
