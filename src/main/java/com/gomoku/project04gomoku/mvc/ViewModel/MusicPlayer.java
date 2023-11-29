@@ -14,15 +14,22 @@ public class MusicPlayer {
     private static final String CONFIG_FILE_PATH = "settings.properties";
     public static void initializeMusicPlayer() throws URISyntaxException {
 
-        Properties props = loadSettings();
-        //URL musicResource = MusicPlayer.class.getResource("/bgm/default_music.mp3");
-        //assert musicResource != null;
-        //File musicFile = new File(musicResource.getFile());
-        //String musicFilePath = musicFile.getAbsolutePath();
-        InitSetting(0.5, "bgm/default_music.mp3");
+
+        File Config = new File(CONFIG_FILE_PATH);
+        if(!Config.exists())
+        {
+            InitSetting(0.5, "bgm/default_music.mp3");
+        }
+
         List<String> bgmList = loadBgmFiles();
+
         if(!bgmList.isEmpty())
         {
+            String bgmpath = "bgm/"+bgmList.get(0);
+
+            Properties props = loadSettings();
+            props.setProperty("bgm",bgmpath);
+
             String musicFileName = props.getProperty("bgm"); // default bgm
             double volume = Double.parseDouble(props.getProperty("volume", "0.5")); // default volume
 
@@ -35,19 +42,7 @@ public class MusicPlayer {
     private static void InitSetting(double volume, String selectedBGM) {
 
         Properties props = new Properties();
-        String bgmfolder="bgm";
-        File bgmdirectory= new File(bgmfolder);
-        if (!bgmdirectory.exists()) {
-            // create while bgm folder
-            boolean result = !bgmdirectory.mkdir();
-            if (result) {
-                System.out.println("Folder created：" + bgmdirectory);
-            } else {
-                System.out.println("Folder creation failed。");
-            }
-        } else {
-            System.out.println("Folder already exist：" + bgmdirectory);
-        }
+
 
         props.setProperty("volume", String.valueOf(volume));
         props.setProperty("bgm", selectedBGM);
@@ -59,11 +54,26 @@ public class MusicPlayer {
         }
     }
 
-    public   static List<String> loadBgmFiles() {
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public  static List<String> loadBgmFiles() {
         List<String> bgmFiles = new ArrayList<>();
         try {
             String bgmDirectoryPath="bgm";
             File bgmFile = new File(bgmDirectoryPath);
+            if (!bgmFile.exists()) {
+                // create while bgm folder
+                boolean result = !bgmFile.mkdir();
+                if (result) {
+                    System.out.println("Folder created：" + bgmFile);
+                } else {
+                    System.out.println("Folder creation failed。");
+                }
+            } else {
+                System.out.println("Folder already exist：" + bgmFile);
+            }
             FilenameFilter mp3Filter = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
