@@ -1,5 +1,6 @@
 package com.gomoku.project04gomoku.mvc.ViewModel;
 import com.gomoku.project04gomoku.GomokuStart;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +12,9 @@ import javafx.scene.control.Slider;
 import javafx.event.ActionEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -21,6 +25,9 @@ public class SettingController {
     @FXML
     private Slider bgmVolumeSlider;
 
+    @FXML
+    private Slider bgmProgressSlider;
+
     FXMLLoader fxmlLoader;
     @FXML
     private ComboBox<String> bgmSelectionBox;
@@ -28,15 +35,19 @@ public class SettingController {
     private static final String CONFIG_FILE_PATH = "settings.properties";
     private static final Map<String,String> BgmPATHs = new HashMap<>();
 
-
+    private double originalVolume;
+    private String originalBGM;
 
     public void initialize() {
 
-        bgmVolumeSlider.setValue(loadVolumeSetting()*100);
+        originalVolume = loadVolumeSetting();
+        originalBGM = loadBgmSetting();
 
+        bgmVolumeSlider.setValue(originalVolume * 100);
         bgmSelectionBox.setItems(FXCollections.observableArrayList(MusicPlayer.loadBgmFiles()));
         bgmSelectionBox.setValue(loadBgmSetting());
         bgmVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
             double volume = newValue.doubleValue() / 100;
             MusicPlayer.setVolume(volume);
         });
@@ -48,9 +59,9 @@ public class SettingController {
                 e.printStackTrace();
             }
         });
+
+
     }
-
-
 
 
     private Properties loadSettings() {
@@ -85,7 +96,7 @@ public class SettingController {
                 return key;
             }
         }
-        return "Not bgm Found!";
+        return "BGM NOT Found!";
     }
 
 
@@ -103,18 +114,28 @@ public class SettingController {
     private void applySettings(ActionEvent event) throws URISyntaxException {
 
 
-        double volume = bgmVolumeSlider.getValue() /100;
+        // Restore
+        double volume = bgmVolumeSlider.getValue() / 100;
         String selectedBGM = bgmSelectionBox.getSelectionModel().getSelectedItem();
 
-        saveVolumeSetting(volume,selectedBGM);
-        changeBGM(selectedBGM);
+        // Save the new value
+        originalVolume = volume;
+        if(!bgmSelectionBox.getSelectionModel().getSelectedItem().equals(originalBGM))
+        {
+            originalBGM = selectedBGM;
+            changeBGM(selectedBGM);
+
+        }
+
+        saveSetting(volume, selectedBGM);
+
         MusicPlayer.setVolume(volume);
 
         System.out.println("Settings applied: Volume is " + volume + ", BGM is " + selectedBGM);
     }
 
 
-    private void saveVolumeSetting(double volume, String selectedBGM) {
+    private void saveSetting(double volume, String selectedBGM) {
 
         Properties props = new Properties();
         props.setProperty("volume", String.valueOf(volume));
@@ -136,20 +157,26 @@ public class SettingController {
     }
     @FXML
     protected void GoBackMain(ActionEvent event) {
-        try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
-            Scene root = new Scene(fxmlLoader.load(), 800, 600);
 
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
 
-            Node source =(Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-
-
-            stage.setScene(root);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Check if value was changed
+        if (bgmVolumeSlider.getValue() / 100 != originalVolume )
+        {
+            MusicPlayer.setVolume(originalVolume);
         }
+        if(!bgmSelectionBox.getSelectionModel().getSelectedItem().equals(originalBGM)) {
+            // Restore to original setting
+
+            try {
+                changeBGM(originalBGM);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Original settings restored");
+
+        }
+        stage.close();
     }
 }

@@ -5,6 +5,7 @@ import com.gomoku.project04gomoku.app.logic.Game;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,7 +36,11 @@ public class LocalWLANMultiplayerController {
         this.ChessUtils =new ChessUtils(canvas,game);
     }
 
-
+    @FXML
+    public void Replay(ActionEvent event)
+    {
+        //TODO: Replay function
+    }
 
     @FXML
     public void restartGame() {
@@ -63,5 +68,15 @@ public class LocalWLANMultiplayerController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void openSetting(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
+        fxmlLoader.setController(new SettingController());
+        Parent root = fxmlLoader.load();
+        Stage Setting = new Stage();
+        Setting.setTitle("Setting");
+        Setting.setScene(new Scene(root));
+        Setting.show();
     }
 }
