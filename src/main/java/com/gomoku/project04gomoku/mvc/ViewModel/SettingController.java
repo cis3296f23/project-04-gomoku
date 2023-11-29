@@ -114,11 +114,11 @@ public class SettingController {
     private void applySettings(ActionEvent event) throws URISyntaxException {
 
 
-        // 更新设置
+        // Restore
         double volume = bgmVolumeSlider.getValue() / 100;
         String selectedBGM = bgmSelectionBox.getSelectionModel().getSelectedItem();
 
-        // 保存新的原始设置
+        // Save the new value
         originalVolume = volume;
         if(!bgmSelectionBox.getSelectionModel().getSelectedItem().equals(originalBGM))
         {
