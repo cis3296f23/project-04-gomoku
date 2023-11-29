@@ -1,5 +1,6 @@
 package com.gomoku.project04gomoku.mvc.ViewModel;
 import com.gomoku.project04gomoku.GomokuStart;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Slider;
 import javafx.event.ActionEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -20,6 +22,9 @@ public class SettingController {
 
     @FXML
     private Slider bgmVolumeSlider;
+
+    @FXML
+    private Slider bgmProgressSlider;
 
     FXMLLoader fxmlLoader;
     @FXML
@@ -49,8 +54,8 @@ public class SettingController {
                 e.printStackTrace();
             }
         });
-    }
 
+    }
 
 
 

@@ -14,12 +14,17 @@ public class MusicPlayer {
     private static final String CONFIG_FILE_PATH = "settings.properties";
     public static void initializeMusicPlayer() throws URISyntaxException {
 
-        Properties props = loadSettings();
+
         //URL musicResource = MusicPlayer.class.getResource("/bgm/default_music.mp3");
         //assert musicResource != null;
         //File musicFile = new File(musicResource.getFile());
         //String musicFilePath = musicFile.getAbsolutePath();
-        InitSetting(0.5, "bgm/default_music.mp3");
+        File Config = new File(CONFIG_FILE_PATH);
+        if(!Config.exists())
+        {
+            InitSetting(0.5, "bgm/default_music.mp3");
+        }
+        Properties props = loadSettings();
         List<String> bgmList = loadBgmFiles();
         if(!bgmList.isEmpty())
         {
@@ -37,6 +42,7 @@ public class MusicPlayer {
         Properties props = new Properties();
         String bgmfolder="bgm";
         File bgmdirectory= new File(bgmfolder);
+
         if (!bgmdirectory.exists()) {
             // create while bgm folder
             boolean result = !bgmdirectory.mkdir();
@@ -57,6 +63,10 @@ public class MusicPlayer {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 
     public   static List<String> loadBgmFiles() {

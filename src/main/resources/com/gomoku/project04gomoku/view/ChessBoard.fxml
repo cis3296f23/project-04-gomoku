@@ -13,13 +13,14 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false" text="Restart" onAction="#restartGame" />
-            <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" text="Setting" textAlignment="CENTER" onAction="#openNewWindow">
+            <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#restartGame" text="Restart" />
+            <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openNewWindow" text="Setting" textAlignment="CENTER">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="BackButton" mnemonicParsing="false" text="Back" onAction="#GoBackToMain" />
+            <Button fx:id="BackButton" mnemonicParsing="false" onAction="#GoBackToMain" text="Back" />
+            <Button fx:id="ReplayButton" mnemonicParsing="false" text="Replay" />
          </children>
       </HBox>
    </bottom>
