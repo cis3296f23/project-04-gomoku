@@ -8,6 +8,7 @@ import com.gomoku.project04gomoku.GomokuStart;
 import com.gomoku.project04gomoku.mvc.test.MenuViewModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
@@ -16,7 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -71,9 +74,14 @@ public class MenuController {
 
             Parent root = fxmlLoader.load();
             Stage newWindow = new Stage();
-
+            newWindow.initModality(Modality.WINDOW_MODAL);
+            Node source =(Node) event.getSource();
+            Stage Parentstage = (Stage) source.getScene().getWindow();
             newWindow.setTitle("Setting");
+            newWindow.initOwner(Parentstage);
             newWindow.setScene(new Scene(root));
+            // 在这里添加关闭前的逻辑
+            newWindow.setOnCloseRequest(Event::consume);
             newWindow.show();
 
 

@@ -12,6 +12,8 @@ import javafx.scene.control.Slider;
 import javafx.event.ActionEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.*;
@@ -33,16 +35,19 @@ public class SettingController {
     private static final String CONFIG_FILE_PATH = "settings.properties";
     private static final Map<String,String> BgmPATHs = new HashMap<>();
 
-    private Scene LastScene;
-
+    private double originalVolume;
+    private String originalBGM;
 
     public void initialize() {
 
-        bgmVolumeSlider.setValue(loadVolumeSetting()*100);
+        originalVolume = loadVolumeSetting();
+        originalBGM = loadBgmSetting();
 
+        bgmVolumeSlider.setValue(originalVolume * 100);
         bgmSelectionBox.setItems(FXCollections.observableArrayList(MusicPlayer.loadBgmFiles()));
         bgmSelectionBox.setValue(loadBgmSetting());
         bgmVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+
             double volume = newValue.doubleValue() / 100;
             MusicPlayer.setVolume(volume);
         });
@@ -55,8 +60,8 @@ public class SettingController {
             }
         });
 
-    }
 
+    }
 
 
     private Properties loadSettings() {
@@ -91,7 +96,7 @@ public class SettingController {
                 return key;
             }
         }
-        return "Not bgm Found!";
+        return "BGM NOT Found!";
     }
 
 
@@ -109,18 +114,28 @@ public class SettingController {
     private void applySettings(ActionEvent event) throws URISyntaxException {
 
 
-        double volume = bgmVolumeSlider.getValue() /100;
+        // 更新设置
+        double volume = bgmVolumeSlider.getValue() / 100;
         String selectedBGM = bgmSelectionBox.getSelectionModel().getSelectedItem();
 
-        saveVolumeSetting(volume,selectedBGM);
-        changeBGM(selectedBGM);
+        // 保存新的原始设置
+        originalVolume = volume;
+        if(!bgmSelectionBox.getSelectionModel().getSelectedItem().equals(originalBGM))
+        {
+            originalBGM = selectedBGM;
+            changeBGM(selectedBGM);
+
+        }
+
+        saveSetting(volume, selectedBGM);
+
         MusicPlayer.setVolume(volume);
 
         System.out.println("Settings applied: Volume is " + volume + ", BGM is " + selectedBGM);
     }
 
 
-    private void saveVolumeSetting(double volume, String selectedBGM) {
+    private void saveSetting(double volume, String selectedBGM) {
 
         Properties props = new Properties();
         props.setProperty("volume", String.valueOf(volume));
@@ -143,10 +158,25 @@ public class SettingController {
     @FXML
     protected void GoBackMain(ActionEvent event) {
 
-            Node source =(Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
 
+        // Check if value was changed
+        if (bgmVolumeSlider.getValue() / 100 != originalVolume )
+        {
+            MusicPlayer.setVolume(originalVolume);
+        }
+        if(!bgmSelectionBox.getSelectionModel().getSelectedItem().equals(originalBGM)) {
+            // Restore to original setting
 
+            try {
+                changeBGM(originalBGM);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Original settings restored");
+
+        }
+        stage.close();
     }
 }

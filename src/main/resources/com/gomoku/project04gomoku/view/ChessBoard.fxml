@@ -14,7 +14,7 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#restartGame" text="Restart" />
-            <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openNewWindow" text="Setting" textAlignment="CENTER">
+            <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openSetting" text="Setting" textAlignment="CENTER">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
