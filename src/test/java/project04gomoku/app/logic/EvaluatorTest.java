@@ -33,17 +33,60 @@ public class EvaluatorTest {
     }
 
     @Test
-    public void testOpenFour() {
+    public void testOpenVerticalFour() {
+        int score = 0;
         // Set up an open four pattern
-        board.setCell(0, 0, null); // empty space
-        for (int i = 1; i <= 4; i++) {
-            board.setCell(i, 0, blackPlayer); // four consecutive black pieces
-            System.out.println("x = " + i);
-        }
-        board.setCell(5, 0, null); // empty space
+//        for (int i = 1; i <= 4; i++) {
+//            board.setCell(i, 0, blackPlayer); // four consecutive black pieces
+//            System.out.println("x = " + i);
+//        }
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect open four", Evaluator.getOpenFour(), score);
+        // Vertical
+        board.setCell(1, 1, whitePlayer);
+        board.setCell(2, 1, whitePlayer);
+        board.setCell(3, 1, whitePlayer);
+        board.setCell(4, 1, whitePlayer);
+        score = evaluator.evaluateBoard(whitePlayer);
+        assertEquals("Score should reflect open four (vertical)", Evaluator.getOpenFour(), score);
+
+//        // Compound
+//        board.setCell(0, 0, whitePlayer);
+//        board.setCell(0, 1, whitePlayer);
+//        board.setCell(0, 2, whitePlayer);
+//        board.setCell(0, 4, whitePlayer);
+//
+//        board.setCell(1, 0, blackPlayer);
+//        board.setCell(2, 0, blackPlayer);
+//        board.setCell(3, 0, blackPlayer);
+//        board.setCell(4, 0, blackPlayer);
+//
+//        board.setCell(0, 3, blackPlayer);
+//        board.setCell(0, 5, blackPlayer);
+//
+//        score = evaluator.evaluateBoard(whitePlayer);
+//        assertEquals("Score should reflect open four (compound)", Evaluator.getOpenFour(), score);
+
+
+
+//        board.setCell(1, 1, whitePlayer);
+//        board.setCell(2, 2, whitePlayer);
+//        board.setCell(3, 3, whitePlayer);
+//        board.setCell(4, 4, whitePlayer);
+//        assertEquals("Score should reflect open four (diagonal)", Evaluator.getOpenFour(), score);
+
+    }
+
+    @Test
+    public void testHorizontalOpenFour() {
+        int score = 0;
+        // Horizontal
+        board.setCell(0, 2, whitePlayer);
+        board.setCell(0, 3, whitePlayer);
+        board.setCell(0, 4, whitePlayer);
+        board.setCell(0, 5, whitePlayer);
+
+        score = evaluator.evaluateBoard(whitePlayer);
+        assertEquals("Score should reflect open four (horizontally)", Evaluator.getOpenFour(), score);
     }
 
     @Test
