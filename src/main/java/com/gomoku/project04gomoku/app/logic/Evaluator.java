@@ -45,7 +45,7 @@ public class Evaluator {
 
                 // Ensure that we count a pattern only if it starts from this cell
                 // to avoid double counting
-                if (evaluated[x][y]) {
+                if (evaluated[x][y]  || board.isEmpty(x, y)) {
                     continue; // Skip already evaluated cells
                 }
 
