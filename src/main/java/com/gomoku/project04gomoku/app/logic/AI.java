@@ -22,6 +22,8 @@ public class AI {
 
     // Method to find the best move for the AI
     public Move findBestMove() {
+        //Evaluator.printBoard(board);  //DEBUG
+        //System.out.println(""); //DEBUG
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
         bestMove = minimax(board, 2, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
@@ -69,7 +71,11 @@ public class AI {
         ArrayList<Move> emptyCells = getEmptyCells();
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
-            int s = evaluator.evaluateBoard(aiPlayer) - evaluator.evaluateBoard(humanPlayer);
+            //int s = evaluator.evaluateBoard(board, aiPlayer) - evaluator.evaluateBoard(board, humanPlayer);
+            int aiPoint = evaluator.evaluateBoard(board, aiPlayer);
+            int humanPoint = evaluator.evaluateBoard(board, humanPlayer);
+            int s = aiPoint - humanPoint;
+            /* print
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {
                     Player p = board.getCell(i,j);
@@ -79,7 +85,10 @@ public class AI {
                 }
                 System.out.println();
             }
-            System.out.println();
+            */
+
+            System.out.printf("point: ai:%d human:%d \n", aiPoint, humanPoint);   //DEBUG
+
             return new Move(-1, -1, s);
         }
 

@@ -7,10 +7,15 @@ import java.util.Random;
 
 public class Evaluator {
     final static int FIVE = 10000000;       // ●●●●●
+    final static int BLOCKED_FIVE = FIVE;   // ●●●●●○
     final static int FOUR = 100000;         // ●●●●
-    final static int BLOCKED_FOUR = 100000; // ●●●●○ ●○●●●
+    final static int BLOCKED_FOUR = 1500; // ●●●●○ ●○●●●
     final static int THREE = 1000;          // ●●●
     final static int BLOCKED_THREE = 150;   // ●●●○
+    final static int TWO = 200; // ●●
+    final static int BLOCKED_TWO = 15;  // ●
+    final static int ONE = 10;
+    final static int BLOCKED_ONE = 1;
 
     /*
         UNACCOUNTED
@@ -19,6 +24,12 @@ public class Evaluator {
         TWO_SPLIT_THREE
         THREE_FOUR
         BLOCKED_FOUR_FOUR
+
+        FOUR_FOUR
+        FOUR_THREE
+        THREE_THREE
+        TWO_TWO
+
      */
     //
     //  or
@@ -44,6 +55,7 @@ public class Evaluator {
     public Evaluator(Board board){
         this.board = board;
     }
+    /*
     public static void main(String[] args){
         System.out.println("Hello World");
         Board board = generateRandomBoard();
@@ -72,7 +84,7 @@ public class Evaluator {
                         board.setCell(i, j, new ComputerPlayer(Player.PlayerColor.WHITE));
                         break;
                     default:
-                        System.out.println("ERROR: unexpected value at generateRandomBoard");
+                        System.out.println("ERROR: unexpected value at generateRandomBoard()");
                 }
             }
         }
@@ -99,14 +111,92 @@ public class Evaluator {
         }
     }
 
-    public static int evaluatePoint(Board board, int x, int y, boolean[][] evaluated){
+    public static int evaluatePoint(Board board, int x, int y, Player currentPlayer){
+        int score = 0;
+        Player[] horizontal = getLine(board, x, y, DIRECTION.HORIZONTAL);
+        Player[] vertical = getLine(board,x, y, DIRECTION.VERTICAL);
+        Player[] slash = getLine(board, x, y, DIRECTION.DIAGONAL_SLASH);
+        Player[] backslash = getLine(board, x, y, DIRECTION.DIAGONAL_BACKSLASH);
+
+        score += analyzeLine(horizontal, currentPlayer, null);
+        score += analyzeLine(vertical, currentPlayer, null);
+        score += analyzeLine(slash, currentPlayer, null);
+        score += analyzeLine(backslash, currentPlayer, null);
+        return score;
+    }
+
+    //analyze the line returned by getLine, and returns a score
+    public static int analyzeLine(Player[] line, Player currentPlayer, boolean[][] evaluated){
+        if(line.length != 9){
+            System.out.println("ERROR! Incorrect array length at analyzeLine()");
+            return 0;
+        }
+
+        //check the shape of the line by counting the pieces on both sides starting from middle
+        final int mid = 4;  // 4 is the index of middle in array with length 9
+        int gapCount = 0;        //gapCount should be <= 1
+        int blockedCount = 0;    //blockCount should be <= 1
+        int pieceCount = 0;      //pieceCount determines the shape, should be 1 <= pieceCount <= 5
+
+        //check null and if starting point equals currentPlayer
+        if(line[mid] == null || line[mid].getColor() != currentPlayer.getColor()){
+            return 0;
+        }
+
+        //check left side of the array from middle
+        for(int i=4; i>=0; i--){
+            if(line[i] == null){
+                System.out.printf("i = %d is null\n", i);
+            }
+
+            if(line[i] == null && gapCount == 0){
+                gapCount++;
+            } else if(line[i] == null && gapCount >= 1){
+                gapCount++;
+                break;
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){
+                blockedCount++;
+                break;
+            }else if(line[i].getColor() == currentPlayer.getColor()){
+                pieceCount++;
+            }else{
+                System.out.println("ERROR: unknown situation at analyzeLine()");
+            }
+        }
+
+        //check right side of the array from middle
+        for(int i=4; i<9; i++){
+            if(line[i] == null && gapCount == 0){  //problem with using ==
+                gapCount++;
+            }else if(line[i] == null && gapCount >= 1){
+                gapCount++;
+                break;
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){
+                blockedCount++;
+                break;
+            }else if(line[i].getColor() == currentPlayer.getColor()){
+                pieceCount++;
+            }else{
+                System.out.println("ERROR: unknown situation at analyzeLine()");
+            }
+        }
+
+        if(pieceCount == 5){
+            return FIVE;
+        }else if(pieceCount == 4){
+            return FOUR;
+        }else if(pieceCount == 3){
+            return THREE;
+        }else if(pieceCount == 2){
+            return TWO;
+        }else if(pieceCount == 1){
+            return ONE;
+        }
 
         return 0;
     }
 
-    public static int analyzeLine(){
-        return 0;
-    }
+    //return a line (array of size 9) given the location and direction
     public static Player[] getLine(Board board, int x, int y, DIRECTION DIRECTION){
         Player[] toReturn = new Player[9];  // stretch 4 steps from the starting point on each side of direction,
                                             // resulting in an array of length 9
@@ -158,8 +248,14 @@ public class Evaluator {
         return x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE;
     }
 
-    public int evaluateBoard(Player currentPlayer) {
-        return 0;
+    public int evaluateBoard(Board board, Player currentPlayer) {
+        int score = 0;
+        for(int i=0; i<board.SIZE; i++){
+            for(int j=0; j<board.SIZE; j++){
+                score += evaluatePoint(board, i, j, currentPlayer);
+            }
+        }
+        return score;
     }
         /*
         int score = 0;
