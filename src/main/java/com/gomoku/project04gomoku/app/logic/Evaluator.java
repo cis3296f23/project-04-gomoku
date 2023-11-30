@@ -46,8 +46,10 @@ public class Evaluator {
     }
     public static void main(String[] args){
         System.out.println("Hello World");
-        printBoard(generateRandomBoard());
-
+        Board board = generateRandomBoard();
+        printBoard(board);
+        System.out.println("");
+        printLine(getLine(board, 0, 0, DIRECTION.DIAGONAL_BACKSLASH));
     }
 
     /*
@@ -79,7 +81,10 @@ public class Evaluator {
 
     public static void printLine(Player[] line){
         for(int i=0; i<line.length; i++){
-            
+            Player p = line[i];
+            if (p == null) System.out.print("- ");
+            else if (p.getColor() == Player.PlayerColor.WHITE) System.out.print("o ");
+            else System.out.print("x ");
         }
     }
     public static void printBoard(Board board){
@@ -110,29 +115,38 @@ public class Evaluator {
         int dx2 = 0, dy2 = 0;       //two sides of direction
 
         switch(DIRECTION){
-            case HORIZONTAL:        //if DIRECTION.HORIZONTAL, then check left and right
-                dx = 1;   dy=0;     //left
-                dx2 = -1; dy2=0;    //right
-            case VERTICAL:          //if DIRECTION.VERTICAL, then check up and down
-                dx = 0;   dy = 1;   //up
-                dx2 = 0;  dy2 = -1; //down
-            case DIAGONAL_SLASH:
-                dx = 1;   dy =  -1;
-            case DIAGONAL_BACKSLASH:
-
+            case HORIZONTAL:        //if DIRECTION.HORIZONTAL, then check left to right
+                dx = 0;   dy=-1;    //left
+                dx2 = 0;  dy2=1;     //right
+                break;
+            case VERTICAL:          //if DIRECTION.VERTICAL, then check up to down
+                dx = -1;   dy = 0;  //up
+                dx2 = 1;  dy2 = 0;  //down
+                break;
+            case DIAGONAL_SLASH:    //if DIRECTION.DIAGONAL_SLASH, then check top right to bottom left
+                dx = -1;   dy = 1;  //top right
+                dx2 = 1; dy2 = -1;  //bottom left
+                break;
+            case DIAGONAL_BACKSLASH:    //if DIRECTION.DIAGONAL_BACKSLASH, then check top left to bottom right
+                dx = -1;   dy = -1;
+                dx2 = 1;   dy2 = 1;
+                break;
         }
 
         int temp_x = x + dx*4;  //setting the point to start [ O X X X X X X X X ]
         int temp_y = y + dy*4;
 
+        //System.out.printf("dx = %d, dy = %d \n", dx, dy); //DEBUG
+        //System.out.printf("dx2 = %d, dy2 = %d \n", dx2, dy2); //DEBUG
         for(int i=0; i<9; i++){
             if(checkOutOfBoard(x, y)){
                 toReturn[i] = null;
             }else {
                 toReturn[i] = board.getCell(temp_x, temp_y);
             }
-            x += dx2;
-            y += dy2;
+            //System.out.printf("temp_x = %d, temp_y = %d \n", temp_x, temp_y); //DEBUG
+            temp_x += dx2;
+            temp_y += dy2;
         }
 
         return toReturn;
