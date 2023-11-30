@@ -6,7 +6,6 @@ import javax.net.ssl.SSLContext;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static com.gomoku.project04gomoku.app.logic.Evaluator.FIVE_IN_ROW;
 
 public class AI {
     private final Evaluator evaluator;

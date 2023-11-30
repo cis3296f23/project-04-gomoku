@@ -3,19 +3,26 @@ package com.gomoku.project04gomoku.app.logic;
 import com.gomoku.project04gomoku.app.models.Board;
 import com.gomoku.project04gomoku.app.utils.BoardUtils;
 
-public class Evaluator {
-    private final Board board;
+import java.util.Random;
 
-    // ●●●●●
-    final static int FIVE_IN_ROW = 100000;
-    // ○●●●●○
-    final static int OPEN_FOUR = 10000;
-    // ●●●●○ or ●●●●×
-    final static int HALF_OPEN_FOUR = 5000;
-    // ○●●●○
-    final static int OPEN_THREE = 2500;
-    // ●○●●○ or ●●○●○
-    // final static int SPLIT_THREE = 1000;
+public class Evaluator {
+    final static int FIVE = 10000000;       // ●●●●●
+    final static int FOUR = 100000;         // ●●●●
+    final static int BLOCKED_FOUR = 100000; // ●●●●○ ●○●●●
+    final static int THREE = 1000;          // ●●●
+    final static int BLOCKED_THREE = 150;   // ●●●○
+
+    /*
+        UNACCOUNTED
+        SPLIT_THREE     ●●○●○ or ●○●●○
+        TWO_THREE       ●○●●○
+        TWO_SPLIT_THREE
+        THREE_FOUR
+        BLOCKED_FOUR_FOUR
+     */
+    //
+    //  or
+    // final static int SPLIT_THREE = 1000; //
     // ●●●○ or ●●●×
     final static int HALF_OPEN_THREE = 500;
     // ○●●○
@@ -25,23 +32,129 @@ public class Evaluator {
     // ●○●○
     // final static int SPLIT_TWO = 75;
 
-    public Evaluator(Board board) {
+
+
+    public enum DIRECTION{
+        // DIAGONAL_SLASH means top right to left bottom, "/"
+        // DIAGONAL_BACKSLASH means top left to right bottom, "\"
+        HORIZONTAL, VERTICAL, DIAGONAL_SLASH, DIAGONAL_BACKSLASH
+    }
+
+    public Board board;
+    public Evaluator(Board board){
         this.board = board;
+    }
+    public static void main(String[] args){
+        System.out.println("Hello World");
+        printBoard(generateRandomBoard());
+
+    }
+
+    /*
+        Debug method to generate a board filled with random pieces
+     */
+    public static Board generateRandomBoard(){
+        Random rand = new Random();
+        Board board = new Board();
+        for(int i=0; i<Board.SIZE; i++){
+            for(int j=0; j<Board.SIZE; j++){
+                int value = rand.nextInt(3);
+                switch(value){
+                    case 0:
+                        board.setCell(i, j, null);
+                        break;
+                    case 1:
+                        board.setCell(i, j, new ComputerPlayer(Player.PlayerColor.BLACK));
+                        break;
+                    case 2:
+                        board.setCell(i, j, new ComputerPlayer(Player.PlayerColor.WHITE));
+                        break;
+                    default:
+                        System.out.println("ERROR: unexpected value at generateRandomBoard");
+                }
+            }
+        }
+        return board;
+    }
+
+    public static void printLine(Player[] line){
+        for(int i=0; i<line.length; i++){
+            
+        }
+    }
+    public static void printBoard(Board board){
+        for (int i = 0; i < Board.SIZE; i++) {
+            for (int j = 0; j < Board.SIZE; j++) {
+                Player p = board.getCell(i,j);
+                if (p == null) System.out.print("- ");
+                else if (p.getColor() == Player.PlayerColor.WHITE) System.out.print("o ");
+                else System.out.print("x ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static int evaluatePoint(Board board, int x, int y, boolean[][] evaluated){
+
+        return 0;
+    }
+
+    public static int analyzeLine(){
+        return 0;
+    }
+    public static Player[] getLine(Board board, int x, int y, DIRECTION DIRECTION){
+        Player[] toReturn = new Player[9];  // stretch 4 steps from the starting point on each side of direction,
+                                            // resulting in an array of length 9
+
+        int dx = 0, dy = 0;
+        int dx2 = 0, dy2 = 0;       //two sides of direction
+
+        switch(DIRECTION){
+            case HORIZONTAL:        //if DIRECTION.HORIZONTAL, then check left and right
+                dx = 1;   dy=0;     //left
+                dx2 = -1; dy2=0;    //right
+            case VERTICAL:          //if DIRECTION.VERTICAL, then check up and down
+                dx = 0;   dy = 1;   //up
+                dx2 = 0;  dy2 = -1; //down
+            case DIAGONAL_SLASH:
+                dx = 1;   dy =  -1;
+            case DIAGONAL_BACKSLASH:
+
+        }
+
+        int temp_x = x + dx*4;  //setting the point to start [ O X X X X X X X X ]
+        int temp_y = y + dy*4;
+
+        for(int i=0; i<9; i++){
+            if(checkOutOfBoard(x, y)){
+                toReturn[i] = null;
+            }else {
+                toReturn[i] = board.getCell(temp_x, temp_y);
+            }
+            x += dx2;
+            y += dy2;
+        }
+
+        return toReturn;
+    }
+
+    //return true for out of bound
+    //return false for NOT out of bound
+    public static boolean checkOutOfBoard(int x, int y){
+        return x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE;
     }
 
     public int evaluateBoard(Player currentPlayer) {
+        return 0;
+    }
+        /*
         int score = 0;
         boolean[][] evaluated = new boolean[Board.SIZE][Board.SIZE]; // Track evaluated cells
-        /*System.out.println("////////////////////");*/
         // Evaluate the board and adjust the score based on the patterns found
         // Iterate over every cell in the board
         for (int x = 0; x < Board.SIZE; x++) {
             for (int y = 0; y < Board.SIZE; y++) {
 
-               /* if (!board.isEmpty(x, y)) {
-                    System.out.println(board.getCell(x, y).getColor() + " x:" + x + " y:" + y);
-
-                }*/
 
                 // Ensure that we count a pattern only if it starts from this cell
                 // to avoid double counting
@@ -82,14 +195,16 @@ public class Evaluator {
                     continue;
                 }
 
-                /*// Check for Split Three
-                if (checkSplitThree(x, y, currentPlayer)) {
+                // Check for Split Three
+        /*
+        if (checkSplitThree(x, y, currentPlayer)) {
                     score += SPLIT_THREE;
                     markEvaluated(evaluated, x, y, 1, 0, 3); // assuming horizontal split three
                     continue;
                 }*/
 
                 // Check for Half-Open Three
+        /*
                 if (checkHalfOpenThree(x, y, currentPlayer)) {
                     score += HALF_OPEN_THREE;
                     markEvaluated(evaluated, x, y, 1, 0, 3);
@@ -121,23 +236,13 @@ public class Evaluator {
                 }
                 evaluated[x][y] = true;*/
                 // ... Add similar logic for other patterns
+ /*
             }
         }
         return score;
     }
-
-
-    // Helper method to mark cells as counted
-    private void markEvaluated(boolean[][] evaluated, int x, int y, int dx, int dy, int length) {
-        for (int i = 0; i < length; i++) {
-            if (x >= 0 && y >= 0 && x < Board.SIZE && y < Board.SIZE) {
-                evaluated[x][y] = true;
-                x += dx;
-                y += dy;
-            }
-        }
-    }
-
+/*
+/*
     private boolean checkLine(int x, int y, int dx, int dy, int length, Player player) {
         return BoardUtils.checkLine(board, x, y, dx, dy, length, player);
     }
@@ -229,7 +334,7 @@ public class Evaluator {
                 CheckLineWithSplit(x, y, 1, 1, 3, player) ||
                 CheckLineWithSplit(x, y, 1, -1, 3, player);
     }*/
-
+/*
     // Method to check for Split Two
     private boolean checkSplitTwo(int x, int y, Player player) {
         boolean found = CheckLineWithSplit(x, y, 1, 0, 2, player) ||
@@ -277,63 +382,5 @@ public class Evaluator {
         return SPLIT_TWO;
     }*/
 
-    public int evaluateBoardForAll(Player currentPlayer) {
-        int totalScore = 0;
-
-        // Iterate over every cell in the board
-        for (int x = 0; x < Board.SIZE; x++) {
-            for (int y = 0; y < Board.SIZE; y++) {
-                if (!board.isEmpty(x, y) && board.getCell(x, y) == currentPlayer) {
-                    // Evaluate the score for each piece of the current player
-                    totalScore += evaluateBoardFromCell(x, y, currentPlayer);
-                }
-            }
-        }
-
-        return totalScore;
-    }
-
-    private int evaluateBoardFromCell(int x, int y, Player currentPlayer) {
-        int score = 0;
-
-        // Check for Five in a Row
-        if (checkFiveInRow(x, y, currentPlayer)) {
-            score += FIVE_IN_ROW;
-        }
-
-        // Check for Open Four
-        if (checkOpenFour(x, y, currentPlayer)) {
-            score += OPEN_FOUR;
-        }
-
-        // Check for Half-Open Four
-        if (checkHalfOpenFour(x, y, currentPlayer)) {
-            score += HALF_OPEN_FOUR;
-        }
-
-        // Check for Open Three
-        if (checkOpenThree(x, y, currentPlayer)) {
-            score += OPEN_THREE;
-        }
-
-        // Check for Half-Open Three
-        if (checkHalfOpenThree(x, y, currentPlayer)) {
-            score += HALF_OPEN_THREE;
-        }
-
-        // Check for Open Two
-        if (checkOpenTwo(x, y, currentPlayer)) {
-            score += OPEN_TWO;
-        }
-
-        // Check for Half-Open Two
-        if (checkHalfOpenTwo(x, y, currentPlayer)) {
-            score += HALF_OPEN_TWO;
-        }
-
-        // ... Add similar logic for other patterns, if any
-
-        return score;
-    }
 
 }
