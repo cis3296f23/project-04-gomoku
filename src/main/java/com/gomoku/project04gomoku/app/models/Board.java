@@ -75,7 +75,6 @@ public class Board {
                 board[i][j] = null;  // Reset each cell to null (empty)
             }
         }
-        moveHistory.clear(); // Clear the move history
     }
 
     /**
@@ -135,6 +134,13 @@ public class Board {
     // Gets the move history
     public Stack<Move> getMoveHistory() {
         return moveHistory;
+    }
+
+    public Move getMoveAt(int index) {
+        if (index >= 0 && index < moveHistory.size()) {
+            return moveHistory.get(index);
+        }
+        return null;
     }
 
     // Inner class to represent a move
