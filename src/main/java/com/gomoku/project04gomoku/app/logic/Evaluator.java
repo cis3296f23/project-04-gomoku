@@ -32,6 +32,16 @@ public class Evaluator {
     public int evaluateBoard(Player currentPlayer) {
         int score = 0;
         boolean[][] evaluated = new boolean[Board.SIZE][Board.SIZE]; // Track evaluated cells
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                Player p = board.getCell(i,j);
+                if (p == null) System.out.print("- ");
+                else if (p.getColor() == Player.PlayerColor.WHITE) System.out.print("o ");
+                else System.out.print("x ");
+            }
+            System.out.println();
+        }
+        System.out.println();
         /*System.out.println("////////////////////");*/
         // Evaluate the board and adjust the score based on the patterns found
         // Iterate over every cell in the board
