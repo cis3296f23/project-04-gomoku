@@ -72,11 +72,16 @@ public class Game {
      * Restarts the game and empties the board.
      */
     public void restartGame() {
-        board.reset();
+        board.restart();
         currentPlayer = blackPlayer;
         gameOver = false;
     }
 
+    public void clear() {
+        board.reset();
+        currentPlayer = blackPlayer;
+        gameOver = false;
+    }
     /**
      * Retrieves the board.
      * @return the active game board
@@ -115,10 +120,6 @@ public class Game {
             // Switch to the next player
             currentPlayer = (currentPlayer == blackPlayer) ? whitePlayer : blackPlayer;
 
-            // If the game is in PvE mode and it's now the computer's turn, handle the computer move
-            if (!isPvPMode && currentPlayer.getType() == Player.PlayerType.COMPUTER) {
-                // TODO: Implement computer move logic
-            }
         }
     }
 
@@ -164,4 +165,14 @@ public class Game {
     public boolean isDraw() {
         return !gameOver && board.isFull();
     }
+
+    public boolean undoLastMove() {
+        Board.Move lastMove = board.undoMove();
+        if (lastMove != null) {
+            currentPlayer = lastMove.player;
+            return true;
+        }
+        return false;
+    }
+
 }

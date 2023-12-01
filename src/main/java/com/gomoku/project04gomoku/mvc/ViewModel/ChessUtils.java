@@ -6,6 +6,7 @@
 
 package com.gomoku.project04gomoku.mvc.ViewModel;
 
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -152,4 +153,35 @@ public class ChessUtils {
             updateBoard();
         }
     }
+
+    public void replayMoves() {
+        new Thread(() -> {
+            game.clear();
+            updateBoard();
+            for (int i = 0; i < game.getBoard().getMoveHistory().size(); i++) {
+                Board.Move move = game.getBoard().getMoveAt(i);
+                if (move != null) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                    Platform.runLater(() -> {
+                        game.getBoard().setCell(move.x, move.y, move.player);
+                        updateBoard();
+                    });
+                }
+            }
+        }).start();
+    }
+
+    public void undoMove() {
+        if (game.undoLastMove()) {
+            updateBoard();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "No more moves to undo.", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
 }
