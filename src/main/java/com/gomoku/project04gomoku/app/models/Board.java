@@ -77,6 +77,15 @@ public class Board {
         }
     }
 
+    public void restart(){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                board[i][j] = null;  // Reset each cell to null (empty)
+            }
+        }
+        moveHistory.clear();
+    }
+
     /**
      * Checks if the board is full.
      * @return true if no empty cells leftover, or false otherwise
