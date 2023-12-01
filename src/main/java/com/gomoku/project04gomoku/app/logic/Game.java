@@ -115,10 +115,6 @@ public class Game {
             // Switch to the next player
             currentPlayer = (currentPlayer == blackPlayer) ? whitePlayer : blackPlayer;
 
-            // If the game is in PvE mode and it's now the computer's turn, handle the computer move
-            if (!isPvPMode && currentPlayer.getType() == Player.PlayerType.COMPUTER) {
-                // TODO: Implement computer move logic
-            }
         }
     }
 
