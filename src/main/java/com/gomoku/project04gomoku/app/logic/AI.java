@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 public class AI {
-    private final Evaluator evaluator;
+    //private final Evaluator evaluator;
     private final Board board;
     private final Player aiPlayer;
     private final Player humanPlayer;
@@ -17,7 +17,7 @@ public class AI {
         this.board = board;
         this.aiPlayer = aiPlayer;
         this.humanPlayer = humanPlayer;
-        this.evaluator = new Evaluator(board);
+        //this.evaluator = new Evaluator(board);
     }
 
     // Method to find the best move for the AI
@@ -72,8 +72,8 @@ public class AI {
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
             //int s = evaluator.evaluateBoard(board, aiPlayer) - evaluator.evaluateBoard(board, humanPlayer);
-            int aiPoint = evaluator.evaluateBoard(board, aiPlayer);
-            int humanPoint = evaluator.evaluateBoard(board, humanPlayer);
+            int aiPoint = Evaluator.evaluateBoard(board, aiPlayer);
+            int humanPoint = Evaluator.evaluateBoard(board, humanPlayer);
             int s = aiPoint - humanPoint;
             /* print
             for (int i = 0; i < 15; i++) {

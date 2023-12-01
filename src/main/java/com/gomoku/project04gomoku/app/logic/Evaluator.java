@@ -52,9 +52,12 @@ public class Evaluator {
     }
 
     public Board board;
+    /*
     public Evaluator(Board board){
         this.board = board;
     }
+    */
+
     /*
     public static void main(String[] args){
         System.out.println("Hello World");
@@ -67,13 +70,13 @@ public class Evaluator {
     /*
         Debug method to generate a board filled with random pieces
      */
-    public static Board generateRandomBoard(){
+    public static Board generateRandomBoard() {
         Random rand = new Random();
         Board board = new Board();
-        for(int i=0; i<Board.SIZE; i++){
-            for(int j=0; j<Board.SIZE; j++){
+        for (int i = 0; i < Board.SIZE; i++) {
+            for (int j = 0; j < Board.SIZE; j++) {
                 int value = rand.nextInt(3);
-                switch(value){
+                switch (value) {
                     case 0:
                         board.setCell(i, j, null);
                         break;
@@ -88,8 +91,10 @@ public class Evaluator {
                 }
             }
         }
+
         return board;
     }
+
 
     public static void printLine(Player[] line){
         for(int i=0; i<line.length; i++){
@@ -190,16 +195,17 @@ public class Evaluator {
             return BLOCKED_TWO;
         }else if(pieceCount == 1 && blockedCount == 1) {
             return BLOCKED_ONE;
-        }else if(pieceCount == 5){
-        return FIVE;
-    }else if(pieceCount == 4){
-        return FOUR;
-    }else if(pieceCount == 3){
-        return THREE;
-    }else if(pieceCount == 2){
-        return TWO;
-    }else if(pieceCount == 1) {
-        return ONE;
+        }else if(pieceCount == 5) {
+            return FIVE;
+        }else if(pieceCount == 4){
+            return FOUR;
+        }else if(pieceCount == 3){
+            return THREE;
+        }else if(pieceCount == 2){
+            return TWO;
+        }else if(pieceCount == 1) {
+            return ONE;
+        }
 
         return 0;
     }
@@ -256,7 +262,7 @@ public class Evaluator {
         return x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE;
     }
 
-    public int evaluateBoard(Board board, Player currentPlayer) {
+    public static int evaluateBoard(Board board, Player currentPlayer) {
         int score = 0;
         for(int i=0; i<board.SIZE; i++){
             for(int j=0; j<board.SIZE; j++){

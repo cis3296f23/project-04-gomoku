@@ -1,0 +1,35 @@
+/* 通用样式 */
+.root {
+    -fx-font-family: 'Arial';
+    -fx-font-size: 14px;
+    -fx-background-color: #f0f0f0;
+}
+
+.label {
+    -fx-font-weight: bold;
+}
+
+
+.button {
+    -fx-background-color: #4076d6;
+    -fx-text-fill: white;
+    -fx-border-color: #305090;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+}
+
+.button:hover {
+    -fx-background-color: #305090;
+}
+
+
+.slider {
+    -fx-control-inner-background: #d6d6d6;
+}
+
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #c0c0c0;
+}

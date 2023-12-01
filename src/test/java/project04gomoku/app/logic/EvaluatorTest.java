@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class EvaluatorTest {
+    private int score;
     private Board board;
     private Evaluator evaluator;
     private Player blackPlayer;
@@ -15,6 +16,7 @@ public class EvaluatorTest {
 
     @Before
     public void setUp() {
+        score = 0;
         board = new Board();
         evaluator = new Evaluator(board);
         blackPlayer = new HumanPlayer(Player.PlayerColor.BLACK);
@@ -23,96 +25,201 @@ public class EvaluatorTest {
 
     @Test
     public void testFiveInRow() {
-        // Set up a five-in-a-row pattern
-        for (int i = 0; i < 5; i++) {
+        // Vertical
+        for (int i = 1; i <= 5; i++) {
             board.setCell(i, 0, blackPlayer);
-            System.out.println("x = " + i);
         }
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect five in a row", Evaluator.getFiveInRow(), score);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect five in a row (vertical)", Evaluator.getFiveInRow(), score);
+
+        board.reset();
+
+        // Diagonal
+        for (int i = 1; i <= 5; i++) {
+            board.setCell(i, 0, blackPlayer);
+        }
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect five in a row (diagonal)", Evaluator.getFiveInRow(), score);
+
+        board.reset();
+
+        // Horizontal
+        for (int i = 1; i <= 5; i++) {
+            board.setCell(0, i, blackPlayer);
+        }
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect five in a row (horizontal)", Evaluator.getFiveInRow(), score);
     }
 
     @Test
     public void testOpenFour() {
-        // Set up an open four pattern
-        board.setCell(0, 0, null); // empty space
-        for (int i = 1; i <= 4; i++) {
-            board.setCell(i, 0, blackPlayer); // four consecutive black pieces
-            System.out.println("x = " + i);
-        }
-        board.setCell(5, 0, null); // empty space
+        // Vertical
+        for (int i = 1; i <= 4;i++) {
+            board.setCell(i, 1, whitePlayer);
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect open four", Evaluator.getOpenFour(), score);
+        }
+        score = evaluator.evaluateBoard(whitePlayer);
+        assertEquals("Score should reflect open four (vertical)", Evaluator.getOpenFour(), score);
+
+        board.reset();
+
+        // Diagonal
+        board.setCell(1, 1, whitePlayer);
+        board.setCell(2, 2, whitePlayer);
+        board.setCell(3, 3, whitePlayer);
+        board.setCell(4, 4, whitePlayer);
+
+        score = evaluator.evaluateBoard(whitePlayer);
+        assertEquals("Score should reflect open four (diagonal)", Evaluator.getOpenFour(), score);
+
+        board.reset();
+
+        // Horizontal
+        board.setCell(0, 2, whitePlayer);
+        board.setCell(0, 3, whitePlayer);
+        board.setCell(0, 4, whitePlayer);
+        board.setCell(0, 5, whitePlayer);
+
+        score = evaluator.evaluateBoard(whitePlayer);
+        assertEquals("Score should reflect open four (horizontally)", Evaluator.getOpenFour(), score);
     }
 
     @Test
     public void testHalfOpenFour() {
-        // Set up a half-open four pattern
-        board.setCell(0, 0, null); // empty space
+        // Vertical
         for (int i = 1; i <= 4; i++) {
             board.setCell(i, 0, blackPlayer); // four consecutive black pieces
         }
         board.setCell(5, 0, whitePlayer); // blocked by white player
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect half-open Four", Evaluator.getHalfOpenFour(), score);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open Four (vertical)", Evaluator.getHalfOpenFour(), score);
+
+        board.reset();
+
+        // Diagonal
+        for (int i = 1; i <= 4; i++) {
+            board.setCell(i, i, blackPlayer); // four consecutive black pieces
+        }
+        board.setCell(5, 5, whitePlayer); // blocked by white player
+
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open Four (Diagonal)", Evaluator.getHalfOpenFour(), score);
+
+        board.reset();
+
+        // Horizontal
+        for (int i = 1; i <= 4; i++) {
+            board.setCell(0, i, blackPlayer); // four consecutive black pieces
+        }
+        board.setCell(0, 5, whitePlayer); // blocked by white player
+
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open Four (Horizontal)", Evaluator.getHalfOpenFour(), score);
     }
 
     @Test
     public void testOpenThree() {
-        // Set up an open three pattern
-        board.setCell(0, 0, null); // empty space
+        // Vertical
         for (int i = 1; i <= 3; i++) {
-            board.setCell(i, 0, blackPlayer); // three consecutive black pieces
-            System.out.println("x = " + i);
+            board.setCell(i, 0, blackPlayer); // three consecutive black pieces}
         }
-        board.setCell(4, 0, null); // empty space
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three (vertical)", Evaluator.getOpenThree(), score);
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect open three", Evaluator.getOpenThree(), score);
+        board.reset();
+
+        // Diagonal
+        for (int i = 1; i <= 3; i++) {
+            board.setCell(i, i, blackPlayer); // three consecutive black pieces
+        }
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three (diagonal)", Evaluator.getOpenThree(), score);
+
+        board.reset();
+
+        // Horizontal
+        for (int i = 1; i <= 3; i++) {
+            board.setCell(0, i, blackPlayer); // three consecutive black pieces
+        }
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three (horizontal)", Evaluator.getOpenThree(), score);
+
+
     }
 
     @Test
     public void testHalfOpenThree() {
-        // Set up a half-open three pattern
-        board.setCell(0, 0, null); // empty space
+        // Vertical
         for (int i = 1; i <= 3; i++) {
             board.setCell(i, 0, blackPlayer); // three consecutive black pieces
-            System.out.println("x = " + i);
         }
         board.setCell(4, 0, whitePlayer); // blocked by white player
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenThree(), score);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open three (vertical)", Evaluator.getHalfOpenThree(), score);
+
+        board.reset();
+
+        // Diagonal
+        for (int i = 1; i <= 3; i++) {
+            board.setCell(0, i, blackPlayer); // three consecutive black pieces
+        }
+        board.setCell(0, 4, whitePlayer); // blocked by white player
+
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open three (diagonal)", Evaluator.getHalfOpenThree(), score);
+
+        board.reset();
+
+        // Horizontal
+        for (int i = 1; i <= 3; i++) {
+            board.setCell(0, i, blackPlayer); // three consecutive black pieces
+        }
+        board.setCell(0, 4, whitePlayer); // blocked by white player
+
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open three (Horizontal)", Evaluator.getHalfOpenThree(), score);
     }
 
     @Test
     public void testOpenTwo() {
-        // Set up an open three pattern
-        board.setCell(0, 0, null); // empty space
-        for (int i = 1; i <= 2; i++) {
-            board.setCell(i, 0, blackPlayer); // three consecutive black pieces
-            System.out.println("x = " + i);
-        }
-        board.setCell(3, 0, null); // empty space
+        // Vertical
+        setLane(1,1,1,0, 2, blackPlayer);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three (vertical)", Evaluator.getOpenTwo(), score);
+        board.reset();
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect open three", Evaluator.getOpenTwo(), score);
+        // Diagonal
+        setLane(1,1,1,1, 2, blackPlayer);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three (diagonal)", Evaluator.getOpenTwo(), score);
+        board.reset();
+
+        // Horizontal
+        setLane(0,1,0,1, 2, blackPlayer);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect open three (Horizontal)", Evaluator.getOpenTwo(), score);
     }
 
     @Test
     public void testHalfOpenTwo() {
-        // Set up a half-open three pattern
-        board.setCell(0, 0, null); // empty space
-        for (int i = 1; i <= 2; i++) {
-            board.setCell(i, 0, blackPlayer); // three consecutive black pieces
-            System.out.println("x = " + i);
-        }
-        board.setCell(3, 0, whitePlayer); // blocked by white player
+        // Vertical
+        setLane(0,0,1,0,2,blackPlayer);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open two (Vertical)", Evaluator.getHalfOpenTwo(), score);
+        board.reset();
 
-        int score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect half-open three", Evaluator.getHalfOpenTwo(), score);
+        // Diagonal
+        setLane(0,0,1,1,2,blackPlayer);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open two (Diagonal)", Evaluator.getHalfOpenTwo(), score);
+        board.reset();
+
+        // Horizontal
+        setLane(0,0,0,1,2,blackPlayer);
+        score = evaluator.evaluateBoard(blackPlayer);
+        assertEquals("Score should reflect half-open two (Horizontal)", Evaluator.getHalfOpenTwo(), score);
     }
 
 /*    @Test
@@ -158,7 +265,15 @@ public class EvaluatorTest {
 
     @Test
     public void testEmptyBoard() {
-        int totalScore = evaluator.evaluateBoardForAll(blackPlayer);
-        assertEquals("Total score should be zero for an empty board", 0, totalScore);
+        score = evaluator.evaluateBoardForAll(blackPlayer);
+        assertEquals("Total score should be zero for an empty board", 0, score);
+    }
+
+    private void setLane(int row, int col, int dr, int dc, int count, Player player) {
+        for (int i = 0; i < count; i++) {
+            board.setCell(row, col, player);
+            row += dr;
+            col += dc;
+        }
     }
 }
