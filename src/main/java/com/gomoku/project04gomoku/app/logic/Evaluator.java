@@ -145,16 +145,12 @@ public class Evaluator {
 
         //check left side of the array from middle
         for(int i=4; i>=0; i--){
-            if(line[i] == null){
-                System.out.printf("i = %d is null\n", i);
-            }
-
             if(line[i] == null && gapCount == 0){
                 gapCount++;
             } else if(line[i] == null && gapCount >= 1){
                 gapCount++;
                 break;
-            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){  //one end blocked
                 blockedCount++;
                 break;
             }else if(line[i].getColor() == currentPlayer.getColor()){
@@ -173,6 +169,7 @@ public class Evaluator {
                 break;
             }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){
                 blockedCount++;
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount >= 1 ) {  //two end blocked, use less
                 break;
             }else if(line[i].getColor() == currentPlayer.getColor()){
                 pieceCount++;
@@ -181,17 +178,28 @@ public class Evaluator {
             }
         }
 
-        if(pieceCount == 5){
-            return FIVE;
-        }else if(pieceCount == 4){
-            return FOUR;
-        }else if(pieceCount == 3){
-            return THREE;
-        }else if(pieceCount == 2){
-            return TWO;
-        }else if(pieceCount == 1){
-            return ONE;
-        }
+        if(blockedCount >= 2){
+            return 0;
+        }else if(pieceCount == 5 && blockedCount == 1){
+            return BLOCKED_FIVE;
+        }else if(pieceCount == 4 && blockedCount == 1){
+            return BLOCKED_FOUR;
+        }else if(pieceCount == 3 && blockedCount == 1){
+            return BLOCKED_THREE;
+        }else if(pieceCount == 2 && blockedCount == 1){
+            return BLOCKED_TWO;
+        }else if(pieceCount == 1 && blockedCount == 1) {
+            return BLOCKED_ONE;
+        }else if(pieceCount == 5){
+        return FIVE;
+    }else if(pieceCount == 4){
+        return FOUR;
+    }else if(pieceCount == 3){
+        return THREE;
+    }else if(pieceCount == 2){
+        return TWO;
+    }else if(pieceCount == 1) {
+        return ONE;
 
         return 0;
     }
@@ -257,240 +265,5 @@ public class Evaluator {
         }
         return score;
     }
-        /*
-        int score = 0;
-        boolean[][] evaluated = new boolean[Board.SIZE][Board.SIZE]; // Track evaluated cells
-        // Evaluate the board and adjust the score based on the patterns found
-        // Iterate over every cell in the board
-        for (int x = 0; x < Board.SIZE; x++) {
-            for (int y = 0; y < Board.SIZE; y++) {
-
-
-                // Ensure that we count a pattern only if it starts from this cell
-                // to avoid double counting
-                if (evaluated[x][y]) {
-                    continue; // Skip already evaluated cells
-                }
-
-                // Check for Five in a Row
-                if (checkFiveInRow(x, y, currentPlayer)) {
-                    score += FIVE_IN_ROW;
-                    markEvaluated(evaluated, x, y, 1, 0, 5);
-                    System.out.println("Five in a row found at " + x + "," + y);
-                    continue; // Skip to next cell
-                }
-
-                // Check for Open Four
-                if (checkOpenFour(x, y, currentPlayer)) {
-                    score += OPEN_FOUR;
-                    markEvaluated(evaluated, x, y, 1, 0, 4);
-                    System.out.println("Open four found at " + x + "," + y);
-                    continue; // Skip to next cell
-                }
-
-
-                // Check for Half-Open Four
-                if (checkHalfOpenFour(x, y, currentPlayer)) {
-                    score += HALF_OPEN_FOUR;
-                    markEvaluated(evaluated, x, y, 1, 0, 4);
-                    System.out.println("Half open four found at " + x + "," + y);
-                    continue;
-                }
-
-                // Check for Open Three
-                if (checkOpenThree(x, y, currentPlayer)) {
-                    score += OPEN_THREE;
-                    markEvaluated(evaluated, x, y, 1, 0, 3);
-                    System.out.println("Open three found at " + x + "," + y);
-                    continue;
-                }
-
-                // Check for Split Three
-        /*
-        if (checkSplitThree(x, y, currentPlayer)) {
-                    score += SPLIT_THREE;
-                    markEvaluated(evaluated, x, y, 1, 0, 3); // assuming horizontal split three
-                    continue;
-                }*/
-
-                // Check for Half-Open Three
-        /*
-                if (checkHalfOpenThree(x, y, currentPlayer)) {
-                    score += HALF_OPEN_THREE;
-                    markEvaluated(evaluated, x, y, 1, 0, 3);
-                    System.out.println("Half open three found at " + x + "," + y);
-                    continue;
-                }
-
-                // Check for Open two
-                if (checkOpenTwo(x, y, currentPlayer)) {
-                    score += OPEN_TWO;
-                    markEvaluated(evaluated, x, y, 1, 0, 2);
-                    System.out.println("Open two found at " + x + "," + y);
-                    continue;
-                }
-
-                // Check for Half-Open two
-                if (checkHalfOpenTwo(x, y, currentPlayer)) {
-                    score += HALF_OPEN_TWO;
-                    markEvaluated(evaluated, x, y, 1, 0, 2);
-                    System.out.println("Half open two found at " + x + "," + y);
-                    continue;
-                }
-
-               /* // Check for Split Two
-                if (checkSplitTwo(x, y, currentPlayer)) {
-                    score += SPLIT_TWO;
-                    markEvaluated(evaluated, x, y, 1, 0, 2); // assuming horizontal split two
-                    continue;
-                }
-                evaluated[x][y] = true;*/
-                // ... Add similar logic for other patterns
- /*
-            }
-        }
-        return score;
-    }
-/*
-/*
-    private boolean checkLine(int x, int y, int dx, int dy, int length, Player player) {
-        return BoardUtils.checkLine(board, x, y, dx, dy, length, player);
-    }
-
-    public boolean checkLineWithGaps(int x, int y, int dx, int dy, int length, Player player, boolean openEnds) {
-        return BoardUtils.checkLineWithGaps(board, x, y, dx, dy, length, player, openEnds);
-    }
-
-    public boolean CheckLineWithSplit(int x, int y, int dx, int dy, int length, Player player) {
-        return BoardUtils.CheckLineWithSplit(board, x, y, dx, dy, length, player);
-    }
-
-    // Method to check for Five in a Row
-    private boolean checkFiveInRow(int x, int y, Player player) {
-        boolean found = checkLine(x, y, 1, 0, 5, player) ||
-                checkLine(x, y, 0, 1, 5, player) ||
-                checkLine(x, y, 1, 1, 5, player) ||
-                checkLine(x, y, 1, -1, 5, player);
-        if (found) System.out.println("Five in a Row found at " + x + "," + y);
-        return found;
-    }
-
-    // Method to check for Open Four
-    private boolean checkOpenFour(int x, int y, Player player) {
-        boolean found = (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
-                (checkLineWithGaps(x, y, 1, 0, 4, player, true) ||
-                        checkLineWithGaps(x, y, 0, 1, 4, player, true) ||
-                        checkLineWithGaps(x, y, 1, 1, 4, player, true) ||
-                        checkLineWithGaps(x, y, 1, -1, 4, player, true));
-        if (found) System.out.println("Open Four found at " + x + "," + y);
-        return found;
-    }
-
-    // Method to check for Half Open Four
-    private boolean checkHalfOpenFour(int x, int y, Player player) {
-        boolean found = checkLineWithGaps(x, y, 1, 0, 4, player, false) ||
-                checkLineWithGaps(x, y, 0, 1, 4, player, false) ||
-                checkLineWithGaps(x, y, 1, 1, 4, player, false) ||
-                checkLineWithGaps(x, y, 1, -1, 4, player, false);
-        if (found) System.out.println("Half Open Four at " + x + "," + y);
-        return found;
-    }
-
-    // Method to check for Open Three
-    private boolean checkOpenThree(int x, int y, Player player) {
-        boolean found = (board.getCell(x, y) == null || board.getCell(x, y) == player) &&
-                (checkLineWithGaps(x, y, 1, 0, 3, player, true) ||
-                        checkLineWithGaps(x, y, 0, 1, 3, player, true) ||
-                        checkLineWithGaps(x, y, 1, 1, 3, player, true) ||
-                        checkLineWithGaps(x, y, 1, -1, 3, player, true));
-        if (found) System.out.println("Open Three at " + x + "," + y);
-        return found;
-    }
-
-    // Method to check for Half-Open Three
-    private boolean checkHalfOpenThree(int x, int y, Player player) {
-        boolean found =  checkLineWithGaps(x, y, 1, 0, 3, player, false) ||
-                checkLineWithGaps(x, y, 0, 1, 3, player, false) ||
-                checkLineWithGaps(x, y, 1, 1, 3, player, false) ||
-                checkLineWithGaps(x, y, 1, -1, 3, player, false);
-        if (found) System.out.println("Half Open Three at " + x + "," + y);
-        return found;
-    }
-
-    // Method to check for Open Two
-    private boolean checkOpenTwo(int x, int y, Player player) {
-        boolean found =  checkLineWithGaps(x, y, 1, 0, 2, player, true) ||
-                checkLineWithGaps(x, y, 0, 1, 2, player, true) ||
-                checkLineWithGaps(x, y, 1, 1, 2, player, true) ||
-                checkLineWithGaps(x, y, 1, -1, 2, player, true);
-        if (found) System.out.println("Open Two at " + x + "," + y);
-        return found;
-    }
-
-    // Method to check for Half-Open Two
-    private boolean checkHalfOpenTwo(int x, int y, Player player) {
-        boolean found =  checkLineWithGaps(x, y, 1, 0, 2, player, false) ||
-                checkLineWithGaps(x, y, 0, 1, 2, player, false) ||
-                checkLineWithGaps(x, y, 1, 1, 2, player, false) ||
-                checkLineWithGaps(x, y, 1, -1, 2, player, false);
-        if (found) System.out.println("Hlaf Open Two at " + x + "," + y);
-        return found;
-    }
-
-  /*  // Method to check for Split Three
-    private boolean checkSplitThree(int x, int y, Player player) {
-        return CheckLineWithSplit(x, y, 1, 0, 3, player) ||
-                CheckLineWithSplit(x, y, 0, 1, 3, player) ||
-                CheckLineWithSplit(x, y, 1, 1, 3, player) ||
-                CheckLineWithSplit(x, y, 1, -1, 3, player);
-    }*/
-/*
-    // Method to check for Split Two
-    private boolean checkSplitTwo(int x, int y, Player player) {
-        boolean found = CheckLineWithSplit(x, y, 1, 0, 2, player) ||
-                CheckLineWithSplit(x, y, 0, 1, 2, player) ||
-                CheckLineWithSplit(x, y, 1, 1, 2, player) ||
-                CheckLineWithSplit(x, y, 1, -1, 2, player);
-        if (found) System.out.println("Split Two at " + x + "," + y);
-        return found;
-    }
-
-    // Getters for the constants
-    public static int getFiveInRow() {
-        return FIVE_IN_ROW;
-    }
-
-    public static int getOpenFour() {
-        return OPEN_FOUR;
-    }
-
-    public static int getHalfOpenFour() {
-        return HALF_OPEN_FOUR;
-    }
-
-    public static int getOpenThree() {
-        return OPEN_THREE;
-    }
-
-    public static int getHalfOpenThree() {
-        return HALF_OPEN_THREE;
-    }
-
-    public static int getOpenTwo() {
-        return OPEN_TWO;
-    }
-
-    public static int getHalfOpenTwo() {
-        return HALF_OPEN_TWO;
-    }
-
-  /*  public static int getSplitThree() {
-        return SPLIT_THREE;
-    }*/
-
-  /*  public static int getSplitTwo() {
-        return SPLIT_TWO;
-    }*/
-
 
 }

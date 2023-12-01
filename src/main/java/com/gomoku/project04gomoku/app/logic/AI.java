@@ -87,7 +87,7 @@ public class AI {
             }
             */
 
-            System.out.printf("point: ai:%d human:%d \n", aiPoint, humanPoint);   //DEBUG
+            //System.out.printf("point: ai:%d human:%d \n", aiPoint, humanPoint);   //DEBUG
 
             return new Move(-1, -1, s);
         }
@@ -128,7 +128,7 @@ public class AI {
                     break;
                 }
             }
-            System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
+            //System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
             return bestMove;
         }
         // for minimize move
