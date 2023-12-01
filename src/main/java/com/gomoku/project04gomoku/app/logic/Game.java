@@ -165,4 +165,14 @@ public class Game {
     public boolean isDraw() {
         return !gameOver && board.isFull();
     }
+
+    public boolean undoLastMove() {
+        Board.Move lastMove = board.undoMove();
+        if (lastMove != null) {
+            currentPlayer = lastMove.player;
+            return true;
+        }
+        return false;
+    }
+
 }
