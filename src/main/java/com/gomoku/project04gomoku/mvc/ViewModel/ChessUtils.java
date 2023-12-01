@@ -157,27 +157,19 @@ public class ChessUtils {
     public void replayMoves() {
         new Thread(() -> {
             game.restartGame();
-            System.out.println("Restart Game");
             updateBoard();
-            System.out.println("Updated Board");
             for (int i = 0; i < game.getBoard().getMoveHistory().size(); i++) {
-                System.out.println("In the for loop!");
                 Board.Move move = game.getBoard().getMoveAt(i);
-                System.out.println("Get the move!");
                 if (move != null) {
-                    System.out.println("Move != null");
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
                     Platform.runLater(() -> {
                         game.getBoard().setCell(move.x, move.y, move.player);
-                        System.out.println("In x:" + move.x + " y:" + move.y + " player:" + move.player);
                         updateBoard();
                     });
-                } else {
-                    System.out.println("Move has problem!");
                 }
             }
         }).start();
