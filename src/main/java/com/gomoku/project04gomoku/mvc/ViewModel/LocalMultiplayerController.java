@@ -40,10 +40,10 @@ public class LocalMultiplayerController {
     }
 
     @FXML
-    public void Replay(ActionEvent event)
-    {
-        //TODO: Replay function
+    public void Replay(ActionEvent event) {
+        chessUtils.replayMoves();
     }
+
     @FXML
     public void handleCanvasClick(javafx.scene.input.MouseEvent event) {
         chessUtils.handleCanvasClick(event);
