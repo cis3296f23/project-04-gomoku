@@ -1,6 +1,7 @@
 package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.GomokuStart;
+import com.gomoku.project04gomoku.app.logic.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
-import com.gomoku.project04gomoku.app.logic.AI;
-import com.gomoku.project04gomoku.app.logic.Game;
-import com.gomoku.project04gomoku.app.logic.HumanPlayer;
-import com.gomoku.project04gomoku.app.logic.Player;
 import com.gomoku.project04gomoku.app.logic.Player.PlayerColor;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -47,11 +44,11 @@ public class PVEController {
         this.game.setupGameMode(false); // Set to PvE mode
         // AI as white for now
         Player humanPlayer =  new HumanPlayer(PlayerColor.BLACK);
-        Player aiPlayer  = new HumanPlayer(PlayerColor.WHITE);
+        Player aiPlayer  = new ComputerPlayer(PlayerColor.WHITE);
         switch (diff) {
-            case "Easy" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
-            case "Normal" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
-            case "Hard" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
+            case "Easy" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer,2);
+            case "Normal" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer,4);
+            case "Hard" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer,6);
         }
 
 
@@ -75,7 +72,7 @@ public class PVEController {
         chessUtils.handleCanvasClick(event);
         // After human move, check if game is over or if it's AI's turn
         if (!game.isGameOver() && game.getCurrentPlayer().getType() == Player.PlayerType.COMPUTER) {
-            AI.Move aiMove = ai.findBestMove();
+            AI.Move aiMove = ai.findBestMove(game.getCurrentPlayer());
             if (aiMove != null) {
                 game.handleCellClick(aiMove.x, aiMove.y);
                 chessUtils.updateBoard();

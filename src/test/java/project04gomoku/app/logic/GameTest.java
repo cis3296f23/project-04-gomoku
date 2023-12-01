@@ -47,7 +47,7 @@ public class GameTest {
     public void testRestartGame() {
         game.handleCellClick(0, 0); // Black
         game.restartGame();
-        assertNull("Board should be empty after game restart.", game.getBoard().getCell(0, 0));
+        assertEquals(true, game.getBoard().getCell(0, 0).getType()== Player.PlayerType.EMPTY);
         assertFalse("Game should not be over after restart.", game.isGameOver());
         assertEquals("Current player should be BLACK after game restart.", Player.PlayerColor.BLACK, game.getCurrentPlayer().getColor());
     }
@@ -96,6 +96,13 @@ public class GameTest {
             }
         }
         assertTrue("Game should be over after diagonal winning condition is met.", game.isGameOver());
+    }
+    @Test
+    public void testGetCell()
+    {
+        Board board = game.getBoard();
+        assertEquals(true, board.getCell(1,6).getType()==Player.PlayerType.EMPTY);
+
     }
 
     // Add more tests if there are more behaviors to verify.

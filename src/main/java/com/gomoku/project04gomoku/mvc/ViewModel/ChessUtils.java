@@ -45,7 +45,7 @@ public class ChessUtils {
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
                 Player player = game.getBoard().getCell(i, j);
-                if (player != null) {
+                if (player.getType() != Player.PlayerType.EMPTY) {
                     // Draw the piece of the current player
                     drawPiece(j, i, getPlayerColor(player));
                 }

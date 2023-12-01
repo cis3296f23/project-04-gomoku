@@ -9,7 +9,15 @@ public class BoardUtils {
     // Helper method to check line for a pattern
     public static boolean checkLine(Board board, int x, int y, int dx, int dy, int length, Player player) {
         for (int i = 0; i < length; i++) {
-            if (x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE || board.getCell(x, y) != player) {
+
+            if (x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE ) {
+                //System.out.println(x+" , "+y);
+                return false;
+            }
+            if (board.getCell(x, y).getType() != player.getType()) {
+                //System.out.println(x+" , "+y);
+                //System.out.println("false的棋盘上的type：" + board.getCell(x, y).getType());
+                //System.out.println("false的获得的player type:" + player.getType());
                 return false;
             }
             x += dx;
@@ -36,7 +44,7 @@ public class BoardUtils {
                     return false;
                 }
             } else {
-                if (board.getCell(checkX, checkY) != player) {
+                if (board.getCell(checkX, checkY).getType() != player.getType()) {
 
                     return false;
                 }
@@ -45,6 +53,10 @@ public class BoardUtils {
         return true;
     }
 
+    public static boolean isVaild(int x, int y)
+    {
+        return x >= 0 && y >= 0 && x < Board.SIZE && y < Board.SIZE;
+    }
     // Check for the existence of split chess patterns (such as separated three pieces, etc.)
     // Helper method to check split patterns
     public static boolean CheckLineWithSplit(Board board, int x, int y, int dx, int dy, int length, Player player) {
@@ -65,7 +77,7 @@ public class BoardUtils {
                 // Ends should be empty for split pattern
                 if (cellPlayer != null) return false;
             } else {
-                if (cellPlayer == player) {
+                if (cellPlayer.getType() == player.getType()) {
                     stoneCount++;
                 } else if (cellPlayer == null) {
                     gapCount++;

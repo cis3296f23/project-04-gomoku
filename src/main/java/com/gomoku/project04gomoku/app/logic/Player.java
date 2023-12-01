@@ -10,7 +10,7 @@ public interface Player {
     }
 
     enum PlayerType {
-        HUMAN, COMPUTER;  // Representing types of players
+        HUMAN, COMPUTER,EMPTY;  // Representing types of players
     }
 
     PlayerColor getColor();

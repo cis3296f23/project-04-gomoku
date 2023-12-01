@@ -1,5 +1,6 @@
 package com.gomoku.project04gomoku.app.models;
 
+import com.gomoku.project04gomoku.app.logic.EmptyPlayer;
 import com.gomoku.project04gomoku.app.logic.Player;
 
 import java.util.Objects;
@@ -16,14 +17,15 @@ public class Board {
     /**
      * Actual 2D array representing the board.
      */
-    private Player[][] board; // Two-dimensional array to represent the board
-    private Stack<Move> moveHistory;
+    private final Player[][] board; // Two-dimensional array to represent the board
+    private final Stack<Move> moveHistory;
 
     /**
      * Initialize the board with default SIZE x SIZE dimension and reset all cell to empty state.
      */
     public Board() {
         board = new Player[SIZE][SIZE];
+        initBoard();
         moveHistory = new Stack<>();
         reset(); // Sets all positions to null (empty)
     }
@@ -39,6 +41,16 @@ public class Board {
             return null;  // Outside the board bounds
         }
         return board[x][y];
+    }
+    public void initBoard()
+    {
+        for(int i = 0; i<SIZE;i++)
+        {
+            for(int j =0;j<SIZE;j++)
+            {
+                board[i][j]=new EmptyPlayer(Player.PlayerColor.NONE);
+            }
+        }
     }
 
     /**
@@ -63,7 +75,7 @@ public class Board {
      * @return true if the cell is empty, or false otherwise
      */
     public boolean isEmpty(int x, int y) {
-        return getCell(x, y) == null;
+        return getCell(x, y).getType() == Player.PlayerType.EMPTY;
     }
 
     /**
@@ -72,7 +84,7 @@ public class Board {
     public void reset() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                board[i][j] = null;  // Reset each cell to null (empty)
+                board[i][j] = new EmptyPlayer(Player.PlayerColor.NONE);  // Reset each cell to null (empty)
             }
         }
         moveHistory.clear(); // Clear the move history
