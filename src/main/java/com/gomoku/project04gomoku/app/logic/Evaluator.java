@@ -95,8 +95,18 @@ public class Evaluator {
         return board;
     }
 
+    public static int evaluateBoard(Board board, Player currentPlayer) {
+        int score = 0;
+        for(int i=0; i<board.SIZE; i++){
+            for(int j=0; j<board.SIZE; j++){
+                score += evaluatePoint(board, i, j, currentPlayer);
+            }
+        }
+        return score;
+    }
 
-    public static void printLine(Player[] line){
+    //Debugger method of getLine
+    private static void printLine(Player[] line){
         for(int i=0; i<line.length; i++){
             Player p = line[i];
             if (p == null) System.out.print("- ");
@@ -116,8 +126,10 @@ public class Evaluator {
         }
     }
 
-    public static int evaluatePoint(Board board, int x, int y, Player currentPlayer){
+    private static int evaluatePoint(Board board, int x, int y, Player currentPlayer){
         int score = 0;
+        boolean evaulated[][] = new boolean[Board.SIZE][Board.SIZE];
+
         Player[] horizontal = getLine(board, x, y, DIRECTION.HORIZONTAL);
         Player[] vertical = getLine(board,x, y, DIRECTION.VERTICAL);
         Player[] slash = getLine(board, x, y, DIRECTION.DIAGONAL_SLASH);
@@ -131,7 +143,7 @@ public class Evaluator {
     }
 
     //analyze the line returned by getLine, and returns a score
-    public static int analyzeLine(Player[] line, Player currentPlayer, boolean[][] evaluated){
+    private static int analyzeLine(Player[] line, Player currentPlayer, boolean[][] evaluated){
         if(line.length != 9){
             System.out.println("ERROR! Incorrect array length at analyzeLine()");
             return 0;
@@ -262,14 +274,6 @@ public class Evaluator {
         return x < 0 || y < 0 || x >= Board.SIZE || y >= Board.SIZE;
     }
 
-    public static int evaluateBoard(Board board, Player currentPlayer) {
-        int score = 0;
-        for(int i=0; i<board.SIZE; i++){
-            for(int j=0; j<board.SIZE; j++){
-                score += evaluatePoint(board, i, j, currentPlayer);
-            }
-        }
-        return score;
-    }
+
 
 }
