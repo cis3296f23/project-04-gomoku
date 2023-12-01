@@ -175,5 +175,13 @@ public class ChessUtils {
         }).start();
     }
 
+    public void undoMove() {
+        if (game.undoLastMove()) {
+            updateBoard();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "No more moves to undo.", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
 
 }
