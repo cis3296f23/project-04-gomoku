@@ -156,7 +156,7 @@ public class ChessUtils {
 
     public void replayMoves() {
         new Thread(() -> {
-            game.restartGame();
+            game.clear();
             updateBoard();
             for (int i = 0; i < game.getBoard().getMoveHistory().size(); i++) {
                 Board.Move move = game.getBoard().getMoveAt(i);
