@@ -22,6 +22,7 @@ public class LocalMultiplayerController {
     @FXML private Button RestartButton;
     @FXML private Button SettingButton;
     @FXML private Button BackButton;
+    @FXML private Button UndoButton;
 
 
     private ChessUtils chessUtils;
@@ -70,5 +71,10 @@ public class LocalMultiplayerController {
         Setting.setTitle("Setting");
         Setting.setScene(new Scene(root));
         Setting.show();
+    }
+
+    @FXML
+    public void undoMove(ActionEvent event) {
+        chessUtils.undoMove();
     }
 }
