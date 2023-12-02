@@ -95,7 +95,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     private void restartGame() {
         game.restartGame(); // Reset game
         ChessUtils.updateBoard(); // Update the chessboard display
-        taContent.appendText("[System] The game has been restarted\\n");
+        taContent.appendText("[System] The game has been restarted\n");
     }
 
 
