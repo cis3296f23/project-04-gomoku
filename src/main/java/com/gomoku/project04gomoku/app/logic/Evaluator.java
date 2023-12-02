@@ -203,7 +203,7 @@ public class Evaluator {
         }
 
         //check right side of the array from middle
-        for(int i=4; i<9; i++){
+        for(int i=5; i<9; i++){     //needs to start at 5 because 4 is counted in above loop
             if(line[i] == null && gapCount == 0){  //problem with using ==
                 gapCount++;
             }else if(line[i] == null && gapCount >= 1){
@@ -247,8 +247,53 @@ public class Evaluator {
         return 0;
     }
 
-    private static Player[] newAnalyzeLine(){
-        return null;
+    private static int newAnalyzeLine(Player[] line, Player currentPlayer, boolean[][] evaluated){
+        if(line.length != 9){
+            System.out.println("ERROR! Incorrect array length at analyzeLine()");
+            return 0;
+        }
+
+        //check the shape of the line by counting the pieces on both sides starting from middle
+        int gapCount = 0;        //gapCount should be <= 1
+        int blockedCount = 0;    //blockCount should be <= 1
+        int pieceCount = 0;      //pieceCount determines the shape, should be 1 <= pieceCount <= 5
+
+        //check left side of the array from middle
+        for(int i=4; i>=0; i--){
+            if(line[i] == null && gapCount == 0){
+                gapCount++;
+            } else if(line[i] == null && gapCount >= 1){
+                gapCount++;
+                break;
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){  //one end blocked
+                blockedCount++;
+                break;
+            }else if(line[i].getColor() == currentPlayer.getColor()){
+                pieceCount++;
+            }else{
+                System.out.println("ERROR: unknown situation at analyzeLine()");
+            }
+        }
+
+        //check right side of the array from middle
+        for(int i=4; i<9; i++){
+            if(line[i] == null && gapCount == 0){  //problem with using ==
+                gapCount++;
+            }else if(line[i] == null && gapCount >= 1){
+                gapCount++;
+                break;
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount == 0){
+                blockedCount++;
+            }else if(line[i].getColor() != currentPlayer.getColor() && blockedCount >= 1 ) {  //two end blocked, use less
+                break;
+            }else if(line[i].getColor() == currentPlayer.getColor()){
+                pieceCount++;
+            }else{
+                System.out.println("ERROR: unknown situation at analyzeLine()");
+            }
+        }
+
+        return 0;
     }
 
     public static String newGetLine(Board board, int x, int y, DIRECTION DIRECTION, Player currentPlayer){
