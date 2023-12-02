@@ -71,16 +71,6 @@ public class AI {
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
             int s = evaluator.evaluateBoard(aiPlayer) - evaluator.evaluateBoard(humanPlayer);
-//            for (int i = 0; i < 15; i++) {
-//                for (int j = 0; j < 15; j++) {
-//                    Player p = board.getCell(i,j);
-//                    if (p == null) System.out.print("- ");
-//                    else if (p.getColor() == Player.PlayerColor.WHITE) System.out.print("o ");
-//                    else System.out.print("x ");
-//                }
-//                System.out.println();
-//            }
-//            System.out.println();
 //            System.out.printf("s = %d\n", s);
             return new Move(-1, -1, s);
         }
