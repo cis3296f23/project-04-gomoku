@@ -345,7 +345,30 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     }
 
 
+    private void sendMessage(String message) {
+        if (netType == NetType.SERVER) {
+            server.sendMessage(message);
+        } else if (netType == NetType.CLIENT) {
+            client.sendMessage(message);
+        }
+    }
 
+    @Override
+    public void onDisconnect() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "The line is disconnected!", ButtonType.OK);
+        alert.setOnCloseRequest(event -> System.exit(0));
+        alert.show();
+    }
+
+
+    @Override
+    public void onServerOK() {
+        System.out.println("server OK");
+        taContent.appendText("[System] Host establishment successful!\n");
+        StartButton.setDisable(true);
+        ConnectButton.setDisable(true);
+        tfIP.setDisable(true);
+    }
 
     static String buildMessage(String head, String body) {
         return head + ':' + body;
