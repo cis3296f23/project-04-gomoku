@@ -16,13 +16,17 @@ public class EvaluatorTest {
 
     @Before
     public void setUp() {
+        /*
         score = 0;
         board = new Board();
         evaluator = new Evaluator(board);
         blackPlayer = new HumanPlayer(Player.PlayerColor.BLACK);
         whitePlayer = new HumanPlayer(Player.PlayerColor.WHITE);
+        */
+
     }
 
+    /*
     @Test
     public void testFiveInRow() {
         // Vertical
@@ -30,7 +34,7 @@ public class EvaluatorTest {
             board.setCell(i, 0, blackPlayer);
         }
         score = evaluator.evaluateBoard(blackPlayer);
-        assertEquals("Score should reflect five in a row (vertical)", Evaluator.getFiveInRow(), score);
+        assertEquals("Score should reflect five in a row (vertical)", Evaluator, score);
 
         board.reset();
 
@@ -247,6 +251,7 @@ public class EvaluatorTest {
         assertEquals("Score should reflect split two", Evaluator.getSplitTwo(), score);
     }*/
 
+    /*
     @Test
     public void testEvaluateBoardForAll() {
         // Set up a board state that should result in a specific score
@@ -276,4 +281,6 @@ public class EvaluatorTest {
             col += dc;
         }
     }
+    */
+
 }

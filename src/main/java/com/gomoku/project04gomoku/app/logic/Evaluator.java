@@ -126,8 +126,17 @@ public class Evaluator {
         }
     }
 
+
+    //return score of a point by adding all the shapes in four directions
     private static int evaluatePoint(Board board, int x, int y, Player currentPlayer){
         int score = 0;
+
+        //no need to check out of bound here, why? check how it is called evaluateBoard()
+        //return 0 if it is empty, or it is opponent's piece
+        if(board.getCell(x, y) == null || board.getCell(x, y).getColor() != currentPlayer.getColor()){
+            return 0;
+        }
+
         boolean evaulated[][] = new boolean[Board.SIZE][Board.SIZE];
 
         Player[] horizontal = getLine(board, x, y, DIRECTION.HORIZONTAL);
@@ -171,6 +180,7 @@ public class Evaluator {
         int pieceCount = 0;      //pieceCount determines the shape, should be 1 <= pieceCount <= 5
 
         //check null and if starting point equals currentPlayer
+        //can be deleted because this is checked at evaluated point
         if(line[mid] == null || line[mid].getColor() != currentPlayer.getColor()){
             return 0;
         }
@@ -235,6 +245,68 @@ public class Evaluator {
         }
 
         return 0;
+    }
+
+    private static Player[] newAnalyzeLine(){
+        return null;
+    }
+
+    public static String newGetLine(Board board, int x, int y, DIRECTION DIRECTION, Player currentPlayer){
+        int dx = 0, dy = 0;
+        int dx2 = 0, dy2 = 0;       //two sides of direction
+
+        switch(DIRECTION){
+            case HORIZONTAL:        //if DIRECTION.HORIZONTAL, then check left to right
+                dx = 0;   dy=-1;    //left
+                dx2 = 0;  dy2=1;     //right
+                break;
+            case VERTICAL:          //if DIRECTION.VERTICAL, then check up to down
+                dx = -1;   dy = 0;  //up
+                dx2 = 1;  dy2 = 0;  //down
+                break;
+            case DIAGONAL_SLASH:    //if DIRECTION.DIAGONAL_SLASH, then check top right to bottom left
+                dx = -1;   dy = 1;  //top right
+                dx2 = 1; dy2 = -1;  //bottom left
+                break;
+            case DIAGONAL_BACKSLASH:    //if DIRECTION.DIAGONAL_BACKSLASH, then check top left to bottom right
+                dx = -1;   dy = -1;
+                dx2 = 1;   dy2 = 1;
+                break;
+        }
+
+        x = x + dx*4;  //setting the point to start [ O X X X X X X X X ]
+        y = y + dy*4;
+        String toReturn = "";
+
+        /*
+            3 = out of bound
+            2 = opponent
+            1 = self
+            0 = empty
+         */
+
+        for(int i=0; i<9; i++){
+
+            if(checkOutOfBoard(x, y)){
+                toReturn += "3";
+                continue;
+            }
+            Player piece = board.getCell(x, y);
+
+            if(piece == null) {
+                toReturn += "0";
+            }else if(piece.getColor() == currentPlayer.getColor()){
+                toReturn += "1";
+            }else if(piece.getColor() != currentPlayer.getColor()){
+                toReturn += "2";
+            }else{
+                System.out.println("ERROR! unexpected situation at newGetLine()");
+            }
+
+            x += dx;
+            y += dy;
+        }
+        return null;
     }
 
     //return a line (array of size 9) given the location and direction
