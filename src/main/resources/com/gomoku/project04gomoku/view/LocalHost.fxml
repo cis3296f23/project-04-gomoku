@@ -9,11 +9,11 @@
     <top>
         <HBox alignment="CENTER" spacing="10">
             <children>
-                <Label fx:id="lbIP" prefWidth="200.0" text="本机IP：127.0.0.1"/>
-                <TextField fx:id="tfIP" promptText="请输入对方IP"/>
-                <Button fx:id="ConnectButton" mnemonicParsing="false" onAction="#handleConnectClicked" text="连接"
+                <Label fx:id="lbIP" prefWidth="200.0" text="IP：127.0.0.1"/>
+                <TextField fx:id="tfIP" promptText="Please enter the other's IP"/>
+                <Button fx:id="ConnectButton" mnemonicParsing="false" onAction="#handleConnectClicked" text="Connect"
                 />
-                <Button fx:id="StartButton" mnemonicParsing="false" onAction="#handleStartServer" text="建主"
+                <Button fx:id="StartButton" mnemonicParsing="false" onAction="#handleStartServer" text="Create a host"
                 />
             </children>
         </HBox>
@@ -40,11 +40,11 @@
                         <Insets/>
                     </HBox.margin>
                 </Button>
+                <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#handleUndoClicked" text="Undo"/>
                 <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false"
                         onAction="#handleRestartClicked" text="Restart"/>
                 <Button fx:id="BackButton" mnemonicParsing="false" onAction="#GoBackToMain" text="Back"/>
                 <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay" text="Replay"/>
-                <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#handleUndoClicked" text="悔棋"/>
             </children>
         </HBox>
     </bottom>
