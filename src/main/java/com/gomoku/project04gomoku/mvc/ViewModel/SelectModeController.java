@@ -142,8 +142,8 @@ public class SelectModeController {
     @FXML
     private void GoToLocalWLANMultiplayer(ActionEvent event) {
         try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/CreateOrJoin.fxml"));
-            fxmlLoader.setController(this);
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/LocalHost.fxml"));
+            fxmlLoader.setController(new LocalWLANMultiplayerController());
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
 
             Node source =(Node) event.getSource();
