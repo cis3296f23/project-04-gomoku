@@ -86,3 +86,60 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void Replay(ActionEvent event) {
+        ChessUtils.replayMoves();
+    }
+
+    private void restartGame() {
+        game.restartGame(); // Reset game
+        ChessUtils.updateBoard(); // Update the chessboard display
+        taContent.appendText("[System]The game has been restarted\\n");
+    }
+
+
+    @FXML
+    public void handleCanvasClick(MouseEvent event) {
+
+        double paddedWidth = canvas.getWidth() - 2 * padding;
+        double paddedHeight = canvas.getHeight() - 2 * padding;
+        double cellWidth = paddedWidth / (Board.SIZE - 1);
+        double cellHeight = paddedHeight / (Board.SIZE - 1);
+
+        int col = (int) Math.round((event.getX() - padding) / cellWidth);
+        int row = (int) Math.round((event.getY() - padding) / cellHeight);
+
+        if (netType == NetType.SERVER) {
+            if (isMyTurn) {
+                if (game.getCurrentPlayer().getColor() == Player.PlayerColor.BLACK) {
+                    if (col >= 0 && col < Board.SIZE && row >= 0 && row < Board.SIZE) {
+                        game.handleCellClick(row, col);
+                        ChessUtils.updateBoard();
+                        ChessUtils.checkGameStatus();
+
+                        // Send message to the other client
+                        sendChessMove(col, row);
+                    }
+                } else {
+                    taContent.appendText("[System] Please wait for the client to move!\n");
+                }
+            }
+        } else if (netType == NetType.CLIENT) {
+            if (isMyTurn) {
+                if (game.getCurrentPlayer().getColor() == Player.PlayerColor.WHITE) {
+                    if (col >= 0 && col < Board.SIZE && row >= 0 && row < Board.SIZE) {
+                        game.handleCellClick(row, col);
+                        ChessUtils.updateBoard();
+                        ChessUtils.checkGameStatus();
+
+                        // Send message to the other client
+                        sendChessMove(col, row);
+                    }
+                } else {
+                    taContent.appendText("[System] Please wait for the host to make a move！\n");
+                }
+            }
+        }
+    }
+
