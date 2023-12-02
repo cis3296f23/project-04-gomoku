@@ -95,7 +95,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     private void restartGame() {
         game.restartGame(); // Reset game
         ChessUtils.updateBoard(); // Update the chessboard display
-        taContent.appendText("[System]The game has been restarted\\n");
+        taContent.appendText("[System] The game has been restarted\\n");
     }
 
 
@@ -201,7 +201,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     @FXML
     protected void handleSendClicked(ActionEvent event) {
         if (!tfMessage.getText().isEmpty()) {
-            String sender = (netType == NetType.SERVER) ? "[Host]" : "[Client]";
+            String sender = (netType == NetType.SERVER) ? "[Host] " : "[Client] ";
             String message = buildMessage(MSG, tfMessage.getText());
             sendMessage(message);
             taContent.appendText(sender + tfMessage.getText() + "\n");
@@ -227,5 +227,99 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     }
 
 
+    @Override
+    public void onConnect() {
+        System.out.println("Some one connected");
+        server.sendMessage(buildMessage(NET, OK));
+        taContent.appendText("[System] Client is connected!\n");
+        tfMessage.setDisable(false);
+        SendButton.setDisable(false);
+        taContent.appendText("[System] The host plays black and moves first\n");
+    }
 
+    @Override
+    public void onMessage(String message) {
+        System.out.println(message);
+        String[] msgArray = message.split(":");
+        switch (msgArray[0]) {
+            case NET:
+                if (msgArray[1].equals(OK)) {
+                    taContent.appendText("[System] Connected to host!\n");
+                    tfMessage.setDisable(false);
+                    SendButton.setDisable(false);
+                    tfIP.setDisable(true);
+                    StartButton.setDisable(true);
+                    ConnectButton.setDisable(true);
+                    taContent.appendText("[System] The client plays white, please wait for the host to move first\n");
+                }
+                break;
+            case MSG:
+                StringBuilder msgContent = new StringBuilder();
+                for (int i = 1; i < msgArray.length; i++) {
+                    msgContent.append(msgArray[i]);
+                    if (i + 1 < msgArray.length) {
+                        msgContent.append(':');
+                    }
+                }
+
+                if (netType == NetType.SERVER) {
+                    taContent.appendText("[Client] " + msgContent.toString() + "\n");
+                } else if (netType == NetType.CLIENT) {
+                    taContent.appendText("[Host] " + msgContent.toString() + "\n");
+                }
+                break;
+            case CHESS:
+                // Parse the received chess move
+                int col = Integer.parseInt(msgArray[1]);
+                int row = Integer.parseInt(msgArray[2]);
+
+                // Handle the move in your game logic
+                game.handleCellClick(row, col); // This assumes that your game logic can handle moves from both players
+                ChessUtils.updateBoard(); // Update the board
+
+                // Display the move in the text area
+                String playerType = netType == NetType.SERVER ? "Client " : "Host ";
+                taContent.appendText("[" + playerType + "] Move: " + col + ", " + row + "\n");
+
+                // Check if the game has ended after the move
+                ChessUtils.checkGameStatus();
+                break;
+            case GAME:
+                isMyTurn = true;
+                break;
+            case UNDO:
+                if (msgArray[1].equals("undo")) {
+                    String requester = netType == NetType.SERVER ? "[Host]" : "[Client]";
+                    handleUndoRequest(requester);
+                } else if (msgArray[1].equals(OK) || msgArray[1].equals(NO)) {
+                    String responder = netType == NetType.SERVER ? "[Host]" : "[Client]";
+                    String responseText = msgArray[1].equals(OK) ? " Agree to regret the move\n" : " Reject to regret the move\n";
+                    taContent.appendText(responder + responseText);
+                    if (msgArray[1].equals(OK)) {
+                        ChessUtils.undoMove();
+                        ChessUtils.updateBoard();
+                    }
+                }
+                break;
+            case RESTART:
+                if (msgArray[1].equals("restart")) {
+                    String requester = netType == NetType.SERVER ? "[Host]" : "[Client]";
+                    handleRestartRequest(requester);
+                } else if (msgArray[1].equals(OK) || msgArray[1].equals(NO)) {
+                    String responder = netType == NetType.SERVER ? "[Host]" : "[Client]";
+                    String responseText = msgArray[1].equals(OK) ? " Agree to restart the game\n" : " Refuse to restart the game\n";;
+                    taContent.appendText(responder + responseText);
+                    if (msgArray[1].equals(OK)) {
+                        restartGame();
+                    }
+                }
+                break;
+        }
+    }
+
+
+
+    static String buildMessage(String head, String body) {
+        return head + ':' + body;
+    }
 }
