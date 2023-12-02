@@ -15,4 +15,5 @@ public interface Player {
 
     PlayerColor getColor();
     PlayerType getType();
+
 }

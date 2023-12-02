@@ -6,10 +6,9 @@ import javax.net.ssl.SSLContext;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import static com.gomoku.project04gomoku.app.logic.Evaluator.FIVE_IN_ROW;
 
 public class AI {
-    private final Evaluator evaluator;
+    //private final Evaluator evaluator;
     private final Board board;
     private final Player aiPlayer;
     private final Player humanPlayer;
@@ -18,11 +17,13 @@ public class AI {
         this.board = board;
         this.aiPlayer = aiPlayer;
         this.humanPlayer = humanPlayer;
-        this.evaluator = new Evaluator(board);
+        //this.evaluator = new Evaluator(board);
     }
 
     // Method to find the best move for the AI
     public Move findBestMove() {
+        //Evaluator.printBoard(board);  //DEBUG
+        //System.out.println(""); //DEBUG
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
         bestMove = minimax(board, 2, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
@@ -70,8 +71,10 @@ public class AI {
         ArrayList<Move> emptyCells = getEmptyCells();
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
-            int s = evaluator.evaluateBoard(aiPlayer) - evaluator.evaluateBoard(humanPlayer);
-//            System.out.printf("s = %d\n", s);
+            //int s = evaluator.evaluateBoard(board, aiPlayer) - evaluator.evaluateBoard(board, humanPlayer);
+            int aiPoint = Evaluator.evaluateBoard(board, aiPlayer);
+            int humanPoint = Evaluator.evaluateBoard(board, humanPlayer);
+            int s = aiPoint - humanPoint;
             return new Move(-1, -1, s);
         }
 
@@ -111,7 +114,7 @@ public class AI {
                     break;
                 }
             }
-            System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
+            //System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
             return bestMove;
         }
         // for minimize move
