@@ -157,7 +157,6 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
-            Net.getInstance(netType).close();
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
             Stage stage = (Stage) BackButton.getScene().getWindow();
