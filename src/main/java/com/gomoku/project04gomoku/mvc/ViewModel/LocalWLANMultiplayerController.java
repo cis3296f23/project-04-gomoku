@@ -143,3 +143,70 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         }
     }
 
+    private void sendChessMove(int col, int row) {
+        String message = buildMessage(CHESS, col + ":" + row);
+        if (netType == NetType.SERVER) {
+            server.sendMessage(message);
+            taContent.appendText("[Host] move: " + col + ", " + row + "\n");
+        } else if (netType == NetType.CLIENT) {
+            client.sendMessage(message);
+            taContent.appendText("[Client] Move: " + col + ", " + row + "\n");
+        }
+    }
+
+    @FXML
+    public void GoBackToMain(ActionEvent event) throws IOException {
+        try {
+            Net.getInstance(netType).close();
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
+            Scene root = new Scene(fxmlLoader.load(), 800, 600);
+            Stage stage = (Stage) BackButton.getScene().getWindow();
+            stage.setScene(root);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openSetting(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
+        fxmlLoader.setController(new SettingController());
+        Parent root = fxmlLoader.load();
+        Stage Setting = new Stage();
+        Setting.setTitle("Setting");
+        Setting.setScene(new Scene(root));
+        Setting.show();
+    }
+
+    @FXML
+    protected void handleStartServer(ActionEvent event) {
+        server = Net.getInstance(NetType.SERVER);
+        server.startServer();
+        server.setNetStateChangeListener(this);
+        netType = NetType.SERVER;
+    }
+
+    @FXML
+    protected void handleConnectClicked(ActionEvent event) {
+
+        if (tfIP.getText().matches("(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")) {
+            client = Net.getInstance(NetType.CLIENT);
+            client.setNetStateChangeListener(this);
+            client.connectToServer(tfIP.getText());
+            netType = NetType.CLIENT;
+        }
+    }
+
+    @FXML
+    protected void handleSendClicked(ActionEvent event) {
+        if (!tfMessage.getText().isEmpty()) {
+            String sender = (netType == NetType.SERVER) ? "[Host]" : "[Client]";
+            String message = buildMessage(MSG, tfMessage.getText());
+            sendMessage(message);
+            taContent.appendText(sender + tfMessage.getText() + "\n");
+            tfMessage.setText("");
+        }
+    }
+
+  
