@@ -209,4 +209,23 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         }
     }
 
-  
+    @FXML
+    protected void handleUndoClicked(ActionEvent event) {
+        String requester = (netType == NetType.SERVER) ? "[Host]" : "[Client]";
+        String message = buildMessage(UNDO, "undo");
+        sendMessage(message);
+        taContent.appendText(requester + " Request to regret\n");
+    }
+
+
+    @FXML
+    protected void handleRestartClicked(ActionEvent event) {
+        String requester = (netType == NetType.SERVER) ? "[Host]" : "[Client]";
+        String message = buildMessage(RESTART, "restart");
+        sendMessage(message);
+        taContent.appendText(requester + " Request to restart the game\n");
+    }
+
+
+
+}
