@@ -73,6 +73,42 @@ public class Net {
         reader.start();
     }
 
+    public void sendMessage(String message) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                pw.println(message);
+                pw.flush();
+            }
+        }).start();
+    }
+
+    public void close() {
+        try {
+            pw.close();
+            socket.close();
+            if (LocalWLANMultiplayerController.netType == LocalWLANMultiplayerController.NetType.SERVER) {
+                serverSocket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String readMessage() {
+        String message = null;
+        try {
+            message = br.readLine();
+        }catch (SocketException se){
+            if(nsc!=null){
+                nsc.onDisconnect();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return message;
+    }
+
     public interface NetStateChange {
         void onServerOK();
 
