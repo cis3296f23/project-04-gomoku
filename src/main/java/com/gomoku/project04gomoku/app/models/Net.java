@@ -87,6 +87,58 @@ public class Net {
         this.nsc = nsc;
     }
 
+    class ServerThread extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    serverSocket = new ServerSocket(PORT);
+                    System.out.println(serverSocket.getInetAddress());
+                    if (nsc != null) {
+                        nsc.onServerOK();
+                    }
+                    socket = serverSocket.accept();
+                    initialize();
+                    if (nsc != null) {
+                        nsc.onConnect();
+                        nsc.onMessage(buildMessage(LocalWLANMultiplayerController.NET, "some one connected!"));
+                    }
+                    startRead();
+                    break;
+                } catch (IOException e) {
+                    System.out.print("Server failure\n");
+                    e.printStackTrace();
+                    try {
+                        serverSocket.close();
+                    } catch (IOException ex) {
+                        //ignore this;
+                    }
+                }
+            }
+        }
+    }
+
+    class ReadThread extends Service<String> {
+        @Override
+        protected void succeeded() {
+            super.succeeded();
+            if (getValue() != null && getValue().length() > 0) {
+                if (nsc != null) {
+                    nsc.onMessage(getValue());
+                }
+            }
+            this.restart();
+        }
+
+        @Override
+        protected Task<String> createTask() {
+            return new Task<String>() {
+                protected String call() throws Exception {
+                    return readMessage();
+                }
+            };
+        }
+    }
 
     static String buildMessage(String head, String body) {
         return head + ':' + body;
