@@ -95,7 +95,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     private void restartGame() {
         game.restartGame(); // Reset game
         ChessUtils.updateBoard(); // Update the chessboard display
-        taContent.appendText("[System] The game has been restarted\\n");
+        taContent.appendText("[System] The game has been restarted \n");
     }
 
 
@@ -124,6 +124,8 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
                 } else {
                     taContent.appendText("[System] Please wait for the client to move!\n");
                 }
+            } else {
+                taContent.appendText("[System] Please wait for the client to move!!\n");
             }
         } else if (netType == NetType.CLIENT) {
             if (isMyTurn) {
@@ -137,8 +139,10 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
                         sendChessMove(col, row);
                     }
                 } else {
-                    taContent.appendText("[System] Please wait for the host to make a move！\n");
+                    taContent.appendText("[System] Please wait for the host to make a move! \n");
                 }
+            }  else {
+                taContent.appendText("[System] Please wait for the host to make a move!! \n");
             }
         }
     }
@@ -157,7 +161,17 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
-            Net.getInstance(netType).close();
+            // Check if server or client instances are active and close them
+            if (server != null) {
+                server.close();
+                server = null; // Set to null to avoid reuse of closed server
+            }
+            if (client != null) {
+                client.close();
+                client = null; // Set to null to avoid reuse of closed client
+            }
+
+            // Load the main menu scene
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
             Stage stage = (Stage) BackButton.getScene().getWindow();
@@ -185,6 +199,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         server.startServer();
         server.setNetStateChangeListener(this);
         netType = NetType.SERVER;
+        isMyTurn = false;
     }
 
     @FXML
@@ -232,6 +247,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         System.out.println("Some one connected");
         server.sendMessage(buildMessage(NET, OK));
         taContent.appendText("[System] Client is connected!\n");
+        isMyTurn = true;
         tfMessage.setDisable(false);
         SendButton.setDisable(false);
         taContent.appendText("[System] The host plays black and moves first\n");
@@ -307,7 +323,8 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
                     handleRestartRequest(requester);
                 } else if (msgArray[1].equals(OK) || msgArray[1].equals(NO)) {
                     String responder = netType == NetType.SERVER ? "[Host]" : "[Client]";
-                    String responseText = msgArray[1].equals(OK) ? " Agree to restart the game\n" : " Refuse to restart the game\n";;
+                    String responseText = msgArray[1].equals(OK) ? " Agree to restart the game\n" : " Refuse to restart the game\n";
+                    ;
                     taContent.appendText(responder + responseText);
                     if (msgArray[1].equals(OK)) {
                         restartGame();
