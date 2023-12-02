@@ -29,13 +29,67 @@ public class Net {
     private Net() {
     }
 
-    void init() throws IOException {
+    void initialize() throws IOException {
         is = socket.getInputStream();
         os = socket.getOutputStream();
         br = new BufferedReader(new InputStreamReader(is, "utf-8"));
         pw = new PrintWriter(new OutputStreamWriter(os, "utf-8"));
     }
 
+    public static Net getInstance(LocalWLANMultiplayerController.NetType netType) {
+        switch (netType) {
+            case CLIENT:
+                if (client == null) {
+                    client = new Net();
+                }
+                return client;
+            case SERVER:
+                if (server == null) {
+                    server = new Net();
+                }
+                return server;
+            default:
+                return server;
+        }
+    }
 
+    public void startServer() {
+        new ServerThread().start();
+    }
+
+
+    public void connectToServer(String ip) {
+        try {
+            socket = new Socket(ip, PORT);
+            initialize();
+            startRead();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void startRead() {
+        ReadThread reader = new ReadThread();
+        reader.start();
+    }
+
+    public interface NetStateChange {
+        void onServerOK();
+
+        void onConnect();
+
+        void onMessage(String message);
+
+        void onDisconnect();
+    }
+
+    public void setNetStateChangeListener(NetStateChange nsc) {
+        this.nsc = nsc;
+    }
+
+
+    static String buildMessage(String head, String body) {
+        return head + ':' + body;
+    }
 }
 
