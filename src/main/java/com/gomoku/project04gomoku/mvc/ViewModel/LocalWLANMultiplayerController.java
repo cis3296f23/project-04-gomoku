@@ -317,6 +317,34 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         }
     }
 
+    private void handleUndoRequest(String requestor) {
+        String requesterDisplay = requestor.equals("[Host]") ? "[Host]" : "[Client]";
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, requesterDisplay + " Do you agree with the request to regret the move?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                sendMessage(buildMessage(UNDO, OK));
+                ChessUtils.undoMove();
+                ChessUtils.updateBoard();
+            } else {
+                sendMessage(buildMessage(UNDO, NO));
+            }
+        });
+    }
+
+    private void handleRestartRequest(String requestor) {
+        String requesterDisplay = requestor.equals("[Host]") ? "[Host]" : "[Client]";
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, requesterDisplay + " Request to restart the game, do you agree?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                sendMessage(buildMessage(RESTART, OK));
+                restartGame();
+            } else {
+                sendMessage(buildMessage(RESTART, NO));
+            }
+        });
+    }
+
+
 
 
     static String buildMessage(String head, String body) {
