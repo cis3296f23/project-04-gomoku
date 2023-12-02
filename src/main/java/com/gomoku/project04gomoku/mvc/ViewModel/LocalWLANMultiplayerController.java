@@ -166,6 +166,10 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
                 server.close();
                 server = null; // Set to null to avoid reuse of closed server
             }
+            if (client != null) {
+                client.close();
+                client = null; // Set to null to avoid reuse of closed client
+            }
 
             // Load the main menu scene
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
