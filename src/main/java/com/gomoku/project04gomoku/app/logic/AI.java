@@ -5,6 +5,8 @@ import com.gomoku.project04gomoku.app.models.Board;
 import javax.net.ssl.SSLContext;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class AI {
@@ -12,11 +14,16 @@ public class AI {
     private final Board board;
     private final Player aiPlayer;
     private final Player humanPlayer;
+    int nodeCount;
 
-    public AI(Board board, Player aiPlayer, Player humanPlayer) {
+    int depth;
+
+    public AI(Board board, Player aiPlayer, Player humanPlayer, int depth) {
         this.board = board;
         this.aiPlayer = aiPlayer;
         this.humanPlayer = humanPlayer;
+        nodeCount = 0;
+        this.depth = depth;
         //this.evaluator = new Evaluator(board);
     }
 
@@ -26,7 +33,10 @@ public class AI {
         //System.out.println(""); //DEBUG
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
-        bestMove = minimax(board, 2, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+        bestMove = minimax(board, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+        System.out.println("Eval Count = " + nodeCount);
+        nodeCount = 0;
+
         return bestMove;
 
 //        // Iterate through all possible moves
@@ -69,19 +79,17 @@ public class AI {
     public Move minimax(Board board, int depth, int alpha, int beta, boolean maximizingPlayer) {
         // Gets available moves
         ArrayList<Move> emptyCells = getEmptyCells();
+        // Sort moves based on a heuristic (e.g., proximity to the center)
+        Collections.sort(emptyCells, Comparator.comparingInt(m -> Math.abs(m.x - 15/2) + Math.abs(m.y - 15/2)));
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
+            nodeCount++;
             //int s = evaluator.evaluateBoard(board, aiPlayer) - evaluator.evaluateBoard(board, humanPlayer);
             int aiPoint = Evaluator.evaluateBoard(board, aiPlayer);
             int humanPoint = Evaluator.evaluateBoard(board, humanPlayer);
             int s = aiPoint - humanPoint;
             return new Move(-1, -1, s);
         }
-
-//        for (Move m: emptyCells) {
-//            System.out.printf("(%d, %d) ", m.x, m.y);
-//        }
-//        System.out.println("\n\n");
 
         // Initialize best move
         Move bestMove = new Move(-1, -1);
