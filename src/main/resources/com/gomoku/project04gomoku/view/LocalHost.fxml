@@ -5,46 +5,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/16"  stylesheets="@../css/ChessBoard.css" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="BorderPane" stylesheets="@../css/LocalHost.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <HBox alignment="CENTER" spacing="10">
             <children>
-                <Label fx:id="lbIP" prefWidth="200.0" text="IP：127.0.0.1"/>
-                <TextField fx:id="tfIP" promptText="Please enter the other's IP"/>
-                <Button fx:id="ConnectButton" mnemonicParsing="false" onAction="#handleConnectClicked" text="Connect"
-                />
-                <Button fx:id="StartButton" mnemonicParsing="false" onAction="#handleStartServer" text="Create a host"
-                />
+                <Label fx:id="lbIP" prefWidth="200.0" text="IP：127.0.0.1" />
+                <TextField fx:id="tfIP" promptText="Please enter the other's IP" />
+                <Button fx:id="ConnectButton" mnemonicParsing="false" onAction="#handleConnectClicked" text="Connect" />
+                <Button fx:id="StartButton" mnemonicParsing="false" onAction="#handleStartServer" text="Create a host" />
             </children>
         </HBox>
     </top>
 
     <center>
         <VBox>
-            <Canvas fx:id="canvas" height="400.0" onMouseClicked="#handleCanvasClick" width="400.0"
-                    VBox.vgrow="ALWAYS"/>
-            <TextArea fx:id="taContent" editable="false" prefHeight="371.0" prefWidth="200.0" scrollLeft="2.0"
-                      scrollTop="2.0" wrapText="true"/>
+            <Canvas fx:id="canvas" height="400.0" onMouseClicked="#handleCanvasClick" width="400.0" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="taContent" editable="false" prefHeight="371.0" prefWidth="200.0" scrollLeft="2.0" scrollTop="2.0" wrapText="true" />
         </VBox>
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="tfMessage" disable="true" prefHeight="23.0" prefWidth="149.0"/>
-                <Button fx:id="SendButton" disable="true" mnemonicParsing="false" onAction="#handleSendClicked"
-                        text="Send"/>
-                <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openSetting"
-                        text="Setting" textAlignment="CENTER">
+                <TextField fx:id="tfMessage" disable="true" prefHeight="23.0" prefWidth="149.0" />
+                <Button fx:id="SendButton" disable="true" mnemonicParsing="false" onAction="#handleSendClicked" text="Send" />
+                <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openSetting" text="Setting" textAlignment="CENTER">
                     <HBox.margin>
-                        <Insets/>
+                        <Insets />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#handleUndoClicked" text="Undo"/>
-                <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false"
-                        onAction="#handleRestartClicked" text="Restart"/>
-                <Button fx:id="BackButton" mnemonicParsing="false" onAction="#GoBackToMain" text="Back"/>
-                <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay" text="Replay"/>
+                <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#handleUndoClicked" text="Undo" />
+                <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleRestartClicked" text="Restart" />
+                <Button fx:id="BackButton" mnemonicParsing="false" onAction="#GoBackToMain" text="Back" />
+                <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay" text="Replay" />
             </children>
         </HBox>
     </bottom>

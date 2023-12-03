@@ -1,0 +1,28 @@
+#BorderPane {
+    -fx-background-image: url('../pic/Local_Host.jpg');
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.button {
+    -fx-background-color: rgba(196, 216, 242, 0.7); /* rgba color according to Gan Yu */
+    -fx-background-radius: 3;
+    -fx-border-color: rgba(242, 232, 227, 0.5);
+    -fx-border-radius: 2;
+    -fx-border-width: 4;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-text-fill: rgba(51, 57, 91, 1);
+    -fx-padding: 8 8;
+    -fx-font-size: 14.2px;
+    -fx-font-weight: bold; /* Bold text */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+
+    -fx-min-width: 85px;
+    -fx-max-width: 85px;
+}
+
+.button:hover {
+    -fx-background-color: rgba(93, 116, 162, 0.7);
+    -fx-border: rgba(242, 232, 227, 0.5) solid;
+}
