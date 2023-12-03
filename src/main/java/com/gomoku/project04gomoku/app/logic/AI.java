@@ -5,27 +5,38 @@ import com.gomoku.project04gomoku.app.models.Board;
 import javax.net.ssl.SSLContext;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-import static com.gomoku.project04gomoku.app.logic.Evaluator.FIVE_IN_ROW;
 
 public class AI {
-    private final Evaluator evaluator;
+    //private final Evaluator evaluator;
     private final Board board;
     private final Player aiPlayer;
     private final Player humanPlayer;
+    int nodeCount;
 
-    public AI(Board board, Player aiPlayer, Player humanPlayer) {
+    int depth;
+
+    public AI(Board board, Player aiPlayer, Player humanPlayer, int depth) {
         this.board = board;
         this.aiPlayer = aiPlayer;
         this.humanPlayer = humanPlayer;
-        this.evaluator = new Evaluator(board);
+        nodeCount = 0;
+        this.depth = depth;
+        //this.evaluator = new Evaluator(board);
     }
 
     // Method to find the best move for the AI
     public Move findBestMove() {
+        //Evaluator.printBoard(board);  //DEBUG
+        //System.out.println(""); //DEBUG
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
-        bestMove = minimax(board, 2, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+        bestMove = minimax(board, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+        System.out.println("Eval Count = " + nodeCount);
+        nodeCount = 0;
+
         return bestMove;
 
 //        // Iterate through all possible moves
@@ -68,26 +79,17 @@ public class AI {
     public Move minimax(Board board, int depth, int alpha, int beta, boolean maximizingPlayer) {
         // Gets available moves
         ArrayList<Move> emptyCells = getEmptyCells();
+        // Sort moves based on a heuristic (e.g., proximity to the center)
+        Collections.sort(emptyCells, Comparator.comparingInt(m -> Math.abs(m.x - 15/2) + Math.abs(m.y - 15/2)));
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
-            int s = evaluator.evaluateBoard(aiPlayer) - evaluator.evaluateBoard(humanPlayer);
-            for (int i = 0; i < 15; i++) {
-                for (int j = 0; j < 15; j++) {
-                    Player p = board.getCell(i,j);
-                    if (p == null) System.out.print("- ");
-                    else if (p.getColor() == Player.PlayerColor.WHITE) System.out.print("o ");
-                    else System.out.print("x ");
-                }
-                System.out.println();
-            }
-            System.out.println();
+            nodeCount++;
+            //int s = evaluator.evaluateBoard(board, aiPlayer) - evaluator.evaluateBoard(board, humanPlayer);
+            int aiPoint = Evaluator.evaluateBoard(board, aiPlayer);
+            int humanPoint = Evaluator.evaluateBoard(board, humanPlayer);
+            int s = aiPoint - humanPoint;
             return new Move(-1, -1, s);
         }
-
-//        for (Move m: emptyCells) {
-//            System.out.printf("(%d, %d) ", m.x, m.y);
-//        }
-//        System.out.println("\n\n");
 
         // Initialize best move
         Move bestMove = new Move(-1, -1);
@@ -99,11 +101,11 @@ public class AI {
             // Iterate each empty cell
             for (Move m: emptyCells) {
                 // Simulate landing a cell
-                board.setCell(m.x, m.y, aiPlayer);
+                board.getBoard()[m.x][m.y] = aiPlayer;
                 // Get the result at the end starting from the current cell.
                 Move eval = minimax(board, depth-1, alpha, beta, false);
                 // Undo the move
-                board.setCell(m.x, m.y, null);
+                board.getBoard()[m.x][m.y] = null;
                 // Update the move if the current cell lead to a better result
                 if (eval.score > bestMove.score) {
                     bestMove.x = m.x;
@@ -120,7 +122,7 @@ public class AI {
                     break;
                 }
             }
-            System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
+            //System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
             return bestMove;
         }
         // for minimize move
@@ -128,11 +130,11 @@ public class AI {
             bestMove.score = Integer.MAX_VALUE;
             for (Move m: emptyCells) {
                 // Simulate landing a cell
-                board.setCell(m.x, m.y, humanPlayer);
+                board.getBoard()[m.x][m.y] = humanPlayer;
                 // Get the result at the end starting from the current cell.
                 Move eval = minimax(board, depth-1, alpha, beta, true);
                 // Undo the move
-                board.setCell(m.x, m.y, null);
+                board.getBoard()[m.x][m.y] = null;
 
                 if (eval.score < bestMove.score) {
                     bestMove.x = m.x;

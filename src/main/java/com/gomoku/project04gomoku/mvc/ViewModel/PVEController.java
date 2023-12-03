@@ -49,9 +49,9 @@ public class PVEController {
         Player humanPlayer =  new HumanPlayer(PlayerColor.BLACK);
         Player aiPlayer  = new HumanPlayer(PlayerColor.WHITE);
         switch (diff) {
-            case "Easy" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
-            case "Normal" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
-            case "Hard" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer);
+            case "Easy" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer, 2);
+            case "Normal" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer, 4);
+            case "Hard" -> this.ai = new AI(game.getBoard(), aiPlayer, humanPlayer, 6);
         }
 
 
@@ -67,7 +67,7 @@ public class PVEController {
     @FXML
     public void Replay(ActionEvent event)
     {
-        //TODO: Replay function
+        chessUtils.replayMoves();
     }
 
     @FXML
@@ -107,5 +107,10 @@ public class PVEController {
         Setting.setTitle("Setting");
         Setting.setScene(new Scene(root));
         Setting.show();
+    }
+
+    @FXML
+    public void undoMove(ActionEvent event) {
+        chessUtils.undoMove();
     }
 }
