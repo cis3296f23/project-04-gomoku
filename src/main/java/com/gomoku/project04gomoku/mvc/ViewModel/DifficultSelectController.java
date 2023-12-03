@@ -37,4 +37,21 @@ public class DifficultSelectController {
             e.printStackTrace();
         }
     }
+
+    public void GoBackToMain(ActionEvent event) throws IOException {
+        try {
+            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
+            Scene root = new Scene(fxmlLoader.load(), 800, 600);
+
+            Node source =(Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+
+
+            stage.setScene(root);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

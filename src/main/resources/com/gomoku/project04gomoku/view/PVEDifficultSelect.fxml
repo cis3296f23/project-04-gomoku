@@ -32,5 +32,10 @@
             <Font size="13.0" />
          </font>
           </Button>
+       <Button fx:id="GoBackMain" mnemonicParsing="false" onAction="#GoBackToMain" text="Back">
+           <VBox.margin>
+               <Insets top="13.0" />
+           </VBox.margin>
+       </Button>
    </children>
 </VBox>
