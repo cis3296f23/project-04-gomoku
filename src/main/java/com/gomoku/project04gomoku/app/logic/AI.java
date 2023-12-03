@@ -101,11 +101,11 @@ public class AI {
             // Iterate each empty cell
             for (Move m: emptyCells) {
                 // Simulate landing a cell
-                board.setCell(m.x, m.y, aiPlayer);
+                board.getBoard()[m.x][m.y] = aiPlayer;
                 // Get the result at the end starting from the current cell.
                 Move eval = minimax(board, depth-1, alpha, beta, false);
                 // Undo the move
-                board.setCell(m.x, m.y, null);
+                board.getBoard()[m.x][m.y] = null;
                 // Update the move if the current cell lead to a better result
                 if (eval.score > bestMove.score) {
                     bestMove.x = m.x;
@@ -130,11 +130,11 @@ public class AI {
             bestMove.score = Integer.MAX_VALUE;
             for (Move m: emptyCells) {
                 // Simulate landing a cell
-                board.setCell(m.x, m.y, humanPlayer);
+                board.getBoard()[m.x][m.y] = humanPlayer;
                 // Get the result at the end starting from the current cell.
                 Move eval = minimax(board, depth-1, alpha, beta, true);
                 // Undo the move
-                board.setCell(m.x, m.y, null);
+                board.getBoard()[m.x][m.y] = null;
 
                 if (eval.score < bestMove.score) {
                     bestMove.x = m.x;
