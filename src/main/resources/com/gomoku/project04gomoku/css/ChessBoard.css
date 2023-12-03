@@ -1,8 +1,7 @@
 #BorderPane {
-    -fx-background-image: url('../pic/menu.jpg');
-    -fx-background-repeat: stretch;
-    -fx-background-size: cover;
-    -fx-background-position: center center;
+    -fx-background-image: url('../pic/board_background.jpg');
+    -fx-background-size: 900;
+    -fx-background-position: center;
 }
 
 .button {
@@ -13,28 +12,16 @@
     -fx-border-width: 4;
     -fx-background-insets: 0, 0, 0, 0;
     -fx-text-fill: rgba(51, 57, 91, 1);
-    -fx-padding: 8 18;
-    -fx-font-size: 14.2px;
+    -fx-padding: 8 8;
+    -fx-font-size: 16px;
     -fx-font-weight: bold; /* Bold text */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 
-    -fx-min-width: 120px;
-    -fx-max-width: 120px;
+    -fx-min-width: 100px;
+    -fx-max-width: 100px;
 }
 
 .button:hover {
     -fx-background-color: rgba(93, 116, 162, 0.7);
     -fx-border: rgba(242, 232, 227, 0.5) solid;
 }
-
-
-
-
-
-
-
-
-
-
-
-
