@@ -3,15 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="vbox-with-background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/multiplayer.css"
-      xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.gomoku.project04gomoku.mvc.ViewModel.SelectModeController">
+<VBox id="vbox-with-background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/multiplayer.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gomoku.project04gomoku.mvc.ViewModel.SelectModeController">
     <children>
-        <Button fx:id="Local" alignment="CENTER" mnemonicParsing="false" onAction="#GoToLocalMultiplayer" text="Local"/>
-        <Pane prefHeight="76.0" prefWidth="600.0"/>
-        <Button fx:id="LocalWlan" mnemonicParsing="false" prefHeight="23.0" onAction="#GoToLocalWLANMultiplayer" prefWidth="55.0" text="WAN"/>
-        <Pane prefHeight="138.0" prefWidth="600.0"/>
-        <Button  mnemonicParsing="false" text="Back" onAction="#GoBackToSelectMode"/>
+        <Button fx:id="Local" alignment="CENTER" mnemonicParsing="false" onAction="#GoToLocalMultiplayer" text="Local" />
+        <Pane prefHeight="32.0" prefWidth="600.0" />
+        <Button fx:id="LocalWlan" mnemonicParsing="false" onAction="#GoToLocalWLANMultiplayer" prefHeight="23.0" prefWidth="55.0" text="WAN" />
+        <Pane prefHeight="32.0" prefWidth="600.0" />
+        <Button mnemonicParsing="false" onAction="#GoBackToSelectMode" text="Back" />
     </children>
 </VBox>

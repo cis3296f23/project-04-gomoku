@@ -1,8 +1,17 @@
-#BorderPane {
-    -fx-background-image: url('../pic/menu.jpg');
-    -fx-background-repeat: stretch;
-    -fx-background-size: cover;
-    -fx-background-position: center center;
+#vbox-with-background {
+    -fx-background-image: url('../pic/difficulty_select.jpg');
+    -fx-background-size: 900;
+    -fx-background-position: center;
+}
+
+.root {
+    -fx-font-family: 'Verdana';
+    -fx-font-size: 20px;
+    -fx-background-color: #f0f0f0;
+}
+
+.label {
+    -fx-font-weight: bold;
 }
 
 .button {
@@ -27,14 +36,17 @@
     -fx-border: rgba(242, 232, 227, 0.5) solid;
 }
 
+.combo-box .list-cell {
+    -fx-text-fill: rgba(51,57,91); /* Text color in the drop-down list */
+}
 
+.combo-box .list-cell:hover {
+    -fx-text-fill: rgba(196,216,242); /* Text color in the drop-down list on hover */
+}
 
-
-
-
-
-
-
+.combo-box .list-cell:filled:selected {
+    -fx-text-fill: rgba(93,116,162); /* Text color for the selected item in the drop-down list */
+}
 
 
 
