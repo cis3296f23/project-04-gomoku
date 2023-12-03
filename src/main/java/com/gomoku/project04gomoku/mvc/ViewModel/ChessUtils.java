@@ -76,9 +76,9 @@ public class ChessUtils {
         double centerX = padding + col * cellWidth;
         double centerY = padding + row * cellHeight;
 
-        // 绘制边框或改变颜色来高亮棋子
-        gc.setStroke(Color.RED); // 设置高亮颜色，例如红色
-        gc.setLineWidth(1); // 设置边框宽度
+        
+        gc.setStroke(Color.RED); 
+        gc.setLineWidth(1); 
         gc.strokeOval(centerX - pieceDiameter / 2, centerY - pieceDiameter / 2, pieceDiameter, pieceDiameter);
     }
     /**
