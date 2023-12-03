@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Properties;
 
 public class PVEController {
     @FXML private Canvas canvas;
@@ -105,7 +106,29 @@ public class PVEController {
         Parent root = fxmlLoader.load();
         Stage Setting = new Stage();
         Setting.setTitle("Setting");
+        Setting.setResizable(false);
         Setting.setScene(new Scene(root));
+        Setting.setOnCloseRequest(e -> {
+            // create a dialog windows
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Warning");
+            alert.setContentText("Are you sure to exit?");
+
+            // wait for response
+            alert.showAndWait().ifPresent(response -> {
+
+                if (response != ButtonType.OK) {
+
+                    e.consume();
+                }
+
+            });
+            Properties settingfile = SettingController.loadSettings();
+            ;
+            MusicPlayer.setVolume(Double.parseDouble(settingfile.getProperty("volume", "0.5")));
+
+        });
         Setting.show();
     }
 

@@ -4,8 +4,9 @@
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane id="BorderPane" stylesheets="@../css/ChessBoard.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="BorderPane" stylesheets="@../css/ChessBoard.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <Canvas fx:id="canvas" height="400.0" onMouseClicked="#handleCanvasClick" width="400.0" BorderPane.alignment="CENTER">
       </Canvas>
@@ -13,14 +14,20 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#restartGame" text="Restart" />
+            <Button fx:id="RestartButton" graphicTextGap="5.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#restartGame" text="Restart">
+               <font>
+                  <Font size="5.0" />
+               </font></Button>
             <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openSetting" text="Setting" textAlignment="CENTER">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
+               <font>
+                  <Font size="8.0" />
+               </font>
             </Button>
             <Button fx:id="BackButton" mnemonicParsing="false" onAction="#GoBackToMain" text="Back" />
-            <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay"  text="Replay" />
+            <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay" text="Replay" />
             <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#undoMove" text="Undo" />
          </children>
       </HBox>
