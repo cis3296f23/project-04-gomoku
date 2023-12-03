@@ -1,9 +1,9 @@
-#BorderPane {
-    -fx-background-image: url('../pic/menu.jpg');
-    -fx-background-repeat: stretch;
-    -fx-background-size: cover;
-    -fx-background-position: center center;
+#vbox-with-background {
+    -fx-background-image: url('../pic/difficulty_select.jpg');
+    -fx-background-size: 900;
+    -fx-background-position: center;
 }
+
 
 .button {
     -fx-background-color: rgba(196, 216, 242, 0.7); /* rgba color according to Gan Yu */
@@ -18,23 +18,11 @@
     -fx-font-weight: bold; /* Bold text */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 
-    -fx-min-width: 120px;
-    -fx-max-width: 120px;
+    -fx-min-width: 100px;
+    -fx-max-width: 100px;
 }
 
 .button:hover {
     -fx-background-color: rgba(93, 116, 162, 0.7);
     -fx-border: rgba(242, 232, 227, 0.5) solid;
 }
-
-
-
-
-
-
-
-
-
-
-
-

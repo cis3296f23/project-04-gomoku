@@ -22,31 +22,32 @@ public class LocalMultiplayerController {
     @FXML private Button RestartButton;
     @FXML private Button SettingButton;
     @FXML private Button BackButton;
+    @FXML private Button UndoButton;
 
 
-    private ChessUtils chessUtils;
+    private ChessUtils ChessUtils;
     private Game game;
 
     public void initialize() {
         this.game = new Game();
         this.game.setupGameMode(true); // Explicitly set to PvP mode
-        this.chessUtils = new ChessUtils(canvas, game);
+        this.ChessUtils = new ChessUtils(canvas, game);
     }
 
     @FXML
     public void restartGame(ActionEvent event) {
         game.restartGame();
-        chessUtils.updateBoard();
+        ChessUtils.updateBoard();
     }
 
     @FXML
-    public void Replay(ActionEvent event)
-    {
-        //TODO: Replay function
+    public void Replay(ActionEvent event) {
+        ChessUtils.replayMoves();
     }
+
     @FXML
     public void handleCanvasClick(javafx.scene.input.MouseEvent event) {
-        chessUtils.handleCanvasClick(event);
+        ChessUtils.handleCanvasClick(event);
     }
 
     @FXML
@@ -70,5 +71,10 @@ public class LocalMultiplayerController {
         Setting.setTitle("Setting");
         Setting.setScene(new Scene(root));
         Setting.show();
+    }
+
+    @FXML
+    public void undoMove(ActionEvent event) {
+        ChessUtils.undoMove();
     }
 }
