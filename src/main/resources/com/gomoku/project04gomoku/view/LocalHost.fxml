@@ -33,7 +33,7 @@
             <children>
                 <TextField fx:id="tfMessage" disable="true" prefHeight="23.0" prefWidth="149.0"/>
                 <Button fx:id="SendButton" disable="true" mnemonicParsing="false" onAction="#handleSendClicked"
-                        text="发送"/>
+                        text="Send"/>
                 <Button fx:id="SettingButton" alignment="CENTER" mnemonicParsing="false" onAction="#openSetting"
                         text="Setting" textAlignment="CENTER">
                     <HBox.margin>
