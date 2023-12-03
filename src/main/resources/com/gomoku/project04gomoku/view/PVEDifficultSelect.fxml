@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" spacing="20.0">
-            <children>
-                <Label text="Difficult Select" >
-                    <VBox.margin>
-                        <Insets bottom="10.0" />
-                    </VBox.margin>
-                </Label>
-                <ComboBox fx:id="difficultyComboBox" prefWidth="150.0">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Easy" />
-                            <String fx:value="Normal" />
-                            <String fx:value="Hard" />
-                        </FXCollections>
-                    </items>
-                </ComboBox>
-                <Button text="Enter" onAction="#handleDifficultyChange" >
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </Button>
-            </children>
-        </VBox>
-    </children>
-</AnchorPane>
+<VBox id="vbox-with-background" alignment="CENTER" stylesheets="@../css/PVEDifficultySelect.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+          <Label prefHeight="25.0" prefWidth="169.0" text="Difficult Select" textFill="#c4d8f2">
+              <VBox.margin>
+                  <Insets bottom="10.0" />
+              </VBox.margin>
+          </Label>
+          <ComboBox fx:id="difficultyComboBox" prefHeight="39.0" prefWidth="157.0">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Easy" />
+                      <String fx:value="Normal" />
+                      <String fx:value="Hard" />
+                  </FXCollections>
+              </items>
+          </ComboBox>
+      <Pane prefHeight="19.0" prefWidth="200.0" />
+          <Button onAction="#handleDifficultyChange" text="Enter">
+              <VBox.margin>
+                  <Insets top="10.0" />
+              </VBox.margin>
+         <font>
+            <Font size="13.0" />
+         </font>
+          </Button>
+   </children>
+</VBox>

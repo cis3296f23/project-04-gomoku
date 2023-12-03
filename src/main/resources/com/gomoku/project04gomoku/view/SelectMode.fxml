@@ -7,9 +7,9 @@
     <children>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
             <children>
-                <Button fx:id="SinglePlayer" mnemonicParsing="false" onAction="#GoToSinglePlayer" text="Player vs Environment (AI)" />
-                <Pane prefHeight="20.0" prefWidth="100.0" />
-                <Button fx:id="Multiple" alignment="CENTER" mnemonicParsing="false" onAction="#GoToMultiplePlayer" prefHeight="23.0" prefWidth="94.0" text="Multiple player" />
+                <Button fx:id="SinglePlayer" ellipsisString="" mnemonicParsing="false" onAction="#GoToSinglePlayer" text="Player vs Environment (AI)" />
+                <Pane prefHeight="138.0" prefWidth="100.0" />
+                <Button fx:id="Multiple" mnemonicParsing="false" onAction="#GoToMultiplePlayer" prefHeight="23.0" prefWidth="94.0" text="Multiplayer" wrapText="true" />
                 <Pane prefHeight="138.0" prefWidth="100.0" />
                 <Button fx:id="GoBackMain" mnemonicParsing="false" onAction="#GoBackToMain" text="Back" />
             </children>

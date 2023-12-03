@@ -8,14 +8,14 @@
     <center>
         <VBox alignment="CENTER" prefHeight="208.0" prefWidth="409.0" spacing="30.0" BorderPane.alignment="CENTER">
             <children>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="180.0" text="Gomuku" textFill="#095b23e3">
+              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="247.0" text="Gomuku" textFill="#33395b">
                   <font>
-                      <Font size="45.0" />
+                      <Font name="Arial Rounded MT Bold" size="56.0" />
                   </font>
               </Label>
-                <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect" stylesheets="@../css/menu.css" text="Game Start" />
-                <Button fx:id="Setting" mnemonicParsing="false" stylesheets="@../css/menu.css" text="Setting" onAction="#GoToSetting" />
-                <Button mnemonicParsing="false" stylesheets="@../css/menu.css" onAction="#handleExitButtonAction" text="Exit" />
+                <Button fx:id="GameStart" mnemonicParsing="false" onAction="#switchToModeSelect" stylesheets="@../css/menu.css" text="Game Start" textFill="#4b565d" />
+                <Button fx:id="Setting" mnemonicParsing="false" onAction="#GoToSetting" stylesheets="@../css/menu.css" text="Setting" />
+                <Button mnemonicParsing="false" onAction="#handleExitButtonAction" stylesheets="@../css/menu.css" text="Exit" />
 
             </children>
         </VBox>
