@@ -67,7 +67,7 @@ public class PVEController {
     @FXML
     public void Replay(ActionEvent event)
     {
-        //TODO: Replay function
+        chessUtils.replayMoves();
     }
 
     @FXML
@@ -107,5 +107,10 @@ public class PVEController {
         Setting.setTitle("Setting");
         Setting.setScene(new Scene(root));
         Setting.show();
+    }
+
+    @FXML
+    public void undoMove(ActionEvent event) {
+        chessUtils.undoMove();
     }
 }
