@@ -20,8 +20,7 @@
                </HBox.margin>
             </Button>
             <Button fx:id="BackButton" mnemonicParsing="false" onAction="#GoBackToMain" text="Back" />
-            <!-- <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay"  text="Replay" /> -->
-
+            <Button fx:id="ReplayButton" mnemonicParsing="false" onAction="#Replay"  text="Replay" />
             <Button fx:id="UndoButton" mnemonicParsing="false" onAction="#undoMove" text="Undo" />
          </children>
       </HBox>
