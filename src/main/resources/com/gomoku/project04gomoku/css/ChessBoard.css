@@ -13,7 +13,7 @@
     -fx-background-insets: 0, 0, 0, 0;
     -fx-text-fill: rgba(51, 57, 91, 1);
     -fx-padding: 8 8;
-    -fx-font-size: 16px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold; /* Bold text */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 

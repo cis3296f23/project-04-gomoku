@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 
 import java.util.Optional;
@@ -18,6 +19,9 @@ import java.util.Optional;
 import com.gomoku.project04gomoku.app.logic.Game;
 import com.gomoku.project04gomoku.app.logic.Player;
 import com.gomoku.project04gomoku.app.models.Board;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 
 public class ChessUtils {
     private Canvas canvas;
@@ -41,17 +45,41 @@ public class ChessUtils {
     /**
      * Updates the game board by redrawing it and placing pieces based on the current game state.
      */
+
     public void updateBoard() {
         drawBoard(); // Redraw the board
+        Board.Move lastMove = null;
+        if (!game.getBoard().getMoveHistory().isEmpty()) {
+            lastMove = game.getBoard().getMoveHistory().get(game.getBoard().getMoveHistory().size() - 1);
+        }
+
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
                 Player player = game.getBoard().getCell(i, j);
                 if (player != null) {
                     // Draw the piece of the current player
                     drawPiece(j, i, getPlayerColor(player));
+                    if (lastMove != null && lastMove.x == i && lastMove.y == j) {
+                        highlightPiece(j, i, getPlayerColor(player));
+                    }
                 }
             }
         }
+    }
+
+    public void highlightPiece(int col, int row, Color color) {
+        double paddedWidth = canvas.getWidth() - 2 * padding;
+        double paddedHeight = canvas.getHeight() - 2 * padding;
+        double cellWidth = paddedWidth / (Board.SIZE - 1);
+        double cellHeight = paddedHeight / (Board.SIZE - 1);
+        double pieceDiameter = Math.min(cellWidth, cellHeight) * 0.8;
+        double centerX = padding + col * cellWidth;
+        double centerY = padding + row * cellHeight;
+
+        // 绘制边框或改变颜色来高亮棋子
+        gc.setStroke(Color.RED); // 设置高亮颜色，例如红色
+        gc.setLineWidth(1); // 设置边框宽度
+        gc.strokeOval(centerX - pieceDiameter / 2, centerY - pieceDiameter / 2, pieceDiameter, pieceDiameter);
     }
     /**
      * Draws the game board including the grid lines.

@@ -64,7 +64,7 @@ public class SettingController {
     }
 
 
-    private Properties loadSettings() {
+    public static Properties loadSettings() {
         Properties props = new Properties();
         try (InputStream input = new FileInputStream(CONFIG_FILE_PATH)) {
             props.load(input);
