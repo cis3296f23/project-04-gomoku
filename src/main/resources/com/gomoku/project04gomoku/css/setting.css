@@ -1,33 +1,47 @@
-/* 通用样式 */
+#BorderPane {
+    -fx-background-image: url('../pic/settings.jpg');
+    -fx-background-size: 450;
+    -fx-background-position: center;
+}
+
+
 .root {
-    -fx-font-family: 'Arial';
+    -fx-font-family: 'Verdana';
     -fx-font-size: 16px;
     -fx-background-color: #f0f0f0;
 }
 
 .label {
     -fx-font-weight: bold;
+    -fx-font-size: 20px;
 }
 
-
 .button {
-    -fx-background-color: #4076d6;
-    -fx-text-fill: white;
-    -fx-border-color: #305090;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px 20px;
+    -fx-background-color: rgba(196, 216, 242, 0.7); /* rgba color according to Gan Yu */
+    -fx-background-radius: 3;
+    -fx-border-color: rgba(242, 232, 227, 0.5);
+    -fx-border-radius: 2;
+    -fx-border-width: 4;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-text-fill: rgba(51, 57, 91, 1);
+    -fx-padding: 8 8;
+    -fx-font-size: 14.2px;
+    -fx-font-weight: bold; /* Bold text */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+
+    -fx-min-width: 85px;
+    -fx-max-width: 85px;
 }
 
 .button:hover {
-    -fx-background-color: #305090;
+    -fx-background-color: rgba(93, 116, 162, 0.7);
+    -fx-border: rgba(242, 232, 227, 0.5) solid;
 }
 
 
 .slider {
-    -fx-control-inner-background: #d6d6d6;
+    -fx-control-inner-background: rgba(237,202,198,0.8);
 }
-
 
 .combo-box {
     -fx-background-color: white;
