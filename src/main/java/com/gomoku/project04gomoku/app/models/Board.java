@@ -140,6 +140,10 @@ public class Board {
         return null;
     }
 
+    public Player[][] getBoard(){
+        return board;
+    }
+
     // Gets the move history
     public Stack<Move> getMoveHistory() {
         return moveHistory;
