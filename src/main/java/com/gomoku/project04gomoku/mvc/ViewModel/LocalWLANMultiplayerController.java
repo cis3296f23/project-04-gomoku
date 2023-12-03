@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Properties;
 
 public class LocalWLANMultiplayerController implements Net.NetStateChange {
     @FXML
@@ -193,6 +194,28 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         Stage Setting = new Stage();
         Setting.setTitle("Setting");
         Setting.setScene(new Scene(root));
+        Setting.setResizable(false);
+        Setting.setOnCloseRequest(e -> {
+            // create a dialog windows
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Warning");
+            alert.setContentText("Are you sure to exit?");
+
+            // wait for response
+            alert.showAndWait().ifPresent(response -> {
+
+                if (response != ButtonType.OK) {
+
+                    e.consume();
+                }
+
+            });
+            Properties settingfile = SettingController.loadSettings();
+            ;
+            MusicPlayer.setVolume(Double.parseDouble(settingfile.getProperty("volume", "0.5")));
+
+        });
         Setting.show();
     }
 

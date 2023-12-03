@@ -15,13 +15,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.util.Properties;
 
 public class MenuController {
     @FXML
@@ -73,16 +76,39 @@ public class MenuController {
 
 
             Parent root = fxmlLoader.load();
-            Stage newWindow = new Stage();
-            newWindow.initModality(Modality.WINDOW_MODAL);
+            Stage SettingWindow = new Stage();
+            SettingWindow.initModality(Modality.WINDOW_MODAL);
             Node source =(Node) event.getSource();
             Stage Parentstage = (Stage) source.getScene().getWindow();
-            newWindow.setTitle("Setting");
-            newWindow.initOwner(Parentstage);
-            newWindow.setScene(new Scene(root));
-            // 在这里添加关闭前的逻辑
-            newWindow.setOnCloseRequest(Event::consume);
-            newWindow.show();
+            SettingWindow.setTitle("Setting");
+            SettingWindow.initOwner(Parentstage);
+            SettingWindow.setScene(new Scene(root));
+            SettingWindow.setResizable(false);
+            // Add logic when close
+//            SettingWindow.setOnCloseRequest(Event::consume);
+            SettingWindow.setOnCloseRequest(e -> {
+                // create a dialog windows
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirm");
+                alert.setHeaderText("Warning");
+                alert.setContentText("Are you sure to exit?");
+
+                // wait for response
+                alert.showAndWait().ifPresent(response -> {
+
+                    if (response != ButtonType.OK) {
+
+                        e.consume();
+                    }
+
+                });
+                Properties settingfile = SettingController.loadSettings();
+                ;
+                MusicPlayer.setVolume(Double.parseDouble(settingfile.getProperty("volume", "0.5")));
+
+            });
+
+            SettingWindow.show();
 
 
         } catch (IOException e) {
