@@ -219,7 +219,7 @@ public class ChessUtils {
                 }
                 System.out.println("run："+i+" times");
             }
-            game.getBoard().setLastMove(null);
+            //game.getBoard().setLastMove(null);
             System.out.println("replay over!");
         }).start();
 
