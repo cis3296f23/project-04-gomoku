@@ -15,6 +15,7 @@ public class GomokuStart extends Application {
 
     private static final String CONFIG_FILE_PATH = "settings.properties";
 
+
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
         FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
