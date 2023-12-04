@@ -22,7 +22,7 @@ public class DifficultSelectController {
     private void handleDifficultyChange(ActionEvent event) {
         String selectedDifficulty = difficultyComboBox.getValue();
 
-        System.out.println(selectedDifficulty);
+        // System.out.println(selectedDifficulty); //DEBUG
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/ChessBoard.fxml"));
             fxmlLoader.setController(new PVEController(selectedDifficulty));
