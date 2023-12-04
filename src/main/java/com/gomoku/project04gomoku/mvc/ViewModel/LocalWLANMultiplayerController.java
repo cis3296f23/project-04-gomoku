@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class LocalWLANMultiplayerController implements Net.NetStateChange {
@@ -201,7 +202,7 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             alert.setTitle("Confirm");
             alert.setHeaderText("Warning");
             alert.setContentText("Are you sure to exit?");
-
+            alert.getDialogPane().getStylesheets().add( Objects.requireNonNull(GomokuStart.class.getResource("css/alert.css")).toExternalForm());
             // wait for response
             alert.showAndWait().ifPresent(response -> {
 
