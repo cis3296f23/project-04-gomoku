@@ -28,7 +28,7 @@ public class GomokuStart extends Application implements EventHandler<WindowEvent
         Image icon = new Image(Objects.requireNonNull(GomokuStart.class.getResourceAsStream("pic/icon.jpg")));
         stage.getIcons().add(icon);
         stage.setResizable(false);
-        stage.setTitle("Gomuku");
+        stage.setTitle("Gomoku");
         stage.setScene(scene);
         stage.show();
         MusicPlayer.initializeMusicPlayer();

@@ -8,7 +8,7 @@
     <center>
         <VBox alignment="CENTER" prefHeight="208.0" prefWidth="409.0" spacing="30.0" BorderPane.alignment="CENTER">
             <children>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="247.0" text="Gomuku" textFill="#33395b">
+              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="247.0" text="Gomoku" textFill="#33395b">
                   <font>
                       <Font name="Arial Rounded MT Bold" size="56.0" />
                   </font>
