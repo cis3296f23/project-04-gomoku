@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -78,7 +79,7 @@ public class LocalMultiplayerController {
             alert.setTitle("Confirm");
             alert.setHeaderText("Warning");
             alert.setContentText("Are you sure to exit?");
-
+            alert.getDialogPane().getStylesheets().add( Objects.requireNonNull(GomokuStart.class.getResource("css/alert.css")).toExternalForm());
             // wait for response
             alert.showAndWait().ifPresent(response -> {
 

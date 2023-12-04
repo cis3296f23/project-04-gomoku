@@ -6,15 +6,25 @@
 
 package com.gomoku.project04gomoku.mvc.ViewModel;
 
+import com.gomoku.project04gomoku.GomokuStart;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.gomoku.project04gomoku.app.logic.Game;
 import com.gomoku.project04gomoku.app.logic.Player;
@@ -28,7 +38,7 @@ public class ChessUtils {
     private Game game;
     private GraphicsContext gc;
     private final double padding = 20;
-
+    String css = Objects.requireNonNull(GomokuStart.class.getResource("css/alert.css")).toExternalForm();
     /**
      * Constructor to initialize the ChessUtils with a canvas and game logic.
      * It sets up the graphics context and draws the initial board.
@@ -48,10 +58,8 @@ public class ChessUtils {
 
     public void updateBoard() {
         drawBoard(); // Redraw the board
-        Board.Move lastMove = null;
-        if (!game.getBoard().getMoveHistory().isEmpty()) {
-            lastMove = game.getBoard().getMoveHistory().get(game.getBoard().getMoveHistory().size() - 1);
-        }
+        Board.Move lastMove = game.getBoard().getLastMove();
+
 
         for (int i = 0; i < Board.SIZE; i++) {
             for (int j = 0; j < Board.SIZE; j++) {
@@ -76,9 +84,9 @@ public class ChessUtils {
         double centerX = padding + col * cellWidth;
         double centerY = padding + row * cellHeight;
 
-        
-        gc.setStroke(Color.RED); 
-        gc.setLineWidth(1); 
+
+        gc.setStroke(Color.RED);
+        gc.setLineWidth(1);
         gc.strokeOval(centerX - pieceDiameter / 2, centerY - pieceDiameter / 2, pieceDiameter, pieceDiameter);
     }
     /**
@@ -175,6 +183,13 @@ public class ChessUtils {
      */
     public void displayEndGameMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle("Win!!");
+        alert.setHeaderText("Game is over!");
+        DialogPane dialogPane = alert.getDialogPane();
+
+
+        dialogPane.getStylesheets().add(css);
+        dialogPane.setGraphic(null);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             game.restartGame();
@@ -186,21 +201,30 @@ public class ChessUtils {
         new Thread(() -> {
             game.clear();
             updateBoard();
-            for (int i = 0; i < game.getBoard().getMoveHistory().size(); i++) {
+            int size = game.getBoard().getMoveHistory().size();
+            for (int i = 0; i < size; i++) {
                 Board.Move move = game.getBoard().getMoveAt(i);
                 if (move != null) {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
+                        break;
                     }
                     Platform.runLater(() -> {
                         game.getBoard().setCell(move.x, move.y, move.player);
+                        game.getBoard().getMoveHistory().pop();
                         updateBoard();
                     });
                 }
+                System.out.println("run："+i+" times");
             }
+            //game.getBoard().setLastMove(null);
+            System.out.println("replay over!");
         }).start();
+
+
+
     }
 
     public void undoMove() {
@@ -208,6 +232,8 @@ public class ChessUtils {
             updateBoard();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "No more moves to undo.", ButtonType.OK);
+            alert.setHeaderText("Undo error!");
+            alert.getDialogPane().getStylesheets().add(css);
             alert.showAndWait();
         }
     }

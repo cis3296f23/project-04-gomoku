@@ -18,6 +18,7 @@ public class Board {
      */
     private Player[][] board; // Two-dimensional array to represent the board
     private Stack<Move> moveHistory;
+    private Move lastMove;
 
     /**
      * Initialize the board with default SIZE x SIZE dimension and reset all cell to empty state.
@@ -52,6 +53,8 @@ public class Board {
             board[x][y] = player;
             if (player != null) {
                 recordMove(x, y, player); // Record the move
+                lastMove = new Move(x,y,player);
+
             }
         }
     }
@@ -73,10 +76,16 @@ public class Board {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = null;  // Reset each cell to null (empty)
+
             }
         }
     }
-
+    public void setLastMove(Move move) {
+        this.lastMove = move;
+    }
+    public Move getLastMove() {
+        return lastMove;
+    }
     public void restart(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -148,6 +157,7 @@ public class Board {
     public Stack<Move> getMoveHistory() {
         return moveHistory;
     }
+
 
     public Move getMoveAt(int index) {
         if (index >= 0 && index < moveHistory.size()) {
