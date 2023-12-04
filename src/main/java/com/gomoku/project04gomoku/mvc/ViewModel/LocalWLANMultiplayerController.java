@@ -163,19 +163,6 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
-            // Check if server or client instances are active and close them
-            if (server != null) {
-                // Currently, there is no message being sent before closing.
-                // Consider sending a disconnect message here if needed.
-                server.close();
-                server = null; // Set to null to avoid reuse of closed server
-            }
-            if (client != null) {
-                // As above, consider sending a disconnect message here if needed.
-                client.close();
-                client = null; // Set to null to avoid reuse of closed client
-            }
-
             // Load the main menu scene
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
             Scene root = new Scene(fxmlLoader.load(), 800, 600);
