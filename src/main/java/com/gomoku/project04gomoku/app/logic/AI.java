@@ -14,15 +14,12 @@ public class AI {
     private final Board board;
     private final Player aiPlayer;
     private final Player humanPlayer;
-    int nodeCount;
-
     int depth;
 
     public AI(Board board, Player aiPlayer, Player humanPlayer, int depth) {
         this.board = board;
         this.aiPlayer = aiPlayer;
         this.humanPlayer = humanPlayer;
-        nodeCount = 0;
         this.depth = depth;
         //this.evaluator = new Evaluator(board);
     }
@@ -34,46 +31,7 @@ public class AI {
         int bestScore = Integer.MIN_VALUE;
         Move bestMove = new Move(-1, -1);
         bestMove = minimax(board, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
-        System.out.println("Eval Count = " + nodeCount);
-        nodeCount = 0;
-
         return bestMove;
-
-//        // Iterate through all possible moves
-//        for (int x = 0; x < Board.SIZE; x++) {
-//            for (int y = 0; y < Board.SIZE; y++) {
-//                if (board.isEmpty(x, y)) {
-//                    // Simulate AI move
-//                    board.setCell(x, y, aiPlayer);
-//                    int scoreAI = evaluator.evaluateBoard(aiPlayer);
-//
-//                    // Undo AI move and simulate opponent's move
-//                    board.setCell(x, y, humanPlayer);
-//                    int scoreHuman = evaluator.evaluateBoard(humanPlayer);
-//
-//                    // Reset the cell to its original state
-//                    board.setCell(x, y, null);
-//
-//                    // Output current position and corresponding scores
-//                    System.out.println("Position: (" + x + ", " + y + ") - AI Score: " + scoreAI + ", Human Score: " + scoreHuman);
-//
-//                    // Consider a defensive play
-//                    int score = scoreAI - scoreHuman;
-//                    if (scoreHuman > FIVE_IN_ROW / 2) {
-//                        score += scoreHuman;  // Boost the opponent's score if they are close to winning
-//                    }
-//
-//                    // Select the best move
-//                    if (score > bestScore) {
-//                        bestScore = score;
-//                        bestMove = new Move(x, y);
-//                    }
-//                }
-//            }
-//        }
-//
-//        System.out.println("Best Move: (" + bestMove.x + ", " + bestMove.y + ") with Score: " + bestScore);
-//        return bestMove;
     }
 
     public Move minimax(Board board, int depth, int alpha, int beta, boolean maximizingPlayer) {
@@ -83,7 +41,6 @@ public class AI {
         Collections.sort(emptyCells, Comparator.comparingInt(m -> Math.abs(m.x - 15/2) + Math.abs(m.y - 15/2)));
         // Terminate conditions
         if (depth == 0 || emptyCells.isEmpty()) {
-            nodeCount++;
             //int s = evaluator.evaluateBoard(board, aiPlayer) - evaluator.evaluateBoard(board, humanPlayer);
             int aiPoint = Evaluator.evaluateBoard(board, aiPlayer);
             int humanPoint = Evaluator.evaluateBoard(board, humanPlayer);
@@ -122,7 +79,6 @@ public class AI {
                     break;
                 }
             }
-            //System.out.println("best move row: " + bestMove.x + ", col: " + bestMove.y);
             return bestMove;
         }
         // for minimize move
