@@ -3,7 +3,7 @@ package com.gomoku.project04gomoku.app.logic;
 import com.gomoku.project04gomoku.app.models.Board;
 
 /**
- * The controller of the Gomoku responsible for tracking the game flow.
+ * The class of the Gomoku responsible for tracking the game flow.
  */
 public class Game {
     /**
@@ -76,7 +76,9 @@ public class Game {
         currentPlayer = blackPlayer;
         gameOver = false;
     }
-
+    /**
+     * Clears the board, sets the current player to the black player, and resets the game over state.
+     */
     public void clear() {
         board.reset();
         currentPlayer = blackPlayer;
@@ -125,8 +127,8 @@ public class Game {
 
     /**
      * Checks if a specified cell form a consecutive-five.
-     * @param x the x-coordinate of the cell
-     * @param y the y-coordinate of the cell
+     * @param x the row of the cell
+     * @param y the column of the cell
      * @return true if there is a consecutive five in a row, or false otherwise.
      */
     public boolean checkWin(int x, int y) {
@@ -165,7 +167,10 @@ public class Game {
     public boolean isDraw() {
         return !gameOver && board.isFull();
     }
-
+    /**
+     * Undoes the last move made in the game.
+     * @return true if the last move was successfully undone, false otherwise.
+     */
     public boolean undoLastMove() {
         Board.Move lastMove = board.undoMove();
         if (lastMove != null) {

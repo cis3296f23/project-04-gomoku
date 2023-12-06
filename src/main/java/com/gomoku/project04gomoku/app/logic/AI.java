@@ -8,14 +8,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-
+/**
+ * The AI class represents the artificial intelligence player in a Gomoku game.
+ * It uses the minimax algorithm with alpha-beta pruning to find the best move.
+ */
 public class AI {
-    //private final Evaluator evaluator;
+    /**
+     * The game board.
+     */
     private final Board board;
+    /**
+     * The AI player.
+     */
     private final Player aiPlayer;
+    /**
+     * The human player.
+     */
     private final Player humanPlayer;
+    /**
+     * The depth of the minimax algorithm.
+     */
     int depth;
-
+    /**
+     * Creates a new AI player with the specified parameters.
+     *
+     * @param board       The game board.
+     * @param aiPlayer    The AI player.
+     * @param humanPlayer The human player.
+     * @param depth       The depth of the minimax algorithm.
+     */
     public AI(Board board, Player aiPlayer, Player humanPlayer, int depth) {
         this.board = board;
         this.aiPlayer = aiPlayer;
@@ -23,8 +44,11 @@ public class AI {
         this.depth = depth;
         //this.evaluator = new Evaluator(board);
     }
-
-    // Method to find the best move for the AI
+    /**
+     * Finds the best move for the AI using the minimax algorithm.
+     *
+     * @return The best move for the AI.
+     */
     public Move findBestMove() {
         //Evaluator.printBoard(board);  //DEBUG
         //System.out.println(""); //DEBUG
@@ -33,7 +57,16 @@ public class AI {
         bestMove = minimax(board, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
         return bestMove;
     }
-
+    /**
+     * Implements the minimax algorithm to find the best move.
+     *
+     * @param board             The game board.
+     * @param depth             The depth of the minimax algorithm.
+     * @param alpha             The alpha value for alpha-beta pruning.
+     * @param beta              The beta value for alpha-beta pruning.
+     * @param maximizingPlayer Indicates whether it's a maximizing or minimizing move.
+     * @return The best move based on the minimax algorithm.
+     */
     public Move minimax(Board board, int depth, int alpha, int beta, boolean maximizingPlayer) {
         // Gets available moves
         ArrayList<Move> emptyCells = getEmptyCells();
@@ -111,6 +144,11 @@ public class AI {
         }
     }
 
+    /**
+     * Gets a list of empty cells on the game board.
+     *
+     * @return A list of empty cells.
+     */
     private ArrayList<Move> getEmptyCells() {
         ArrayList<Move> moves = new ArrayList<>();
         // for each row
@@ -126,15 +164,40 @@ public class AI {
         return moves;
     }
 
-    // Inner class to represent a move
+    /**
+     * Inner class representing a move with coordinates and a score.
+     */
     public class Move {
-        public int x, y, score;
-
+        /**
+         * The row of the move.
+         */
+        public int x;
+        /**
+         * The column of the move.
+         */
+        public int y;
+        /**
+         * The score associated with the move.
+         */
+        public int score;
+        /**
+         * Creates a new Move with coordinates and a score.
+         *
+         * @param x     The x-coordinate.
+         * @param y     The y-coordinate.
+         * @param score The score associated with the move.
+         */
         public Move(int x, int y, int score) {
             this.x = x;
             this.y = y;
             this.score = score;
         }
+        /**
+         * Creates a new Move with coordinates and a default score of 0.
+         *
+         * @param x The x-coordinate.
+         * @param y The y-coordinate.
+         */
         public Move(int x, int y) {
             this.x = x;
             this.y = y;

@@ -15,12 +15,21 @@ import java.util.Objects;
 
 import com.gomoku.project04gomoku.app.models.Net;
 import com.gomoku.project04gomoku.mvc.ViewModel.LocalWLANMultiplayerController;
-
+/**
+ * The main class responsible for launching the Gomoku application.
+ */
 public class GomokuStart extends Application implements EventHandler<WindowEvent> {
-
+    /**
+     * The path to the configuration file.
+     */
     private static final String CONFIG_FILE_PATH = "settings.properties";
-
-
+    /**
+     * The main entry point for the Gomoku application.
+     *
+     * @param stage The primary stage for the application.
+     * @throws IOException        If an error occurs while loading the FXML file.
+     * @throws URISyntaxException If an error occurs in URI syntax.
+     */
     @Override
     public void start(Stage stage) throws IOException, URISyntaxException {
         FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
@@ -34,7 +43,11 @@ public class GomokuStart extends Application implements EventHandler<WindowEvent
         MusicPlayer.initializeMusicPlayer();
 
     }
-
+    /**
+     * Handles the window close event to ensure proper closure of network connections.
+     *
+     * @param event The window close event.
+     */
     @Override
     public void handle(WindowEvent event) {
         try {
@@ -42,7 +55,11 @@ public class GomokuStart extends Application implements EventHandler<WindowEvent
         } catch (Exception e) {}
         System.exit(0);
     }
-
+    /**
+     * The main method to launch the Gomoku application.
+     *
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }

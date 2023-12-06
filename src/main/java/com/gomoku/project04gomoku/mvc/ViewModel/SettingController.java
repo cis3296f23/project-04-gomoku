@@ -19,25 +19,48 @@ import javafx.util.Duration;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
-
+/**
+ * Controller class for handling application settings such as background music (BGM) volume and selection.
+ */
 public class SettingController {
-
+    /**
+     * Slider for adjusting the background music (BGM) volume.
+     */
     @FXML
     private Slider bgmVolumeSlider;
-
+    /**
+     * Slider for controlling the progress of the background music (BGM).
+     */
     @FXML
     private Slider bgmProgressSlider;
-
+    /**
+     * FXMLLoader for loading FXML files.
+     */
     FXMLLoader fxmlLoader;
+    /**
+     * ComboBox for selecting the background music (BGM) track.
+     */
     @FXML
     private ComboBox<String> bgmSelectionBox;
-
+    /**
+     * Path mapping for background music (BGM) tracks.
+     */
     private static final String CONFIG_FILE_PATH = "settings.properties";
+    /**
+     * Path to the configuration file storing settings.
+     */
     private static final Map<String,String> BgmPATHs = new HashMap<>();
-
+    /**
+     * Original volume setting before any changes.
+     */
     private double originalVolume;
+    /**
+     * Original background music (BGM) selection before any changes.
+     */
     private String originalBGM;
-
+    /**
+     * Initializes the settings controller.
+     */
     public void initialize() {
 
         originalVolume = loadVolumeSetting();
@@ -62,8 +85,11 @@ public class SettingController {
 
 
     }
-
-
+    /**
+     * Loads application settings from the configuration file.
+     *
+     * @return Properties containing loaded settings.
+     */
     public static Properties loadSettings() {
         Properties props = new Properties();
         try (InputStream input = new FileInputStream(CONFIG_FILE_PATH)) {
@@ -73,12 +99,21 @@ public class SettingController {
         }
         return props;
     }
-
+    /**
+     * Loads the saved volume setting from the configuration file.
+     *
+     * @return The loaded volume setting.
+     */
     private double loadVolumeSetting() {
         Properties props = loadSettings();
         String volume = props.getProperty("volume", "50.0");
         return Double.parseDouble(volume);
     }
+    /**
+     * Loads the saved background music (BGM) setting from the configuration file.
+     *
+     * @return The loaded BGM setting.
+     */
     private String loadBgmSetting() {
 
         List<String> bgmFileNames = MusicPlayer.loadBgmFiles();
@@ -98,18 +133,24 @@ public class SettingController {
         }
         return "BGM NOT Found!";
     }
-
-
+    /**
+     * Changes the background music (BGM) track based on the selected name.
+     *
+     * @param bgmName The name of the selected BGM track.
+     * @throws URISyntaxException If there is an issue with the URI syntax.
+     */
     private void changeBGM(String bgmName) throws URISyntaxException {
         String BgmPath = "bgm/"+bgmName;
         BgmPATHs.put(bgmName,BgmPath);
         MusicPlayer.playMusic(BgmPath,loadVolumeSetting());
         System.out.println("BGM changed to: " + bgmName);
     }
-
-
-
-
+    /**
+     * Applies the selected settings, saving them to the configuration file.
+     *
+     * @param event ActionEvent triggered when the "Apply" button is clicked.
+     * @throws URISyntaxException If there is an issue with the URI syntax.
+     */
     @FXML
     private void applySettings(ActionEvent event) throws URISyntaxException {
 
@@ -133,8 +174,12 @@ public class SettingController {
 
         System.out.println("Settings applied: Volume is " + volume + ", BGM is " + selectedBGM);
     }
-
-
+    /**
+     * Saves the current volume and background music (BGM) settings to the configuration file.
+     *
+     * @param volume       The current volume setting.
+     * @param selectedBGM  The currently selected BGM track.
+     */
     private void saveSetting(double volume, String selectedBGM) {
 
         Properties props = new Properties();
@@ -147,14 +192,22 @@ public class SettingController {
             ex.printStackTrace();
         }
     }
-
-
+    /**
+     * Cancels the settings changes, reverting to the original volume setting.
+     *
+     * @param event ActionEvent triggered when the "Cancel" button is clicked.
+     */
     @FXML
     private void cancelSettings(ActionEvent event) {
 
         bgmVolumeSlider.setValue(loadVolumeSetting());
         System.out.println("Settings cancelled");
     }
+    /**
+     * Handles going back to the main stage, restoring original settings if necessary.
+     *
+     * @param event ActionEvent triggered when the "Back" button is clicked.
+     */
     @FXML
     protected void GoBackMain(ActionEvent event) {
 

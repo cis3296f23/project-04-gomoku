@@ -17,9 +17,14 @@ public class Board {
      * Actual 2D array representing the board.
      */
     private Player[][] board; // Two-dimensional array to represent the board
+    /**
+     * Stack holding the move history, recording each move made on the board.
+     */
     private Stack<Move> moveHistory;
+    /**
+     * The last move made on the board, including the coordinates and the player who made the move.
+     */
     private Move lastMove;
-
     /**
      * Initialize the board with default SIZE x SIZE dimension and reset all cell to empty state.
      */
@@ -58,7 +63,6 @@ public class Board {
             }
         }
     }
-
     /**
      * Check if the specified cell (x,y) is empty.
      * @param x the x-axis value of the cell
@@ -76,16 +80,20 @@ public class Board {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 board[i][j] = null;  // Reset each cell to null (empty)
-
             }
         }
     }
-    public void setLastMove(Move move) {
-        this.lastMove = move;
-    }
+    /**
+     * Gets the information about the last move made on the board.
+     *
+     * @return the Move object representing the last move made.
+     */
     public Move getLastMove() {
         return lastMove;
     }
+    /**
+     * Restarts the game by resetting the board and clearing the move history.
+     */
     public void restart(){
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -133,12 +141,22 @@ public class Board {
         return count; // Return the total count of consecutive pieces
     }
 
-    // Records a move to the move history
+    /**
+     * Records a move in the move history, including the specified coordinates and player.
+     *
+     * @param x      the x-axis value of the move
+     * @param y      the y-axis value of the move
+     * @param player the player making the move
+     */
     private void recordMove(int x, int y, Player player) {
         moveHistory.push(new Move(x, y, player));
     }
 
-    // Undoes the last move and returns it
+    /**
+     * Undoes the last move made on the board and returns the details of the undone move.
+     *
+     * @return the Move object representing the last move that was undone, or null if no move to undo.
+     */
     public Move undoMove() {
         if (!moveHistory.isEmpty()) {
             Move lastMove = moveHistory.pop();
@@ -148,17 +166,28 @@ public class Board {
         }
         return null;
     }
-
+    /**
+     * Gets the 2D array representing the current state of the board.
+     *
+     * @return the 2D array of Player objects representing the current state of the board.
+     */
     public Player[][] getBoard(){
         return board;
     }
-
-    // Gets the move history
+    /**
+     * Gets the move history stack.
+     *
+     * @return the Stack containing Move objects representing the move history.
+     */
     public Stack<Move> getMoveHistory() {
         return moveHistory;
     }
-
-
+    /**
+     * Gets the move at the specified index in the move history.
+     *
+     * @param index the index of the move in the move history
+     * @return the Move object at the specified index, or null if the index is out of bounds.
+     */
     public Move getMoveAt(int index) {
         if (index >= 0 && index < moveHistory.size()) {
             return moveHistory.get(index);
@@ -166,17 +195,36 @@ public class Board {
         return null;
     }
 
-    // Inner class to represent a move
+    /**
+     * Inner class representing a move on the board.
+     */
     public static class Move {
+        /**
+         * Row, column coordinates
+         */
         public int x, y;
+        /**
+         * Player of the move
+         */
         public Player player;
-
+        /**
+         * Constructs a Move object with the specified coordinates and player.
+         *
+         * @param x      the x-axis value of the move
+         * @param y      the y-axis value of the move
+         * @param player the player making the move
+         */
         public Move(int x, int y, Player player) {
             this.x = x;
             this.y = y;
             this.player = player;
         }
-
+        /**
+         * Checks if this Move object is equal to another object.
+         *
+         * @param o the object to compare to
+         * @return true if the objects are equal, false otherwise
+         */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -184,7 +232,11 @@ public class Board {
             Move move = (Move) o;
             return x == move.x && y == move.y && Objects.equals(player, move.player);
         }
-
+        /**
+         * Generates a hash code for this Move object.
+         *
+         * @return the hash code of this Move object
+         */
         @Override
         public int hashCode() {
             return Objects.hash(x, y, player);

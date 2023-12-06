@@ -24,26 +24,53 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * Controller class for Player vs Environment (PvE) mode.
+ */
 public class PVEController {
+    /**
+     * The game canvas where the Gomoku board is displayed and interactions occur.
+     */
     @FXML private Canvas canvas;
+    /**
+     * Button for restarting the Gomoku game.
+     */
     @FXML private Button RestartButton;
+    /**
+     * Button for navigating back to the main menu.
+     */
     @FXML private Button BackButton;
-
+    /**
+     * Utility class for managing chess-related operations on the canvas.
+     */
     private ChessUtils chessUtils;
+    /**
+     * String to store difficulty in text
+     */
     private String diff;
+    /**
+     * The game instance managing the Gomoku game logic.
+     */
     private Game game;
-
-    //TODO:Suppose you have multiple AI classes, add them here
+    /**
+     * The AI instance managing the PvE logic.
+     */
     private AI ai;
 
-
+    /**
+     * Constructor to set the difficulty level.
+     *
+     * @param diff The difficulty level ("Easy", "Normal", "Hard").
+     */
     PVEController(String diff)
     {
 
         this.diff=diff;
 
     }
-
+    /**
+     * Initializes the controller, setting up the game and AI.
+     */
     public void initialize() {
         this.game = new Game();
         this.game.setupGameMode(false); // Set to PvE mode
@@ -60,18 +87,31 @@ public class PVEController {
         this.chessUtils = new ChessUtils(canvas, game);
     }
 
-
+    /**
+     * Handles the restart game button click event.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     public void restartGame(ActionEvent event) {
         game.restartGame();
         chessUtils.updateBoard();
     }
+    /**
+     * Handles the replay button click event.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     public void Replay(ActionEvent event)
     {
         chessUtils.replayMoves();
     }
-
+    /**
+     * Handles the canvas click event.
+     *
+     * @param event The MouseEvent triggered by the canvas click.
+     */
     @FXML
     public void handleCanvasClick(MouseEvent event) {
         chessUtils.handleCanvasClick(event);
@@ -86,7 +126,12 @@ public class PVEController {
         chessUtils.checkGameStatus(); // Check if the game has ended
     }
 
-
+    /**
+     * Handles the "Go Back to Main" button click event.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException If there is an issue loading the main menu FXML.
+     */
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure to end the game?", ButtonType.OK, ButtonType.CANCEL);
@@ -99,7 +144,12 @@ public class PVEController {
             stage.show();
         }
     }
-
+    /**
+     * Opens the setting window.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException If there is an issue loading the setting FXML.
+     */
     @FXML
     private void openSetting(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
@@ -133,7 +183,11 @@ public class PVEController {
         });
         Setting.show();
     }
-
+    /**
+     * Handles the undo move button click event.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     public void undoMove(ActionEvent event) {
         chessUtils.undoMove();

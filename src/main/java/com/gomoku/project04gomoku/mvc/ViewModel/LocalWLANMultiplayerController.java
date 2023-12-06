@@ -23,61 +23,151 @@ import java.net.UnknownHostException;
 import java.util.Objects;
 import java.util.Properties;
 
+/**
+ * The controller for the local WLAN multiplayer view in the Gomoku game.
+ * Implements Net.NetStateChange to handle network state changes.
+ */
 public class LocalWLANMultiplayerController implements Net.NetStateChange {
+    /**
+     * The game canvas where the Gomoku board is displayed and interactions occur.
+     */
     @FXML
     private Canvas canvas; // The canvas for drawing the game board and pieces
+    /**
+     * FXMLLoader for loading FXML files.
+     */
     FXMLLoader fxmlLoader;
-
+    /**
+     * Button for restarting the Gomoku game.
+     */
     @FXML
     private Button RestartButton;
+    /**
+     * Button for accessing and modifying bgm settings.
+     */
     @FXML
     private Button SettingButton;
+    /**
+     * Button for navigating back to the main menu.
+     */
     @FXML
     private Button BackButton;
+    /**
+     * Button for connect to a WLAN host
+     */
     @FXML
     private Button ConnectButton;
+    /**
+     * Button for start a WLAN game
+     */
     @FXML
     private Button StartButton;
+    /**
+     * Button for send a message
+     */
     @FXML
     private Button SendButton;
+    /**
+     * Button for undoing the last move in the Gomoku game.
+     */
     @FXML
     private Button UndoButton;
+    /**
+     * Text field for entering the IP address when connecting to a network.
+     */
     @FXML
     private TextField tfIP;
+    /**
+     * Text field for entering messages to be sent over the network.
+     */
     @FXML
     private TextField tfMessage;
+    /**
+     * Text area for displaying the content of messages and system notifications.
+     */
     @FXML
     private TextArea taContent;
+    /**
+     * Label for displaying the local IP address when hosting a network game.
+     */
     @FXML
     private Label lbIP;
 
+    /**
+     * Utility class for managing chess-related operations on the canvas.
+     */
     private ChessUtils ChessUtils;
+    /**
+     * The game instance managing the Gomoku game logic.
+     */
     private Game game;
+    /**
+     * The padding around the game board.
+     */
     private final double padding = 20;
-    private GraphicsContext gc; // The graphics context for drawing on the canvas
-
+    /**
+     * The graphics context for drawing on the canvas
+     */
+    private GraphicsContext gc;
+    /**
+     * The network server instance for hosting a WLAN multiplayer game.
+     */
     private Net server;
+    /**
+     * The network client instance for connecting to a hosted WLAN multiplayer game.
+     */
     private Net client;
-
+    /**
+     * Constant string representing the network communication type.
+     */
     public static final String NET = "net";
+    /**
+     * Constant string representing a generic message.
+     */
     public static final String MSG = "msg";
+
+    /**
+     * Constant string representing a chess move message.
+     */
     public static final String CHESS = "chess";
+    /**
+     * Constant string representing a game state message.
+     */
     public static final String GAME = "game";
+    /**
+     * Constant string representing an undo move request.
+     */
     public static final String UNDO = "undo";
+    /**
+     * Constant string representing a game restart request.
+     */
     public static final String RESTART = "restart";
+    /**
+     * Constant string representing an affirmative response.
+     */
     public static final String OK = "ok";
+    /**
+     * Constant string representing a negative response.
+     */
     public static final String NO = "no";
-
+    /**
+     * Enumeration representing the type of network connection (Client or Server).
+     */
     public static NetType netType;
-
+    /**
+     * Flag indicating whether it is the current player's turn.
+     */
     private boolean isMyTurn = true;
-
-
+    /**
+     * Enum to represent the type of network connection (Client or Server).
+     */
     public enum NetType {
         CLIENT, SERVER
     }
 
-    // Initialize the game and graphics context, and draw the empty game board
+    /**
+     * Initialize the game and graphics context, and draw the empty game board
+     */
     public void initialize() {
         this.game = new Game();
         this.gc = canvas.getGraphicsContext2D();
@@ -89,18 +179,27 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         }
     }
 
+    /**
+     * Handles the replay button action.
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     public void Replay(ActionEvent event) {
         ChessUtils.replayMoves();
     }
 
+    /**
+     * Handles the restart game button action.
+     */
     private void restartGame() {
         game.restartGame(); // Reset game
         ChessUtils.updateBoard(); // Update the chessboard display
         taContent.appendText("[System] The game has been restarted \n");
     }
-
-
+    /**
+     * Handles the canvas click event.
+     * @param event The MouseEvent triggering the method.
+     */
     @FXML
     public void handleCanvasClick(MouseEvent event) {
 
@@ -149,6 +248,12 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         }
     }
 
+    /**
+     * Sends a chess move message to the opponent over the network.
+     *
+     * @param col The column of the chess move.
+     * @param row The row of the chess move.
+     */
     private void sendChessMove(int col, int row) {
         String message = buildMessage(CHESS, col + ":" + row);
         if (netType == NetType.SERVER) {
@@ -159,7 +264,12 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             taContent.appendText("[Client] Move: " + col + ", " + row + "\n");
         }
     }
-
+    /**
+     * Navigates back to the main menu view when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     * @throws IOException If an error occurs during the loading of the main menu scene.
+     */
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
@@ -174,6 +284,12 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         }
     }
 
+    /**
+     * Opens the settings view when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     * @throws IOException If an error occurs during the loading of the settings scene.
+     */
     @FXML
     private void openSetting(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
@@ -206,7 +322,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         });
         Setting.show();
     }
-
+    /**
+     * Handles the start server event when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     */
     @FXML
     protected void handleStartServer(ActionEvent event) {
         server = Net.getInstance(NetType.SERVER);
@@ -215,7 +335,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         netType = NetType.SERVER;
         isMyTurn = false;
     }
-
+    /**
+     * Handles the connect event when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     */
     @FXML
     protected void handleConnectClicked(ActionEvent event) {
 
@@ -226,7 +350,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             netType = NetType.CLIENT;
         }
     }
-
+    /**
+     * Handles the send event when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     */
     @FXML
     protected void handleSendClicked(ActionEvent event) {
         if (!tfMessage.getText().isEmpty()) {
@@ -237,7 +365,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             tfMessage.setText("");
         }
     }
-
+    /**
+     * Handles the undo event when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     */
     @FXML
     protected void handleUndoClicked(ActionEvent event) {
         String requester = (netType == NetType.SERVER) ? "[Host]" : "[Client]";
@@ -246,7 +378,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         taContent.appendText(requester + " Request to regret\n");
     }
 
-
+    /**
+     * Handles the restart event when triggered by the corresponding button.
+     *
+     * @param event The ActionEvent triggered by the button.
+     */
     @FXML
     protected void handleRestartClicked(ActionEvent event) {
         String requester = (netType == NetType.SERVER) ? "[Host]" : "[Client]";
@@ -255,7 +391,9 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         taContent.appendText(requester + " Request to restart the game\n");
     }
 
-
+    /**
+     * Callback method triggered upon successful network connection.
+     */
     @Override
     public void onConnect() {
         System.out.println("Some one connected");
@@ -266,7 +404,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         SendButton.setDisable(false);
         taContent.appendText("[System] The host plays black and moves first\n");
     }
-
+    /**
+     * Callback method triggered upon receiving a network message.
+     *
+     * @param message The received network message.
+     */
     @Override
     public void onMessage(String message) {
         System.out.println(message);
@@ -347,7 +489,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
                 break;
         }
     }
-
+    /**
+     * Handles the undo request received from the opponent.
+     *
+     * @param requestor The side requesting the undo (either "[Host]" or "[Client]").
+     */
     private void handleUndoRequest(String requestor) {
         String requesterDisplay = requestor.equals("[Host]") ? "[Host]" : "[Client]";
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, requesterDisplay + " Do you agree with the request to regret the move?", ButtonType.YES, ButtonType.NO);
@@ -361,7 +507,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             }
         });
     }
-
+    /**
+     * Handles the restart request received from the opponent.
+     *
+     * @param requestor The side requesting the restart (either "[Host]" or "[Client]").
+     */
     private void handleRestartRequest(String requestor) {
         String requesterDisplay = requestor.equals("[Host]") ? "[Host]" : "[Client]";
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, requesterDisplay + " Request to restart the game, do you agree?", ButtonType.YES, ButtonType.NO);
@@ -375,7 +525,11 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         });
     }
 
-
+    /**
+     * Sends a message over the network based on the current network type (SERVER or CLIENT).
+     *
+     * @param message The message to be sent.
+     */
     private void sendMessage(String message) {
         if (netType == NetType.SERVER) {
             server.sendMessage(message);
@@ -383,7 +537,9 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
             client.sendMessage(message);
         }
     }
-
+    /**
+     * Callback method triggered upon network disconnection.
+     */
     @Override
     public void onDisconnect() {
         Alert alert = new Alert(Alert.AlertType.ERROR, "The line is disconnected!", ButtonType.OK);
@@ -391,7 +547,9 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         alert.show();
     }
 
-
+    /**
+     * Callback method triggered upon successful server establishment.
+     */
     @Override
     public void onServerOK() {
         System.out.println("server OK");
@@ -400,7 +558,13 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
         ConnectButton.setDisable(true);
         tfIP.setDisable(true);
     }
-
+    /**
+     * Builds a network message by combining the head and body.
+     *
+     * @param head The header of the message.
+     * @param body The body of the message.
+     * @return The constructed network message.
+     */
     static String buildMessage(String head, String body) {
         return head + ':' + body;
     }

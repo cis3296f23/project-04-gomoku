@@ -33,12 +33,34 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 
+/**
+ * This class provides utility functions for drawing and updating the Gomoku (Five in a Row) game board
+ * using JavaFX. It handles the graphical representation of the board and the game pieces, and also
+ * responds to user interactions.
+ */
 public class ChessUtils {
+    /**
+     * The canvas where the game board is drawn.
+     */
     private Canvas canvas;
+    /**
+     * The game logic and state.
+     */
     private Game game;
+    /**
+     * The graphics context for drawing on the canvas.
+     */
     private GraphicsContext gc;
+    /**
+     * The padding around the game board.
+     */
     private final double padding = 20;
+
+    /**
+     * The CSS stylesheet for styling the alert dialog.
+     */
     String css = Objects.requireNonNull(GomokuStart.class.getResource("css/alert.css")).toExternalForm();
+
     /**
      * Constructor to initialize the ChessUtils with a canvas and game logic.
      * It sets up the graphics context and draws the initial board.
@@ -52,10 +74,10 @@ public class ChessUtils {
         this.gc = canvas.getGraphicsContext2D();
         drawBoard();
     }
+
     /**
      * Updates the game board by redrawing it and placing pieces based on the current game state.
      */
-
     public void updateBoard() {
         drawBoard(); // Redraw the board
         Board.Move lastMove = game.getBoard().getLastMove();
@@ -75,6 +97,13 @@ public class ChessUtils {
         }
     }
 
+    /**
+     * Highlights a specific game piece on the board.
+     *
+     * @param col   The column of the piece.
+     * @param row   The row of the piece.
+     * @param color The color of the piece.
+     */
     public void highlightPiece(int col, int row, Color color) {
         double paddedWidth = canvas.getWidth() - 2 * padding;
         double paddedHeight = canvas.getHeight() - 2 * padding;
@@ -89,6 +118,7 @@ public class ChessUtils {
         gc.setLineWidth(1);
         gc.strokeOval(centerX - pieceDiameter / 2, centerY - pieceDiameter / 2, pieceDiameter, pieceDiameter);
     }
+
     /**
      * Draws the game board including the grid lines.
      */
@@ -132,7 +162,15 @@ public class ChessUtils {
         gc.fillOval(topLeftX, topLeftY, pieceDiameter, pieceDiameter);
     }
 
-    // Get the color associated with a player
+    /**
+     * Retrieves the JavaFX Color associated with a player's piece based on the player's color.
+     *
+     * @param player The player whose color needs to be determined.
+     * @return The JavaFX Color corresponding to the player's color.
+     *         If the player's color is BLACK, returns Color.BLACK.
+     *         If the player's color is WHITE, returns Color.WHITE.
+     *         If the player's color is EMPTY or in an unknown state, returns Color.TRANSPARENT.
+     */
     public Color getPlayerColor(Player player) {
         if (player.getColor() == Player.PlayerColor.BLACK) {
             return Color.BLACK;
@@ -142,7 +180,6 @@ public class ChessUtils {
         return Color.TRANSPARENT; // Fallback for an undefined state
     }
 
-    // Handle a click on the canvas (player's move)
     /**
      * Handles mouse click events on the canvas. It calculates the clicked cell and updates the game
      * state based on the player's move.
@@ -197,6 +234,10 @@ public class ChessUtils {
         }
     }
 
+    /**
+     * Replays the moves stored in the game's move history, creating a visual representation
+     * of the game's progression.
+     */
     public void replayMoves() {
         new Thread(() -> {
             game.clear();
@@ -227,6 +268,9 @@ public class ChessUtils {
 
     }
 
+    /**
+     * Undoes the last move in the game, updating the board accordingly.
+     */
     public void undoMove() {
         if (game.undoLastMove()) {
             updateBoard();

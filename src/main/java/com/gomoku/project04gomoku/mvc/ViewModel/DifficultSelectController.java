@@ -11,13 +11,31 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller class for handling difficulty selection in the Gomoku game.
+ * This class is associated with the "DifficultSelect.fxml" file.
+ * It provides methods to handle user actions, such as changing the difficulty level
+ * and navigating between different scenes (e.g., game board and main menu).
+ */
 public class DifficultSelectController {
+    /**
+     * ComboBox for selecting the difficulty level.
+     */
     @FXML
     private ComboBox<String> difficultyComboBox;
 
+    /**
+     * FXMLLoader for loading FXML files.
+     */
     FXMLLoader fxmlLoader;
     // ...
 
+    /**
+     * Handles the event when the user changes the difficulty level.
+     * Loads the ChessBoard scene with the selected difficulty and switches to it.
+     *
+     * @param event The ActionEvent triggered by the difficulty selection.
+     */
     @FXML
     private void handleDifficultyChange(ActionEvent event) {
         String selectedDifficulty = difficultyComboBox.getValue();
@@ -38,6 +56,12 @@ public class DifficultSelectController {
         }
     }
 
+    /**
+     * Navigates back to the main menu when the corresponding button is clicked.
+     *
+     * @param event The ActionEvent triggered by the "Go Back to Main" button.
+     * @throws IOException If there is an issue loading the Menu.fxml file.
+     */
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Menu.fxml"));
