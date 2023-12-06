@@ -1,7 +1,3 @@
-/**
- * 专门用来控制模式选择的controller。有返回，切换页面等功能
- */
-
 package com.gomoku.project04gomoku.mvc.ViewModel;
 
 import com.gomoku.project04gomoku.GomokuStart;

@@ -62,7 +62,6 @@ public class MenuController {
      * Switches to the mode selection menu.
      *
      * @param event The event triggered by the button click.
-     * @throws IOException If an error occurs while loading the FXML file.
      */
     @FXML
     protected void switchToModeSelect(ActionEvent event) {
