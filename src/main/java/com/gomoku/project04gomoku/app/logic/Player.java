@@ -9,14 +9,33 @@ public interface Player {
      * It includes BLACK, WHITE, and NONE (empty state).
      */
     enum PlayerColor {
-        BLACK, WHITE, NONE;  // Representing player colors and empty state
+        /**
+         * Represents the black color for player's pieces.
+         */
+        BLACK,
+
+        /**
+         * Represents the white color for player's pieces.
+         */
+        WHITE,
+        /**
+         * Represents the absence of a player's piece (empty state).
+         */
+        NONE;
     }
     /**
      * Enum representing the type of the player.
      * It includes HUMAN and COMPUTER.
      */
     enum PlayerType {
-        HUMAN, COMPUTER;  // Representing types of players
+        /**
+         * Represents a human player type.
+         */
+        HUMAN,
+        /**
+         * Represents a computer player type.
+         */
+        COMPUTER;
     }
     /**
      * Gets the color of the player's pieces.

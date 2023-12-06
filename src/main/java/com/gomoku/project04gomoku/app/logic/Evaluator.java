@@ -13,36 +13,36 @@ public class Evaluator {
     /**
      * Represents the score assigned to a consecutive-five pattern.
      */
-    final static int FIVE = 10000000;       // ●●●●●
+    final static int FIVE = 10000000;
     /**
      * Represents the score assigned to a blocked consecutive-five pattern.
      */
-    final static int BLOCKED_FIVE = FIVE;   // ●●●●●○
+    final static int BLOCKED_FIVE = FIVE;
     /**
      * Represents the score assigned to a consecutive-four pattern.
      */
-    final static int FOUR = 100000;         // ●●●●
+    final static int FOUR = 100000;
     /**
      * Represents the score assigned to a blocked consecutive-four pattern.
      */
-    final static int BLOCKED_FOUR = 1500; // ●●●●○ ●○●●●
+    final static int BLOCKED_FOUR = 1500;
     /**
      * Represents the score assigned to a consecutive-three pattern.
      */
-    final static int THREE = 1000;          // ●●●
+    final static int THREE = 1000;
 
     /**
      * Represents the score assigned to a blocked consecutive-three pattern.
      */
-    final static int BLOCKED_THREE = 150;   // ●●●○
+    final static int BLOCKED_THREE = 150;
     /**
      * Represents the score assigned to a consecutive-two pattern.
      */
-    final static int TWO = 200; // ●●
+    final static int TWO = 200;
     /**
      * Represents the score assigned to a blocked consecutive-two pattern.
      */
-    final static int BLOCKED_TWO = 15;  // ●
+    final static int BLOCKED_TWO = 15;
     /**
      * Represents the score assigned to a single piece.
      */
@@ -54,8 +54,8 @@ public class Evaluator {
 
     /*
         UNACCOUNTED
-        SPLIT_THREE     ●●○●○ or ●○●●○
-        TWO_THREE       ●○●●○
+        SPLIT_THREE
+        TWO_THREE
         TWO_SPLIT_THREE
         THREE_FOUR
         BLOCKED_FOUR_FOUR
@@ -69,31 +69,46 @@ public class Evaluator {
     //
     //  or
     // final static int SPLIT_THREE = 1000; //
-    // ●●●○ or ●●●×
+
     /**
      * Represents the score assigned to a half-open three pattern.
      */
     final static int HALF_OPEN_THREE = 500;
-    // ○●●○
+
     /**
      * Represents the score assigned to an open two pattern.
      */
     final static int OPEN_TWO = 100;
-    // ●●○ or ●●×
+
 
     /**
      * Represents the score assigned to a half-open two pattern.
      */
     final static int HALF_OPEN_TWO = 50;
-    // ●○●○
     // final static int SPLIT_TWO = 75;
     /**
      * The possible directions to evaluate patterns on the board.
      */
     public enum DIRECTION{
-        // DIAGONAL_SLASH means top right to left bottom, "/"
-        // DIAGONAL_BACKSLASH means top left to right bottom, "\"
-        HORIZONTAL, VERTICAL, DIAGONAL_SLASH, DIAGONAL_BACKSLASH
+        /**
+         * Represents the horizontal direction from left to right.
+         */
+        HORIZONTAL,
+
+        /**
+         * Represents the vertical direction from top to bottom.
+         */
+        VERTICAL,
+
+        /**
+         * Represents the diagonal direction from top right to left bottom ("/").
+         */
+        DIAGONAL_SLASH,
+
+        /**
+         * Represents the diagonal direction from top left to right bottom ("\").
+         */
+        DIAGONAL_BACKSLASH
     }
 
     /**

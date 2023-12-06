@@ -162,7 +162,14 @@ public class LocalWLANMultiplayerController implements Net.NetStateChange {
      * Enum to represent the type of network connection (Client or Server).
      */
     public enum NetType {
-        CLIENT, SERVER
+        /**
+         * Represents the client role in a client-server architecture.
+         */
+        CLIENT,
+        /**
+         * Represents the server role in a client-server architecture.
+         */
+        SERVER
     }
 
     /**
