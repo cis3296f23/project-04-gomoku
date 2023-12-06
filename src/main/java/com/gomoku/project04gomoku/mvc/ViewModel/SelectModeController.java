@@ -16,28 +16,47 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/**
+ * Controller class specifically designed to control mode selection. It includes functionalities such as navigation and switching between pages.
+ */
 public class SelectModeController {
+    /**
+     * Button for local WLAN multiplayer.
+     */
     public Button LocalWlan;
+    /**
+     * FXMLLoader for loading FXML files.
+     */
     FXMLLoader fxmlLoader;
-
+    /**
+     * Controller for local multiplayer.
+     */
     LocalMultiplayerController localplay = new LocalMultiplayerController();
+    /**
+     * Button to go back to the main menu.
+     */
     @FXML
     private Button GoBackMain;
+    /**
+     * Button to navigate to multiple-player options.
+     */
     @FXML
     private Button Multiple;
-
-
+    /**
+     * Button to navigate to local multiplayer.
+     */
     @FXML
     private Button Local;
-
+    /**
+     * Button to create a lobby.
+     */
    @FXML
    private Button CreateButton;
     /**
-     * 用来返回到二级菜单
+     * Returns to the mode selection menu.
      *
-     * @param event
-     * @throws IOException
+     * @param event ActionEvent triggered when the button is clicked.
+     * @throws IOException If there is an issue loading the FXML file.
      */
     public void GoBackToSelectMode(ActionEvent event) throws IOException {
         try {
@@ -58,10 +77,10 @@ public class SelectModeController {
     }
 
     /**
-     * 用来返回到主菜单
+     * Returns to the main menu.
      *
-     * @param event
-     * @throws IOException
+     * @param event ActionEvent triggered when the button is clicked.
+     * @throws IOException If there is an issue loading the FXML file.
      */
     public void GoBackToMain(ActionEvent event) throws IOException {
         try {
@@ -81,10 +100,10 @@ public class SelectModeController {
     }
 
     /**
-     * 用来进入三级菜单（多人游戏选项）
+     * Navigates to the multiple-player options menu.
      *
-     * @param event
-     * @throws IOException
+     * @param event ActionEvent triggered when the button is clicked.
+     * @throws IOException If there is an issue loading the FXML file.
      */
     public void GoToMultiplePlayer(ActionEvent event) throws IOException {
         try {
@@ -102,25 +121,11 @@ public class SelectModeController {
             e.printStackTrace();
         }
     }
-/*    @FXML
-    public void GoToPVE(ActionEvent event) throws IOException {
-        try {
-            fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/MultiplePlayer.fxml"));
-            fxmlLoader.setController(new PVEController());
-            Scene root = new Scene(fxmlLoader.load(), 800, 600);
-
-
-            Stage stage = (Stage) Multiple.getScene().getWindow();
-
-
-            stage.setScene(root);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
+    /**
+     * Navigates to the local multiplayer board.
+     *
+     * @param event ActionEvent triggered when the button is clicked.
+     */
     @FXML
     private void GoToLocalMultiplayer(ActionEvent event) {
         try {
@@ -139,6 +144,11 @@ public class SelectModeController {
         }
 
     }
+    /**
+     * Navigates to the local WLAN multiplayer lobby.
+     *
+     * @param event ActionEvent triggered when the button is clicked.
+     */
     @FXML
     private void GoToLocalWLANMultiplayer(ActionEvent event) {
         try {
@@ -156,6 +166,11 @@ public class SelectModeController {
         }
 
     }
+    /**
+     * Navigates to the lobby join menu.
+     *
+     * @param event ActionEvent triggered when the button is clicked.
+     */
     @FXML
     private void GoToJoin(ActionEvent event) {
         try {
@@ -172,6 +187,11 @@ public class SelectModeController {
         }
 
     }
+    /**
+     * Navigates to the lobby creation menu.
+     *
+     * @param event ActionEvent triggered when the button is clicked.
+     */
     @FXML
     private void GoToCreate(ActionEvent event) {
         try {
@@ -188,6 +208,11 @@ public class SelectModeController {
         }
 
     }
+    /**
+     * Navigates to the local WLAN multiplayer board.
+     *
+     * @param event ActionEvent triggered when the button is clicked.
+     */
     @FXML
     private void CreateHost(ActionEvent event)
     {
@@ -205,7 +230,11 @@ public class SelectModeController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Navigates to the single-player difficulty selection menu.
+     *
+     * @param event ActionEvent triggered when the button is clicked.
+     */
     @FXML
     public void GoToSinglePlayer(ActionEvent event) {
         try {

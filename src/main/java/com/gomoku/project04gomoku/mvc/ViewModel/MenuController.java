@@ -1,9 +1,5 @@
 package com.gomoku.project04gomoku.mvc.ViewModel;
 
-/**
- * 处理主菜单事件
- */
-
 import com.gomoku.project04gomoku.GomokuStart;
 import com.gomoku.project04gomoku.mvc.test.MenuViewModel;
 import javafx.application.Platform;
@@ -27,32 +23,48 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
+/**
+ * Controller class for handling events in the main menu.
+ */
 public class MenuController {
-    @FXML
-    public Button TestChange;
+    /**
+     * FXMLLoader for loading FXML files.
+     */
     FXMLLoader fxmlLoader;
-
+    /**
+     * View model for the main menu.
+     */
     private final MenuViewModel viewModel = new MenuViewModel();
+    /**
+     * Label displaying welcome text.
+     */
     @FXML
     private Label welcomeText;
-
+    /**
+     * Handles the action when the "Hello" button is clicked.
+     */
     @FXML
     protected void onHelloButtonClick() {
         viewModel.displayInformationDialog("This is a dialog.");
     }
-
+    /**
+     * Button for starting the game.
+     */
     @FXML
     private Button GameStart;
-
+    /**
+     * Button for accessing the settings.
+     */
     @FXML
     private Button Setting;
-    @FXML
 
     /**
-     * 用来进入二级菜单
-     * @param event
-     * @throws IOException
+     * Switches to the mode selection menu.
+     *
+     * @param event The event triggered by the button click.
+     * @throws IOException If an error occurs while loading the FXML file.
      */
+    @FXML
     protected void switchToModeSelect(ActionEvent event) {
         try {
             fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/SelectMode.fxml"));
@@ -69,6 +81,11 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+    /**
+     * Opens the settings window.
+     *
+     * @param event The event triggered by the button click.
+     */
     @FXML
     protected void GoToSetting(ActionEvent event) {
         try {
@@ -116,6 +133,11 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+    /**
+     * Handles the action when the exit button is clicked.
+     *
+     * @param event The event triggered by the button click.
+     */
     @FXML
     public void handleExitButtonAction(ActionEvent event) {
         Platform.exit();

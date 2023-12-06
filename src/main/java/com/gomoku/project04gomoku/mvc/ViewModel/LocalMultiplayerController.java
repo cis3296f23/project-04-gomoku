@@ -19,39 +19,80 @@ import java.util.Properties;
 import com.gomoku.project04gomoku.GomokuStart;
 import com.gomoku.project04gomoku.app.logic.Game;
 
+
+/**
+ * Controller class for the local multiplayer Gomoku game view.
+ * Handles user interactions and updates the UI accordingly.
+ */
 public class LocalMultiplayerController {
+    /**
+     * The game canvas where the Gomoku board is displayed and interactions occur.
+     */
     @FXML private Canvas canvas;
+    /**
+     * Button for restarting the Gomoku game.
+     */
     @FXML private Button RestartButton;
+    /**
+     * Button for accessing and modifying bgm settings.
+     */
     @FXML private Button SettingButton;
+    /**
+     * Button for navigating back to the main menu.
+     */
     @FXML private Button BackButton;
+    /**
+     * Button for undoing the last move in the Gomoku game.
+     */
     @FXML private Button UndoButton;
 
 
+    /**
+     * Utility class for managing chess-related operations on the canvas.
+     */
     private ChessUtils ChessUtils;
+    /**
+     * The game instance managing the Gomoku game logic.
+     */
     private Game game;
-
+    /**
+     * Initializes the controller by setting up the Gomoku game and the ChessUtils.
+     */
     public void initialize() {
         this.game = new Game();
         this.game.setupGameMode(true); // Explicitly set to PvP mode
         this.ChessUtils = new ChessUtils(canvas, game);
     }
-
+    /**
+     * Handles the restart game button action.
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     public void restartGame(ActionEvent event) {
         game.restartGame();
         ChessUtils.updateBoard();
     }
-
+    /**
+     * Handles the replay button action.
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     public void Replay(ActionEvent event) {
         ChessUtils.replayMoves();
     }
-
+    /**
+     * Handles the canvas click event.
+     * @param event The MouseEvent triggering the method.
+     */
     @FXML
     public void handleCanvasClick(javafx.scene.input.MouseEvent event) {
         ChessUtils.handleCanvasClick(event);
     }
-
+    /**
+     * Handles the back to main menu button action.
+     * @param event The ActionEvent triggering the method.
+     * @throws IOException if an I/O error occurs while loading the main menu view.
+     */
     @FXML
     public void GoBackToMain(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Are you sure to end the game?", ButtonType.OK, ButtonType.CANCEL);
@@ -64,6 +105,11 @@ public class LocalMultiplayerController {
             stage.show();
         }
     }
+    /**
+     * Handles the open setting button action.
+     * @param event The ActionEvent triggering the method.
+     * @throws IOException if an I/O error occurs while loading the setting view.
+     */
     @FXML
     private void openSetting(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GomokuStart.class.getResource("view/Setting.fxml"));
@@ -96,7 +142,10 @@ public class LocalMultiplayerController {
         });
         Setting.show();
     }
-
+    /**
+     * Handles the undo move button action.
+     * @param event The ActionEvent triggering the method.
+     */
     @FXML
     public void undoMove(ActionEvent event) {
         ChessUtils.undoMove();

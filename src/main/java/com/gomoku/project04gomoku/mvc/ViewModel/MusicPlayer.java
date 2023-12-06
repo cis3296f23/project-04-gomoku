@@ -9,12 +9,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
+/**
+ * Controller class for managing the music player in the application.
+ */
 public class MusicPlayer {
+    /**
+     * FXMLLoader for loading FXML files.
+     */
     private static MediaPlayer mediaPlayer;
+    /**
+     * The file path for the configuration file.
+     */
     private static final String CONFIG_FILE_PATH = "settings.properties";
+    /**
+     * Initializes the music player with default settings or settings from the configuration file.
+     *
+     * @throws URISyntaxException If there is an issue with the URI syntax.
+     */
     public static void initializeMusicPlayer() throws URISyntaxException {
-
-
         File Config = new File(CONFIG_FILE_PATH);
         if(!Config.exists())
         {
@@ -39,6 +51,12 @@ public class MusicPlayer {
         }
 
     }
+    /**
+     * Initializes the settings and saves them to the configuration file.
+     *
+     * @param volume        The default volume.
+     * @param selectedBGM   The default selected background music.
+     */
     private static void InitSetting(double volume, String selectedBGM) {
 
         Properties props = new Properties();
@@ -54,10 +72,20 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Gets the MediaPlayer instance.
+     *
+     * @return The MediaPlayer instance.
+     */
     public static MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
+    /**
+     * Loads the list of available background music files.
+     *
+     * @return The list of available background music files.
+     */
     public  static List<String> loadBgmFiles() {
         List<String> bgmFiles = new ArrayList<>();
         try {
@@ -98,7 +126,11 @@ public class MusicPlayer {
         return bgmFiles;
     }
 
-
+    /**
+     * Loads the settings from the configuration file.
+     *
+     * @return The properties object containing the settings.
+     */
     private static Properties loadSettings() {
         Properties props = new Properties();
         try (InputStream input = new FileInputStream(CONFIG_FILE_PATH)) {
@@ -108,6 +140,13 @@ public class MusicPlayer {
         }
         return props;
     }
+    /**
+     * Plays the selected music file with the specified volume.
+     *
+     * @param musicFile The music file to play.
+     * @param volume    The volume at which to play the music.
+     * @throws URISyntaxException If there is an issue with the URI syntax.
+     */
     public static void playMusic(String musicFile, double volume) throws URISyntaxException {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -121,6 +160,11 @@ public class MusicPlayer {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
+    /**
+     * Sets the volume of the currently playing music.
+     *
+     * @param volume The volume level.
+     */
     public static void setVolume(double volume)
     {
         mediaPlayer.setVolume(volume);
